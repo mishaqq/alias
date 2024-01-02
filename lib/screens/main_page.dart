@@ -7,7 +7,6 @@ class MainPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final game = ref.watch(gameProvider);
     return Scaffold(
       body: Center(
         child: Column(

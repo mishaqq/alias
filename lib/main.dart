@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:alias/models/game_model.dart';
 import 'package:alias/providers/game_model_provider.dart';
+import 'package:alias/screens/guessing_page.dart';
 import 'package:alias/screens/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,6 +36,7 @@ class MyApp extends ConsumerWidget {
       routes: {
         '/': (context) => MainPage(),
         '/score': (context) => ScorePage(),
+        '/guessing': (context) => GuessingPage(),
       },
     );
   }

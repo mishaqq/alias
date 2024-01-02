@@ -22,6 +22,14 @@ class GameNotifier extends StateNotifier<AliasData> {
     state = state.copyWith(teams: updatedTeams, scores: updatedScores);
   }
 
+  void nextTurn() {
+    if (state.turn < state.teams.length - 1) {
+      state = state.copyWith(turn: (state.turn + 1));
+    } else {
+      state = state.copyWith(turn: 0);
+    }
+  }
+
   void reset() {
     state = state.copyWith(
         teams: ["Super Mario", "Not Ready yet"], scores: [0, 0], turn: 0);

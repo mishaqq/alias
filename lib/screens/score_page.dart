@@ -42,6 +42,15 @@ class ScorePage extends ConsumerWidget {
             },
             child: Text("Reset"),
           ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/guessing');
+              ref
+                  .read(gameProvider.notifier)
+                  .nextTurn(); // move to guessing screen or score counting screen
+            },
+            child: Text("Start next round"),
+          ),
         ],
       ),
     );
