@@ -14,6 +14,8 @@ final gameProvider = StateNotifierProvider<GameNotifier, AliasData>(
       teams: ["Super Mario", "Not Ready yet"],
       scores: [0, 0],
       turn: 0,
+      usedWords: {},
+      usedWordSets: ["asdf", "SAMMM", "WOW"],
     ),
   ),
 );

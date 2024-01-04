@@ -1,6 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../dict/word_sets.dart';
 import '../models/game_model.dart';
+
+Map<String, List> setsTable = {
+  "basic": basic,
+};
 
 class GameNotifier extends StateNotifier<AliasData> {
   GameNotifier(super.state);
@@ -32,6 +39,32 @@ class GameNotifier extends StateNotifier<AliasData> {
 
   void reset() {
     state = state.copyWith(
-        teams: ["Super Mario", "Not Ready yet"], scores: [0, 0], turn: 0);
+        teams: ["Super Mario", "Not Ready yet"],
+        scores: [0, 0],
+        turn: 0,
+        usedWords: {},
+        usedWordSets: []);
+  }
+
+  void addUsedWord(String word) {
+    final updatedUsedWords = Set<String>.from(state.usedWords);
+    updatedUsedWords.add(word);
+    state = state.copyWith(usedWords: updatedUsedWords);
+
+    if (state.usedWords.length == state.usedWordSets.length) {
+      /// change testWords
+      state = state.copyWith(usedWords: {});
+    }
+  }
+
+  String selectRandomWord() {
+    final random = Random();
+    String word = state.usedWordSets[random.nextInt(state.usedWordSets.length)];
+
+    while (state.usedWords.contains(word)) {
+      word = state.usedWordSets[random.nextInt(state.usedWordSets.length)];
+    }
+
+    return word;
   }
 }
