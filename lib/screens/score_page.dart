@@ -9,6 +9,7 @@ class ScorePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final game = ref.watch(gameProvider);
+    print(game.teams);
     return Scaffold(
       appBar: AppBar(),
       body: Column(
@@ -19,6 +20,7 @@ class ScorePage extends ConsumerWidget {
           Container(
             height: MediaQuery.of(context).size.height / 2,
             child: ListView.builder(
+              physics: BouncingScrollPhysics(),
               itemCount: game.teams.length,
               itemBuilder: (context, index) => ListTile(
                 title: Text(
@@ -32,13 +34,13 @@ class ScorePage extends ConsumerWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              ref.read(gameProvider.notifier).addTeam("Suki");
+              ref.read(gameProvider.notifier).addTeam();
             },
             child: Text("Add Team"),
           ),
           ElevatedButton(
             onPressed: () {
-              ref.read(gameProvider.notifier).reset();
+              ref.read(gameProvider.notifier).reset(context);
             },
             child: Text("Reset"),
           ),

@@ -1,8 +1,11 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../dict/team_names.dart';
 import '../dict/word_sets.dart';
+import '../main.dart';
 import '../models/game_model.dart';
 
 Map<String, List<String>> setsTable = {
@@ -20,9 +23,18 @@ class GameNotifier extends StateNotifier<AliasData> {
     state = state.copyWith(teams: updatedTeams);
   }
 
-  void addTeam(String name) {
+  void addTeam() {
     final updatedTeams = List<String>.from(state.teams);
-    updatedTeams.add(name);
+    final random = Random();
+    String team = team_names[random.nextInt(team_names.length)];
+    while (state.teams.contains(team)) {
+      team = team_names[random.nextInt(team_names.length)];
+    }
+
+    if (state.teams.length > 20) {
+      return;
+    }
+    updatedTeams.add(team);
 
     final updatedScores = List<int>.from(state.scores);
     updatedScores.add(0);
@@ -50,13 +62,18 @@ class GameNotifier extends StateNotifier<AliasData> {
     state = state.copyWith(lastWord: lastWord);
   }
 
-  void reset() {
+  void reset(context) {
     state = state.copyWith(
-        teams: ["Super Mario", "Not Ready yet"],
-        scores: [0, 0],
-        turn: 0,
-        usedWords: {},
-        usedWordSets: []);
+      teams: initTeams(),
+      scores: [0, 0],
+      turn: 0,
+      usedWords: {},
+      usedWordSets: [],
+      duration: 60,
+      wordsToWin: 20,
+      lastWord: true,
+    );
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
   void makeGameWordSet(List<String> sets) {

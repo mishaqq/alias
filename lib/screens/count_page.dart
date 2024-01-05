@@ -219,8 +219,8 @@ class CustomDialogScore extends StatelessWidget {
         children: [
           SizedBox(
             width: MediaQuery.of(context).size.width / 2,
-            height: 50 * teams.length < MediaQuery.of(context).size.height
-                ? (50 * (teams.length + 1)).toDouble()
+            height: 45 * teams.length < MediaQuery.of(context).size.height
+                ? (45 * (teams.length + 1)).toDouble()
                 : MediaQuery.of(context).size.height,
             child: ListView.builder(
               physics: BouncingScrollPhysics(),

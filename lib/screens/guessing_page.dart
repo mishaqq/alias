@@ -31,7 +31,7 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
         child: Column(
           children: [
             CircularCountDownTimer(
-              duration: 5, //ref.read(gameProvider).duration,
+              duration: ref.read(gameProvider).duration,
               initialDuration: 0,
               controller: _countDownController,
               width: MediaQuery.of(context).size.width / 2,
@@ -133,8 +133,8 @@ class CustomDialog extends StatelessWidget {
           Text("Who got the last word - $lastWord?"),
           SizedBox(
             width: MediaQuery.of(context).size.width / 2,
-            height: 50 * teams.length < MediaQuery.of(context).size.height
-                ? (50 * (teams.length + 1)).toDouble()
+            height: 45 * teams.length < MediaQuery.of(context).size.height
+                ? (45 * (teams.length + 1)).toDouble()
                 : MediaQuery.of(context).size.height,
             child: ListView.builder(
               physics: BouncingScrollPhysics(),
