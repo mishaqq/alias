@@ -4,6 +4,8 @@ import 'package:alias/models/game_model.dart';
 import 'package:alias/providers/game_model_provider.dart';
 import 'package:alias/screens/guessing_page.dart';
 import 'package:alias/screens/main_page.dart';
+import 'package:alias/screens/setSelection_page.dart';
+import 'package:alias/screens/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'screens/score_page.dart';
@@ -15,7 +17,10 @@ final gameProvider = StateNotifierProvider<GameNotifier, AliasData>(
       scores: [0, 0],
       turn: 0,
       usedWords: {},
-      usedWordSets: ["asdf", "SAMMM", "WOW"],
+      usedWordSets: [],
+      duration: 60,
+      wordsToWin: 20,
+      lastWord: false,
     ),
   ),
 );
@@ -39,6 +44,8 @@ class MyApp extends ConsumerWidget {
         '/': (context) => MainPage(),
         '/score': (context) => ScorePage(),
         '/guessing': (context) => GuessingPage(),
+        '/set_choosing': (context) => ChoosingPage(),
+        '/settings': (context) => SettingsPage(),
       },
     );
   }

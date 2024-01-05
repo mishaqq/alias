@@ -5,8 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../dict/word_sets.dart';
 import '../models/game_model.dart';
 
-Map<String, List> setsTable = {
+Map<String, List<String>> setsTable = {
   "basic": basic,
+  "expert": expert,
 };
 
 class GameNotifier extends StateNotifier<AliasData> {
@@ -37,6 +38,18 @@ class GameNotifier extends StateNotifier<AliasData> {
     }
   }
 
+  void setDuration(int dur) {
+    state = state.copyWith(duration: dur);
+  }
+
+  void setWordsToWin(int quantity) {
+    state = state.copyWith(wordsToWin: quantity);
+  }
+
+  void setlastWord(bool lastWord) {
+    state = state.copyWith(lastWord: lastWord);
+  }
+
   void reset() {
     state = state.copyWith(
         teams: ["Super Mario", "Not Ready yet"],
@@ -46,13 +59,21 @@ class GameNotifier extends StateNotifier<AliasData> {
         usedWordSets: []);
   }
 
+  void makeGameWordSet(List<String> sets) {
+    List<String> gameSets = [];
+    for (String set in sets) {
+      gameSets += setsTable[set]!;
+    }
+
+    state = state.copyWith(usedWordSets: gameSets);
+  }
+
   void addUsedWord(String word) {
     final updatedUsedWords = Set<String>.from(state.usedWords);
     updatedUsedWords.add(word);
     state = state.copyWith(usedWords: updatedUsedWords);
 
     if (state.usedWords.length == state.usedWordSets.length) {
-      /// change testWords
       state = state.copyWith(usedWords: {});
     }
   }
@@ -67,4 +88,12 @@ class GameNotifier extends StateNotifier<AliasData> {
 
     return word;
   }
+
+  void updateScore(int index, int score) {
+    state.scores[index] += score;
+  }
 }
+
+
+/// TO DO
+/// add Sets selection, mix them and save as one array for a game

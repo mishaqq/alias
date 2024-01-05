@@ -20,18 +20,18 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
     _countDownController = CountDownController();
   }
 
-  String guessingWord = "Template";
   Map<String, int> roundWords = {};
 
   @override
   Widget build(BuildContext context) {
+    String guessingWord = ref.read(gameProvider.notifier).selectRandomWord();
     return Scaffold(
       appBar: AppBar(),
       body: Center(
         child: Column(
           children: [
             CircularCountDownTimer(
-              duration: 10,
+              duration: ref.read(gameProvider).duration,
               initialDuration: 0,
               controller: _countDownController,
               width: MediaQuery.of(context).size.width / 2,
@@ -63,7 +63,7 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => CountPage(roundWords),
+                      builder: (context) => CountPage(raundWorlds: roundWords),
                     ));
               },
               onChange: (String timeStamp) {
@@ -73,10 +73,7 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
             Text(guessingWord),
             ElevatedButton(
               onPressed: () {
-                setState(() {
-                  guessingWord =
-                      ref.read(gameProvider.notifier).selectRandomWord();
-                });
+                setState(() {});
                 ref
                     .read(gameProvider.notifier)
                     .addUsedWord(guessingWord); // save used word
@@ -86,10 +83,7 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
             ),
             ElevatedButton(
               onPressed: () {
-                setState(() {
-                  guessingWord =
-                      ref.read(gameProvider.notifier).selectRandomWord();
-                });
+                setState(() {});
                 ref.read(gameProvider.notifier).addUsedWord(guessingWord);
                 roundWords[guessingWord] = 0;
               },

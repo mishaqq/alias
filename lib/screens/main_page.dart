@@ -14,7 +14,8 @@ class MainPage extends ConsumerWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/score');
+                // Navigator.pushNamed(context, '/score');
+                Navigator.pushNamed(context, '/set_choosing');
               },
               child: Text("Start Game!"),
             ),

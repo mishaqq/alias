@@ -10,12 +10,18 @@ class AliasData {
   final Set<String> usedWords;
   final List<String>
       usedWordSets; // array of words, that are used in the current game
+  final int duration;
+  final int wordsToWin;
+  final bool lastWord;
   AliasData({
     required this.teams,
     required this.scores,
     required this.turn,
     required this.usedWords,
     required this.usedWordSets,
+    required this.duration,
+    required this.wordsToWin,
+    required this.lastWord,
   });
 
   AliasData copyWith({
@@ -24,6 +30,9 @@ class AliasData {
     int? turn,
     Set<String>? usedWords,
     List<String>? usedWordSets,
+    int? duration,
+    int? wordsToWin,
+    bool? lastWord,
   }) {
     return AliasData(
       teams: teams ?? this.teams,
@@ -31,6 +40,9 @@ class AliasData {
       turn: turn ?? this.turn,
       usedWords: usedWords ?? this.usedWords,
       usedWordSets: usedWordSets ?? this.usedWordSets,
+      duration: duration ?? this.duration,
+      wordsToWin: wordsToWin ?? this.wordsToWin,
+      lastWord: lastWord ?? this.lastWord,
     );
   }
 
@@ -41,6 +53,9 @@ class AliasData {
       'turn': turn,
       'usedWords': usedWords.toList(),
       'usedWordSets': usedWordSets,
+      'duration': duration,
+      'wordsToWin': wordsToWin,
+      'lastWord': lastWord,
     };
   }
 
@@ -48,7 +63,7 @@ class AliasData {
 
   @override
   String toString() {
-    return 'AliasData(teams: $teams, scores: $scores, turn: $turn, usedWords: $usedWords, usedWordSets: $usedWordSets)';
+    return 'AliasData(teams: $teams, scores: $scores, turn: $turn, usedWords: $usedWords, usedWordSets: $usedWordSets, duration: $duration, wordsToWin: $wordsToWin, lastWord: $lastWord)';
   }
 
   @override
@@ -59,7 +74,10 @@ class AliasData {
         listEquals(other.scores, scores) &&
         other.turn == turn &&
         setEquals(other.usedWords, usedWords) &&
-        listEquals(other.usedWordSets, usedWordSets);
+        listEquals(other.usedWordSets, usedWordSets) &&
+        other.duration == duration &&
+        other.wordsToWin == wordsToWin &&
+        other.lastWord == lastWord;
   }
 
   @override
@@ -68,6 +86,9 @@ class AliasData {
         scores.hashCode ^
         turn.hashCode ^
         usedWords.hashCode ^
-        usedWordSets.hashCode;
+        usedWordSets.hashCode ^
+        duration.hashCode ^
+        wordsToWin.hashCode ^
+        lastWord.hashCode;
   }
 }

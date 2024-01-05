@@ -281,5 +281,7 @@ List<String> basic = [
   "Культура",
   "Релігія",
   "Мова",
-  "Мовлення"
+  "Мовлення",
 ]; // Add more words
+
+final List<String> expert = ["template"];

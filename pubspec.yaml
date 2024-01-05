@@ -10,7 +10,11 @@ dependencies:
   circular_countdown_timer: ^0.2.3
   flutter:
     sdk: flutter
+  flutter_multi_select_items: ^0.4.2
   flutter_riverpod: ^2.4.9
+
+
+
 
 dev_dependencies:
   flutter_test:
