@@ -31,7 +31,7 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
         child: Column(
           children: [
             CircularCountDownTimer(
-              duration: ref.read(gameProvider).duration,
+              duration: 1, //ref.read(gameProvider).duration,
               initialDuration: 0,
               controller: _countDownController,
               width: MediaQuery.of(context).size.width / 2,
@@ -57,14 +57,22 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                 //debugPrint('Countdown Started');
               },
               onComplete: () {
-                print(roundWords);
-                print(ref.read(gameProvider).usedWords);
-                Navigator.pop(context);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CountPage(raundWorlds: roundWords),
-                    ));
+                showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (context) => CustomDialog(
+                    teams: ref.read(gameProvider).teams,
+                    lastWord: guessingWord,
+                    roundWords: roundWords,
+                  ),
+                );
+
+                //Navigator.pop(context);
+                //Navigator.push(
+                //    context,
+                //    MaterialPageRoute(
+                //      builder: (context) => CountPage(raundWorlds: roundWords),
+                //    ));
               },
               onChange: (String timeStamp) {
                 // debugPrint('Countdown Changed $timeStamp');
@@ -91,6 +99,66 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class CustomDialog extends StatelessWidget {
+  final List<String> teams;
+  final String lastWord;
+  final Map<String, int> roundWords;
+  const CustomDialog(
+      {super.key,
+      required this.teams,
+      required this.lastWord,
+      required this.roundWords});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text("Who got the last word - $lastWord?"),
+          SizedBox(
+            width: MediaQuery.of(context).size.width / 2,
+            height: 50 * teams.length < MediaQuery.of(context).size.height
+                ? (50 * (teams.length + 1)).toDouble()
+                : MediaQuery.of(context).size.height,
+            child: ListView.builder(
+              physics: BouncingScrollPhysics(),
+              itemCount: teams.length + 1,
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (index == teams.length) {
+                      roundWords[lastWord] = 0;
+                    } else {
+                      roundWords[lastWord] = 1;
+                    }
+
+                    Navigator.popUntil(context, ModalRoute.withName('/score'));
+
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CountPage(
+                            raundWorlds: roundWords,
+                            lastPoint:
+                                index == teams.length ? "Nobody" : teams[index],
+                          ),
+                        ));
+                  },
+                  child: Text(
+                    index == teams.length ? "Nobody" : teams[index],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

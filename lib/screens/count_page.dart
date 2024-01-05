@@ -1,16 +1,26 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../main.dart';
 
 // ignore: must_be_immutable
 class CountPage extends ConsumerStatefulWidget {
   Map<String, int> raundWorlds;
-  CountPage({super.key, required this.raundWorlds});
+  String lastPoint;
+
+  CountPage({
+    super.key,
+    required this.raundWorlds,
+    required this.lastPoint,
+  });
 
   @override
   ConsumerState<CountPage> createState() => _CountPageState();
 }
+
+late String team;
 
 class _CountPageState extends ConsumerState<CountPage> {
   @override
@@ -32,40 +42,6 @@ class _CountPageState extends ConsumerState<CountPage> {
               padding: const EdgeInsets.only(
                   left: 24, right: 24, top: 24, bottom: 48),
               child: Container(
-                child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  itemCount: widget.raundWorlds.length,
-                  itemBuilder: (context, index) => GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        String key = widget.raundWorlds.keys.toList()[index];
-                        if (widget.raundWorlds[key] == 1) {
-                          widget.raundWorlds[key] = 0;
-                        } else {
-                          widget.raundWorlds[key] = 1;
-                        }
-                      });
-                      print(widget.raundWorlds.values.toList());
-                    },
-                    child: ListTile(
-                        title: Text(
-                          widget.raundWorlds.keys.toList()[index],
-                        ),
-                        trailing: widget.raundWorlds.values.toList()[index] == 1
-                            ? Icon(
-                                Icons.brightness_1,
-                                color: Colors.green,
-                              )
-                            : Icon(
-                                Icons.brightness_1_outlined,
-                                color: Colors.red,
-                              )
-                        //Text(
-                        //raundWorlds.values.toList()[index].toString(),
-                        // ),
-                        ),
-                  ),
-                ),
                 decoration: BoxDecoration(
                   border: Border.all(
                     width: 3,
@@ -74,32 +50,196 @@ class _CountPageState extends ConsumerState<CountPage> {
                     Radius.circular(20),
                   ),
                 ),
+                child: ListView.builder(
+                  physics: BouncingScrollPhysics(),
+                  itemCount: widget.raundWorlds.length,
+                  itemBuilder: (context, index) {
+                    if (index == widget.raundWorlds.length - 1) {
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Divider(
+                            thickness: 3,
+                            color: Colors.black,
+                            height: 3,
+                          ),
+                          Text("Word for all"),
+                          GestureDetector(
+                            onTap: () async {
+                              team = (await openDialog())!;
+
+                              setState(() {
+                                String key =
+                                    widget.raundWorlds.keys.toList()[index];
+                                if (team == "Nobody") {
+                                  widget.raundWorlds[key] = 0;
+                                } else {
+                                  widget.raundWorlds[key] = 1;
+                                }
+                              });
+                              //   String key =
+                              //       widget.raundWorlds.keys.toList()[index];
+                              //   if (widget.raundWorlds[key] == 1) {
+                              //     widget.raundWorlds[key] = 0;
+                              //   } else {
+                              //     widget.raundWorlds[key] = 1;
+                              //   }
+                              //print(widget.raundWorlds.values.toList());
+                            },
+                            child: ListTile(
+                                title: Text(
+                                  widget.raundWorlds.keys.toList()[index],
+                                ),
+                                trailing: widget.raundWorlds.values
+                                            .toList()[index] ==
+                                        1
+                                    ? Icon(
+                                        Icons.check_circle_outline,
+                                        color: Colors.green,
+                                      )
+                                    : Icon(
+                                        Icons.radio_button_unchecked_outlined,
+                                        color: Colors.red,
+                                      )
+                                //Text(
+                                //raundWorlds.values.toList()[index].toString(),
+                                // ),
+                                ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            String key =
+                                widget.raundWorlds.keys.toList()[index];
+                            if (widget.raundWorlds[key] == 1) {
+                              widget.raundWorlds[key] = 0;
+                            } else {
+                              widget.raundWorlds[key] = 1;
+                            }
+                          });
+                          print(widget.raundWorlds.values.toList());
+                        },
+                        child: ListTile(
+                            title: Text(
+                              widget.raundWorlds.keys.toList()[index],
+                            ),
+                            trailing:
+                                widget.raundWorlds.values.toList()[index] == 1
+                                    ? Icon(
+                                        Icons.check_circle_outline,
+                                        color: Colors.green,
+                                      )
+                                    : Icon(
+                                        Icons.radio_button_unchecked_outlined,
+                                        color: Colors.red,
+                                      )
+                            //Text(
+                            //raundWorlds.values.toList()[index].toString(),
+                            // ),
+                            ),
+                      );
+                    }
+                  },
+                ),
               ),
             ),
           ),
           Flexible(
               child: ElevatedButton(
             onPressed: () {
+              // calculating the score
               int roundScore = 0;
-              for (int value in widget.raundWorlds.values) {
-                if (value == 0) {
+
+              for (int i = 0;
+                  i < widget.raundWorlds.values.toList().length - 1;
+                  i++) {
+                // ignore: unrelated_type_equality_checks
+                if (widget.raundWorlds.values.toList()[i] == false) {
                   roundScore--;
                 } else {
                   roundScore++;
                 }
               }
+              // for (int value in widget.raundWorlds.values) {
+              //   if (value == 0) {
+              //     roundScore--;
+              //   } else {
+              //     roundScore++;
+              //   }
+              // }
 
+              // team is getting the points
               if (roundScore > 0) {
                 ref
                     .read(gameProvider.notifier)
                     .updateScore(ref.read(gameProvider).turn, roundScore);
               }
 
+              //last team gets the point
+              if (team != "Nobody") {
+                ref
+                    .read(gameProvider.notifier)
+                    .updateScore(game.teams.indexOf(team), 1);
+              }
+
+              //next turn
               ref.read(gameProvider.notifier).nextTurn();
               Navigator.pop(context);
             },
             child: Text("Done"),
           ))
+        ],
+      ),
+    );
+  }
+
+  Future<String?> openDialog() => showDialog<String>(
+        context: context,
+        builder: (context) => CustomDialogScore(
+          teams: ref.read(gameProvider).teams,
+        ),
+      );
+}
+
+class CustomDialogScore extends StatelessWidget {
+  final List<String> teams;
+
+  const CustomDialogScore({
+    super.key,
+    required this.teams,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width / 2,
+            height: 50 * teams.length < MediaQuery.of(context).size.height
+                ? (50 * (teams.length + 1)).toDouble()
+                : MediaQuery.of(context).size.height,
+            child: ListView.builder(
+              physics: BouncingScrollPhysics(),
+              itemCount: teams.length + 1,
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pop(index == teams.length ? "Nobody" : teams[index]);
+                  },
+                  child: Text(
+                    index == teams.length ? "Nobody" : teams[index],
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
