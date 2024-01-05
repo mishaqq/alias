@@ -20,7 +20,7 @@ final gameProvider = StateNotifierProvider<GameNotifier, AliasData>(
       usedWordSets: [],
       duration: 60,
       wordsToWin: 20,
-      lastWord: false,
+      lastWord: true,
     ),
   ),
 );

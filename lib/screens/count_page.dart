@@ -8,19 +8,17 @@ import '../main.dart';
 // ignore: must_be_immutable
 class CountPage extends ConsumerStatefulWidget {
   Map<String, int> raundWorlds;
-  String lastPoint;
 
   CountPage({
     super.key,
     required this.raundWorlds,
-    required this.lastPoint,
   });
 
   @override
   ConsumerState<CountPage> createState() => _CountPageState();
 }
 
-late String team;
+String team = "";
 
 class _CountPageState extends ConsumerState<CountPage> {
   @override
@@ -54,7 +52,8 @@ class _CountPageState extends ConsumerState<CountPage> {
                   physics: BouncingScrollPhysics(),
                   itemCount: widget.raundWorlds.length,
                   itemBuilder: (context, index) {
-                    if (index == widget.raundWorlds.length - 1) {
+                    if (index == widget.raundWorlds.length - 1 &&
+                        game.lastWord) {
                       return Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -179,7 +178,7 @@ class _CountPageState extends ConsumerState<CountPage> {
               }
 
               //last team gets the point
-              if (team != "Nobody") {
+              if (team != "Nobody" && game.lastWord) {
                 ref
                     .read(gameProvider.notifier)
                     .updateScore(game.teams.indexOf(team), 1);

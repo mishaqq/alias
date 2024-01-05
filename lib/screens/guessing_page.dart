@@ -31,7 +31,7 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
         child: Column(
           children: [
             CircularCountDownTimer(
-              duration: 1, //ref.read(gameProvider).duration,
+              duration: 5, //ref.read(gameProvider).duration,
               initialDuration: 0,
               controller: _countDownController,
               width: MediaQuery.of(context).size.width / 2,
@@ -57,15 +57,25 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                 //debugPrint('Countdown Started');
               },
               onComplete: () {
-                showDialog(
-                  barrierDismissible: false,
-                  context: context,
-                  builder: (context) => CustomDialog(
-                    teams: ref.read(gameProvider).teams,
-                    lastWord: guessingWord,
-                    roundWords: roundWords,
-                  ),
-                );
+                if (ref.read(gameProvider).lastWord) {
+                  showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) => CustomDialog(
+                      teams: ref.read(gameProvider).teams,
+                      lastWord: guessingWord,
+                      roundWords: roundWords,
+                    ),
+                  );
+                } else {
+                  Navigator.pop(context);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            CountPage(raundWorlds: roundWords),
+                      ));
+                }
 
                 //Navigator.pop(context);
                 //Navigator.push(
@@ -146,8 +156,6 @@ class CustomDialog extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => CountPage(
                             raundWorlds: roundWords,
-                            lastPoint:
-                                index == teams.length ? "Nobody" : teams[index],
                           ),
                         ));
                   },
