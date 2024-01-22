@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../forks/item_count.dart';
+import '../providers/game_model_provider.dart';
+import '../providers/selection.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
   const SettingsPage({super.key});
@@ -11,15 +13,9 @@ class SettingsPage extends ConsumerStatefulWidget {
   ConsumerState<SettingsPage> createState() => _SettingPageState();
 }
 
-class _SettingPageState extends ConsumerState<SettingsPage> {
-  List<bool> isSelected = [
-    false,
-    false,
-    true,
-    false,
-    false,
-  ];
+int wordsQuantity = 20;
 
+class _SettingPageState extends ConsumerState<SettingsPage> {
   final Map<int, int> durationTable = {
     0: 10,
     1: 30,
@@ -27,9 +23,11 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
     3: 90,
     4: 120,
   };
-  int wordsQuantity = 20;
+
   @override
   Widget build(BuildContext context) {
+    final isSelected = ref.watch(isSelectedProvider);
+    final wordsQuantity = ref.watch(counterProvider);
     return Scaffold(
       appBar: AppBar(),
       body: Center(
@@ -65,15 +63,9 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
               ],
               isSelected: isSelected,
               onPressed: (newIndex) {
-                setState(() {
-                  for (int i = 0; i < isSelected.length; i++) {
-                    if (i == newIndex) {
-                      isSelected[i] = true;
-                    } else {
-                      isSelected[i] = false;
-                    }
-                  }
-                });
+                ref
+                    .read(isSelectedProvider.notifier)
+                    .updateSelection(newIndex, true);
               },
             ),
             ItemCount(
@@ -86,23 +78,21 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
               decimalPlaces: 0,
               onChanged: (value) {
                 setState(() {
-                  wordsQuantity = value.toInt();
+                  ref.read(counterProvider.notifier).setValue(value.toInt());
                 });
               },
             ),
             ElevatedButton(
               onPressed: () {
                 int durationIndex = isSelected.indexOf(true);
-                print(durationIndex);
+
                 ref
                     .read(gameProvider.notifier)
                     .setDuration(durationTable[durationIndex]!);
-                print(durationTable[durationIndex]!);
-                print(ref.read(gameProvider).duration);
 
                 ref.read(gameProvider.notifier).setWordsToWin(wordsQuantity);
 
-                Navigator.pushNamed(context, '/score');
+                Navigator.pushNamed(context, '/team');
               },
               child: Text("Continue"),
             ),

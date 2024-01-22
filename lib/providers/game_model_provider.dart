@@ -8,6 +8,21 @@ import '../dict/word_sets.dart';
 import '../main.dart';
 import '../models/game_model.dart';
 
+final gameProvider = StateNotifierProvider<GameNotifier, AliasData>(
+  (ref) => GameNotifier(
+    AliasData(
+      teams: initTeams(),
+      scores: [0, 0],
+      turn: 0,
+      usedWords: {},
+      usedWordSets: [],
+      duration: 60,
+      wordsToWin: 20,
+      lastWord: true,
+    ),
+  ),
+);
+
 Map<String, List<String>> setsTable = {
   "basic": basic,
   "expert": expert,
@@ -40,6 +55,12 @@ class GameNotifier extends StateNotifier<AliasData> {
     updatedScores.add(0);
 
     state = state.copyWith(teams: updatedTeams, scores: updatedScores);
+  }
+
+  void deleteTeam(int index) {
+    final updatedTeams = List<String>.from(state.teams);
+    updatedTeams.removeAt(index);
+    state = state.copyWith(teams: updatedTeams);
   }
 
   void nextTurn() {

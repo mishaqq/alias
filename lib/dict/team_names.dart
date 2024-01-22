@@ -54,5 +54,5 @@ final List<String> team_names = [
   "Команда 'Б'",
   "Теплі серцем",
   "Інкогніто",
-  " The Chosen Ones"
+  "The Chosen Ones"
 ];

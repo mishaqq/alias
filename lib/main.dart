@@ -8,6 +8,7 @@ import 'package:alias/screens/guessing_page.dart';
 import 'package:alias/screens/main_page.dart';
 import 'package:alias/screens/setSelection_page.dart';
 import 'package:alias/screens/settings_page.dart';
+import 'package:alias/screens/team_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'screens/score_page.dart';
@@ -26,21 +27,6 @@ List<String> initTeams() {
 
 final random = Random();
 String word = team_names[random.nextInt(team_names.length)];
-
-final gameProvider = StateNotifierProvider<GameNotifier, AliasData>(
-  (ref) => GameNotifier(
-    AliasData(
-      teams: initTeams(),
-      scores: [0, 0],
-      turn: 0,
-      usedWords: {},
-      usedWordSets: [],
-      duration: 60,
-      wordsToWin: 20,
-      lastWord: true,
-    ),
-  ),
-);
 
 void main() {
   runApp(
@@ -63,6 +49,7 @@ class MyApp extends ConsumerWidget {
         '/guessing': (context) => GuessingPage(),
         '/set_choosing': (context) => ChoosingPage(),
         '/settings': (context) => SettingsPage(),
+        '/team': (context) => TeamPage()
       },
     );
   }
