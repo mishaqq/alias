@@ -18,14 +18,14 @@ class TeamPage extends ConsumerWidget {
           Container(
             height: MediaQuery.of(context).size.height / 2,
             child: ListView.builder(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               itemCount: game.teams.length,
               itemBuilder: (context, index) => ListTile(
                   title: Text(
                     game.teams[index],
                   ),
                   trailing: IconButton(
-                    icon: Icon(Icons.delete),
+                    icon: const Icon(Icons.delete),
                     onPressed: () {
                       if (game.teams.length > 2) {
                         ref.read(gameProvider.notifier).deleteTeam(index);

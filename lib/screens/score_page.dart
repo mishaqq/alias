@@ -42,12 +42,6 @@ class ScorePage extends ConsumerWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                ref.read(gameProvider.notifier).addTeam();
-              },
-              child: Text("Add Team"),
-            ),
-            ElevatedButton(
-              onPressed: () {
                 Navigator.pushNamed(context, '/guessing');
               },
               child: Text("Start next round"),

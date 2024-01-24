@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:alias/screens/winning_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -59,8 +60,11 @@ class GameNotifier extends StateNotifier<AliasData> {
 
   void deleteTeam(int index) {
     final updatedTeams = List<String>.from(state.teams);
+    final updatedScores = List<int>.from(state.scores);
     updatedTeams.removeAt(index);
-    state = state.copyWith(teams: updatedTeams);
+    updatedScores.removeAt(index);
+
+    state = state.copyWith(teams: updatedTeams, scores: updatedScores);
   }
 
   void nextTurn() {
@@ -69,6 +73,10 @@ class GameNotifier extends StateNotifier<AliasData> {
     } else {
       state = state.copyWith(turn: 0);
     }
+  }
+
+  void toggleLastWord() {
+    state = state.copyWith(lastWord: !state.lastWord);
   }
 
   void setDuration(int dur) {
@@ -129,6 +137,30 @@ class GameNotifier extends StateNotifier<AliasData> {
 
   void updateScore(int index, int score) {
     state.scores[index] += score;
+  }
+
+  void winCheck(BuildContext context) {
+    List<int> winnersIndexes = [];
+    List<String> winners = [];
+    for (int el = 0; el < state.scores.length; el++) {
+      if (state.scores[el] >= state.wordsToWin) {
+        winnersIndexes.add(el);
+      }
+    }
+    for (var element in winnersIndexes) {
+      winners.add(state.teams[element]);
+    }
+    if (winnersIndexes.isNotEmpty) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => WinningPage(
+              winners: winners,
+            ),
+          ));
+    } else {
+      Navigator.pop(context);
+    }
   }
 }
 

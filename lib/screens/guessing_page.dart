@@ -73,8 +73,8 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            CountPage(raundWorlds: roundWords),
+                        builder: (context) => CountPage(
+                            raundWorlds: roundWords, nameOfLastTeam: ""),
                       ));
                 }
 
@@ -138,7 +138,7 @@ class CustomDialog extends StatelessWidget {
                 ? (45 * (teams.length + 1)).toDouble()
                 : MediaQuery.of(context).size.height,
             child: ListView.builder(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               itemCount: teams.length + 1,
               itemBuilder: (context, index) => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -157,6 +157,8 @@ class CustomDialog extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => CountPage(
                             raundWorlds: roundWords,
+                            nameOfLastTeam:
+                                index == teams.length ? "Nobody" : teams[index],
                           ),
                         ));
                   },

@@ -9,17 +9,17 @@ import '../providers/game_model_provider.dart';
 // ignore: must_be_immutable
 class CountPage extends ConsumerStatefulWidget {
   Map<String, int> raundWorlds;
+  String nameOfLastTeam;
 
   CountPage({
     super.key,
     required this.raundWorlds,
+    required this.nameOfLastTeam,
   });
 
   @override
   ConsumerState<CountPage> createState() => _CountPageState();
 }
-
-String team = "";
 
 class _CountPageState extends ConsumerState<CountPage> {
   @override
@@ -66,12 +66,12 @@ class _CountPageState extends ConsumerState<CountPage> {
                           Text("Word for all"),
                           GestureDetector(
                             onTap: () async {
-                              team = (await openDialog())!;
+                              widget.nameOfLastTeam = (await openDialog())!;
 
                               setState(() {
                                 String key =
                                     widget.raundWorlds.keys.toList()[index];
-                                if (team == "Nobody") {
+                                if (widget.nameOfLastTeam == "Nobody") {
                                   widget.raundWorlds[key] = 0;
                                 } else {
                                   widget.raundWorlds[key] = 1;
@@ -179,15 +179,16 @@ class _CountPageState extends ConsumerState<CountPage> {
               }
 
               //last team gets the point
-              if (team != "Nobody" && game.lastWord) {
+              if (widget.nameOfLastTeam != "Nobody" && game.lastWord) {
                 ref
                     .read(gameProvider.notifier)
-                    .updateScore(game.teams.indexOf(team), 1);
+                    .updateScore(game.teams.indexOf(widget.nameOfLastTeam), 1);
               }
 
               //next turn
               ref.read(gameProvider.notifier).nextTurn();
-              Navigator.pop(context);
+              ref.read(gameProvider.notifier).winCheck(context);
+              //Navigator.pop(context);
             },
             child: Text("Done"),
           ))
@@ -230,6 +231,7 @@ class CustomDialogScore extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: ElevatedButton(
                   onPressed: () {
+                    print(teams[index]);
                     Navigator.of(context)
                         .pop(index == teams.length ? "Nobody" : teams[index]);
                   },

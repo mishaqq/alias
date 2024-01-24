@@ -9,6 +9,7 @@ import 'package:alias/screens/main_page.dart';
 import 'package:alias/screens/setSelection_page.dart';
 import 'package:alias/screens/settings_page.dart';
 import 'package:alias/screens/team_page.dart';
+import 'package:alias/screens/winning_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'screens/score_page.dart';
@@ -49,7 +50,7 @@ class MyApp extends ConsumerWidget {
         '/guessing': (context) => GuessingPage(),
         '/set_choosing': (context) => ChoosingPage(),
         '/settings': (context) => SettingsPage(),
-        '/team': (context) => TeamPage()
+        '/team': (context) => TeamPage(),
       },
     );
   }

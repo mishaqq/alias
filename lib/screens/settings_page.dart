@@ -82,6 +82,15 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                 });
               },
             ),
+            SwitchListTile(
+              value: ref.read(gameProvider).lastWord,
+              onChanged: (value) {
+                setState(() {
+                  ref.read(gameProvider.notifier).toggleLastWord();
+                });
+              },
+              title: const Text("Last word for all?"),
+            ),
             ElevatedButton(
               onPressed: () {
                 int durationIndex = isSelected.indexOf(true);
