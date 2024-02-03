@@ -8,8 +8,7 @@ class AliasData {
   final List<int> scores;
   final int turn;
   final Set<String> usedWords;
-  final List<String>
-      usedWordSets; // array of words, that are used in the current game
+  final List<String> usedWordSets;
   final int duration;
   final int wordsToWin;
   final bool lastWord;
@@ -46,21 +45,6 @@ class AliasData {
     );
   }
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'teams': teams,
-      'scores': scores,
-      'turn': turn,
-      'usedWords': usedWords.toList(),
-      'usedWordSets': usedWordSets,
-      'duration': duration,
-      'wordsToWin': wordsToWin,
-      'lastWord': lastWord,
-    };
-  }
-
-  String toJson() => json.encode(toMap());
-
   @override
   String toString() {
     return 'AliasData(teams: $teams, scores: $scores, turn: $turn, usedWords: $usedWords, usedWordSets: $usedWordSets, duration: $duration, wordsToWin: $wordsToWin, lastWord: $lastWord)';
@@ -90,5 +74,18 @@ class AliasData {
         duration.hashCode ^
         wordsToWin.hashCode ^
         lastWord.hashCode;
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'teams': teams,
+      'scores': scores,
+      'turn': turn,
+      'usedWords': usedWords.toList(),
+      'usedWordSets': usedWordSets,
+      'duration': duration,
+      'wordsToWin': wordsToWin,
+      'lastWord': lastWord,
+    };
   }
 }

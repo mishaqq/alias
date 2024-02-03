@@ -3,26 +3,30 @@ import 'dart:math';
 import 'package:alias/screens/winning_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../dict/team_names.dart';
 import '../dict/word_sets.dart';
 import '../main.dart';
 import '../models/game_model.dart';
 
-final gameProvider = StateNotifierProvider<GameNotifier, AliasData>(
-  (ref) => GameNotifier(
-    AliasData(
-      teams: initTeams(),
-      scores: [0, 0],
-      turn: 0,
-      usedWords: {},
-      usedWordSets: [],
-      duration: 60,
-      wordsToWin: 20,
-      lastWord: true,
-    ),
-  ),
-);
+final sharedPreferences =
+    FutureProvider((ref) => SharedPreferences.getInstance());
+
+final gameProvider = StateNotifierProvider<GameNotifier, AliasData>((ref) {
+  return GameNotifier(
+      AliasData(
+        teams: initTeams(),
+        scores: [0, 0],
+        turn: 0,
+        usedWords: {},
+        usedWordSets: [],
+        duration: 60,
+        wordsToWin: 20,
+        lastWord: true,
+      ),
+      ref);
+});
 
 Map<String, List<String>> setsTable = {
   "basic": basic,
@@ -30,7 +34,12 @@ Map<String, List<String>> setsTable = {
 };
 
 class GameNotifier extends StateNotifier<AliasData> {
-  GameNotifier(super.state);
+  final Ref ref;
+  GameNotifier(super.state, this.ref);
+
+  ///
+  /// Game Logic Section
+  ///
 
   void updateTeams(int index, String name) {
     final updatedTeams = List<String>.from(state.teams);
@@ -105,13 +114,17 @@ class GameNotifier extends StateNotifier<AliasData> {
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
-  void makeGameWordSet(List<String> sets) {
+  Future<void> makeGameWordSet(List<String> sets) async {
+    // final SharedPreferences pref = await SharedPreferences.getInstance();
     List<String> gameSets = [];
     for (String set in sets) {
       gameSets += setsTable[set]!;
     }
 
     state = state.copyWith(usedWordSets: gameSets);
+
+    // await pref.setStringList('gameSets', state.usedWordSets);
+    // print(pref.getStringList('gameSets'));
   }
 
   void addUsedWord(String word) {
@@ -162,8 +175,11 @@ class GameNotifier extends StateNotifier<AliasData> {
       Navigator.pop(context);
     }
   }
-}
 
+  ///
+  /// Shared preferences Section
+  ///
+}
 
 /// TO DO
 /// add Sets selection, mix them and save as one array for a game

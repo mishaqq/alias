@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_multi_select_items/flutter_multi_select_items.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../main.dart';
 import '../providers/game_model_provider.dart';
@@ -75,6 +76,15 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                 Navigator.pushNamed(context, "/settings");
               },
               child: Text("Confirm"),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final SharedPreferences pref =
+                    await SharedPreferences.getInstance();
+                print(pref.getStringList('gameSets'));
+                //await pref.clear();
+              },
+              child: Text("Check"),
             ),
           ],
         ),
