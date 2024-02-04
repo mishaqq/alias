@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:alias/providers/setsProvider.dart';
 import 'package:alias/screens/winning_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,9 +11,7 @@ import '../dict/word_sets.dart';
 import '../main.dart';
 import '../models/game_model.dart';
 
-final sharedPreferences =
-    FutureProvider((ref) => SharedPreferences.getInstance());
-
+// Game Provider
 final gameProvider = StateNotifierProvider<GameNotifier, AliasData>((ref) {
   return GameNotifier(
       AliasData(
@@ -20,19 +19,16 @@ final gameProvider = StateNotifierProvider<GameNotifier, AliasData>((ref) {
         scores: [0, 0],
         turn: 0,
         usedWords: {},
-        usedWordSets: [],
+        setsNames: [],
         duration: 60,
         wordsToWin: 20,
         lastWord: true,
+        oldSesion: false,
       ),
       ref);
 });
 
-Map<String, List<String>> setsTable = {
-  "basic": basic,
-  "expert": expert,
-};
-
+// Game Object
 class GameNotifier extends StateNotifier<AliasData> {
   final Ref ref;
   GameNotifier(super.state, this.ref);
@@ -100,31 +96,31 @@ class GameNotifier extends StateNotifier<AliasData> {
     state = state.copyWith(lastWord: lastWord);
   }
 
-  void reset(context) {
+  void reset() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
     state = state.copyWith(
       teams: initTeams(),
       scores: [0, 0],
       turn: 0,
       usedWords: {},
-      usedWordSets: [],
+      setsNames: [],
       duration: 60,
       wordsToWin: 20,
       lastWord: true,
+      oldSesion: pref.getBool("oldSesion"),
     );
-    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
-  Future<void> makeGameWordSet(List<String> sets) async {
-    // final SharedPreferences pref = await SharedPreferences.getInstance();
-    List<String> gameSets = [];
-    for (String set in sets) {
-      gameSets += setsTable[set]!;
-    }
+  void oldSesionTrue() {
+    state = state.copyWith(
+      oldSesion: true,
+    );
+  }
 
-    state = state.copyWith(usedWordSets: gameSets);
+  void makeGameWordSet(List<String> sets) async {
+    ref.read(setsProvider.notifier).updateWords(sets);
 
-    // await pref.setStringList('gameSets', state.usedWordSets);
-    // print(pref.getStringList('gameSets'));
+    state = state.copyWith(setsNames: sets);
   }
 
   void addUsedWord(String word) {
@@ -132,17 +128,18 @@ class GameNotifier extends StateNotifier<AliasData> {
     updatedUsedWords.add(word);
     state = state.copyWith(usedWords: updatedUsedWords);
 
-    if (state.usedWords.length == state.usedWordSets.length) {
+    if (state.usedWords.length == ref.read(setsProvider).length) {
       state = state.copyWith(usedWords: {});
     }
   }
 
   String selectRandomWord() {
     final random = Random();
-    String word = state.usedWordSets[random.nextInt(state.usedWordSets.length)];
+    List<String> allWords = ref.read(setsProvider);
+    String word = allWords[random.nextInt(allWords.length)];
 
     while (state.usedWords.contains(word)) {
-      word = state.usedWordSets[random.nextInt(state.usedWordSets.length)];
+      word = allWords[random.nextInt(allWords.length)];
     }
 
     return word;
@@ -150,6 +147,7 @@ class GameNotifier extends StateNotifier<AliasData> {
 
   void updateScore(int index, int score) {
     state.scores[index] += score;
+    updateTurnsAndScore();
   }
 
   void winCheck(BuildContext context) {
@@ -179,7 +177,93 @@ class GameNotifier extends StateNotifier<AliasData> {
   ///
   /// Shared preferences Section
   ///
+
+// updates the game object whether it was a old session
+  Future<void> oldGame() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    state = state.copyWith(
+      oldSesion: pref.getBool("oldSesion") ?? false,
+    );
+  }
+
+// Writes game date to SP
+  Future<void> writeToPrefs() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+
+    await pref.setStringList('teams', state.teams);
+    await pref.setStringList('setsNames', state.setsNames);
+    await pref.setStringList('scores', intArrToString(state.scores));
+    await pref.setInt('turn', state.turn);
+    await pref.setInt('duration', state.duration);
+    await pref.setInt('wordsToWin', state.wordsToWin);
+    await pref.setStringList('usedWords', state.usedWords.toList());
+    await pref.setBool('lastWord', state.lastWord);
+    await pref.setBool('oldSesion', true);
+  }
+
+// fetches game data from the SP (SharedPreferences) to GameObject
+  Future<void> readFormPrefs() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+
+    state = state.copyWith(
+      teams: pref.getStringList('teams') ?? initTeams(),
+      scores: stringArrToInt(pref.getStringList('scores') ?? ["0 ", "0 "]),
+      turn: pref.getInt('turn'),
+      usedWords: pref.getStringList('usedWords')?.toSet() ?? {},
+      setsNames: pref.getStringList('setsNames') ?? [],
+      duration: pref.getInt('duration'),
+      wordsToWin: pref.getInt('wordsToWin'),
+      lastWord: pref.getBool('lastWord'),
+      oldSesion: pref.getBool('oldSesion'),
+    );
+  }
+
+// Updates score and turns
+  Future<void> updateTurnsAndScore() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setStringList('scores', intArrToString(state.scores));
+    await pref.setInt('turn', state.turn);
+  }
+
+// not in use but may be helpfull
+
+  Future<void> deleteFromPrefs(context) async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    try {
+      pref.clear();
+      await pref.remove('teams');
+      await pref.remove('setsNames');
+      await pref.remove('scores');
+      await pref.remove('turn');
+      await pref.remove('duration');
+      await pref.remove('wordsToWin');
+      await pref.remove('usedWords');
+      await pref.remove('lastWord');
+      await pref.remove('oldSesion');
+      state = state.copyWith(oldSesion: false);
+    } catch (err) {} // TO DO
+    // add err handling
+  }
 }
 
-/// TO DO
-/// add Sets selection, mix them and save as one array for a game
+///
+/// Global Scope
+///
+
+// Help functions
+
+List<String> intArrToString(List<int> arr) {
+  List<String> strArr = [];
+  for (int i = 0; i < arr.length; i++) {
+    strArr.add(arr[i].toString());
+  }
+  return strArr;
+}
+
+List<int> stringArrToInt(List<String> arr) {
+  List<int> intAr = [];
+  for (int i = 0; i < arr.length; i++) {
+    intAr.add(int.parse(arr[i]));
+  }
+  return intAr;
+}

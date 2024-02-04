@@ -120,7 +120,6 @@ class _CountPageState extends ConsumerState<CountPage> {
                               widget.raundWorlds[key] = 1;
                             }
                           });
-                          print(widget.raundWorlds.values.toList());
                         },
                         child: ListTile(
                             title: Text(
@@ -154,7 +153,10 @@ class _CountPageState extends ConsumerState<CountPage> {
               int roundScore = 0;
 
               for (int i = 0;
-                  i < widget.raundWorlds.values.toList().length - 1;
+                  i <
+                      (game.lastWord
+                          ? widget.raundWorlds.values.toList().length - 1
+                          : widget.raundWorlds.values.toList().length);
                   i++) {
                 // ignore: unrelated_type_equality_checks
                 if (widget.raundWorlds.values.toList()[i] == false) {
@@ -231,7 +233,6 @@ class CustomDialogScore extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: ElevatedButton(
                   onPressed: () {
-                    print(teams[index]);
                     Navigator.of(context)
                         .pop(index == teams.length ? "Nobody" : teams[index]);
                   },

@@ -1,5 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+///
+/// Providers to save the state of Settings Page
+///
 final isSelectedProvider =
     StateNotifierProvider<SelectionNotifier, List<bool>>((ref) {
   return SelectionNotifier();

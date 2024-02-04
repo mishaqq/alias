@@ -13,7 +13,8 @@ showAlertDialog(BuildContext context, ref) {
   Widget continueButton = TextButton(
     child: Text("Continue"),
     onPressed: () {
-      ref.read(gameProvider.notifier).reset(context);
+      ref.read(gameProvider.notifier).oldSesionTrue();
+      Navigator.of(context).popUntil((route) => route.isFirst);
     },
   );
 

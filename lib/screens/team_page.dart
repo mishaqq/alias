@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../main.dart';
 import '../providers/game_model_provider.dart';
 
@@ -10,12 +11,12 @@ class TeamPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final game = ref.watch(gameProvider);
-    print(game.teams);
+
     return Scaffold(
       appBar: AppBar(),
       body: Column(
         children: [
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height / 2,
             child: ListView.builder(
               physics: const BouncingScrollPhysics(),
@@ -38,7 +39,7 @@ class TeamPage extends ConsumerWidget {
             onPressed: () {
               ref.read(gameProvider.notifier).addTeam();
             },
-            child: Text("Add Team"),
+            child: const Text("Add Team"),
           ),
           // ElevatedButton(
           //   onPressed: () {
@@ -47,10 +48,17 @@ class TeamPage extends ConsumerWidget {
           //   child: Text("Reset"),
           // ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
+              // TO DO
+              // Add popup -- Old session will be deleated
+
+              /// rewrites old session in SP
+              await ref.read(gameProvider.notifier).writeToPrefs();
+
+              // ignore: use_build_context_synchronously
               Navigator.pushNamed(context, '/score');
             },
-            child: Text("Start the game"),
+            child: const Text("Start the game"),
           ),
         ],
       ),

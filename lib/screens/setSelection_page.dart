@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../main.dart';
 import '../providers/game_model_provider.dart';
+import '../providers/setsProvider.dart';
 
 class ChoosingPage extends ConsumerStatefulWidget {
   const ChoosingPage({super.key});
@@ -72,19 +73,10 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                 ref
                     .read(gameProvider.notifier)
                     .makeGameWordSet(_controller.getSelectedItems());
-                print(ref.read(gameProvider).usedWordSets.length);
+
                 Navigator.pushNamed(context, "/settings");
               },
               child: Text("Confirm"),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                final SharedPreferences pref =
-                    await SharedPreferences.getInstance();
-                print(pref.getStringList('gameSets'));
-                //await pref.clear();
-              },
-              child: Text("Check"),
             ),
           ],
         ),

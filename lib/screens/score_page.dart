@@ -11,7 +11,7 @@ class ScorePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final game = ref.watch(gameProvider);
-    print(game.teams);
+
     return WillPopScope(
       onWillPop: () async {
         return showAlertDialog(context, ref);

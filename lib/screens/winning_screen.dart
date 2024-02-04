@@ -31,8 +31,13 @@ class WinningPage extends ConsumerWidget {
               whoWins(winners),
             ),
             ElevatedButton(
-              onPressed: () {
-                ref.read(gameProvider.notifier).reset(context);
+              onPressed: () async {
+                //ref.read(gameProvider.notifier).reset();
+                await ref.read(gameProvider.notifier).deleteFromPrefs(context);
+
+                // ignore: use_build_context_synchronously
+                Navigator.popUntil(context, (route) => route.isFirst);
+                //TO DO handle end game
               },
               child: Text("End Game!"),
             ),

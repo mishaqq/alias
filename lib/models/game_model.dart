@@ -8,19 +8,21 @@ class AliasData {
   final List<int> scores;
   final int turn;
   final Set<String> usedWords;
-  final List<String> usedWordSets;
+  final List<String> setsNames;
   final int duration;
   final int wordsToWin;
   final bool lastWord;
+  final bool oldSesion;
   AliasData({
     required this.teams,
     required this.scores,
     required this.turn,
     required this.usedWords,
-    required this.usedWordSets,
+    required this.setsNames,
     required this.duration,
     required this.wordsToWin,
     required this.lastWord,
+    required this.oldSesion,
   });
 
   AliasData copyWith({
@@ -28,26 +30,28 @@ class AliasData {
     List<int>? scores,
     int? turn,
     Set<String>? usedWords,
-    List<String>? usedWordSets,
+    List<String>? setsNames,
     int? duration,
     int? wordsToWin,
     bool? lastWord,
+    bool? oldSesion,
   }) {
     return AliasData(
       teams: teams ?? this.teams,
       scores: scores ?? this.scores,
       turn: turn ?? this.turn,
       usedWords: usedWords ?? this.usedWords,
-      usedWordSets: usedWordSets ?? this.usedWordSets,
+      setsNames: setsNames ?? this.setsNames,
       duration: duration ?? this.duration,
       wordsToWin: wordsToWin ?? this.wordsToWin,
       lastWord: lastWord ?? this.lastWord,
+      oldSesion: oldSesion ?? this.oldSesion,
     );
   }
 
   @override
   String toString() {
-    return 'AliasData(teams: $teams, scores: $scores, turn: $turn, usedWords: $usedWords, usedWordSets: $usedWordSets, duration: $duration, wordsToWin: $wordsToWin, lastWord: $lastWord)';
+    return 'AliasData(teams: $teams, scores: $scores, turn: $turn, usedWords: $usedWords, setsNames: $setsNames, duration: $duration, wordsToWin: $wordsToWin, lastWord: $lastWord, oldSesion: $oldSesion)';
   }
 
   @override
@@ -58,10 +62,11 @@ class AliasData {
         listEquals(other.scores, scores) &&
         other.turn == turn &&
         setEquals(other.usedWords, usedWords) &&
-        listEquals(other.usedWordSets, usedWordSets) &&
+        listEquals(other.setsNames, setsNames) &&
         other.duration == duration &&
         other.wordsToWin == wordsToWin &&
-        other.lastWord == lastWord;
+        other.lastWord == lastWord &&
+        other.oldSesion == oldSesion;
   }
 
   @override
@@ -70,10 +75,11 @@ class AliasData {
         scores.hashCode ^
         turn.hashCode ^
         usedWords.hashCode ^
-        usedWordSets.hashCode ^
+        setsNames.hashCode ^
         duration.hashCode ^
         wordsToWin.hashCode ^
-        lastWord.hashCode;
+        lastWord.hashCode ^
+        oldSesion.hashCode;
   }
 
   Map<String, dynamic> toMap() {
@@ -82,10 +88,13 @@ class AliasData {
       'scores': scores,
       'turn': turn,
       'usedWords': usedWords.toList(),
-      'usedWordSets': usedWordSets,
+      'setsNames': setsNames,
       'duration': duration,
       'wordsToWin': wordsToWin,
       'lastWord': lastWord,
+      'oldSesion': oldSesion,
     };
   }
+
+  String toJson() => json.encode(toMap());
 }
