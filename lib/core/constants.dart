@@ -1,1 +1,1 @@
-final List<String> SETS = ["basic", "expert"];
+final List<String> SETS = ["basic", "expert", "ukr", "tworoots"];

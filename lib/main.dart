@@ -12,6 +12,7 @@ import 'package:alias/screens/team_page.dart';
 import 'package:alias/screens/winning_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'screens/score_page.dart';
 
 List<String> initTeams() {
@@ -43,6 +44,33 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
+      theme: ThemeData(
+        textTheme: TextTheme(
+          bodyMedium: TextStyle(
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
+              fontFamily: "Anonymous",
+              fontSize: MediaQuery.of(context).size.height * 0.031),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            elevation: 10,
+
+            shadowColor: Colors.black,
+            backgroundColor: Color.fromARGB(
+                255, 248, 237, 255), // Color.fromARGB(255, 255, 221, 149),
+            foregroundColor: Color.fromARGB(255, 255, 174, 0), //TO FIX
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                  width: MediaQuery.of(context).size.height * 0.0024),
+              borderRadius: BorderRadius.all(
+                Radius.circular(MediaQuery.of(context).size.height * 0.018),
+              ),
+            ),
+            splashFactory: NoSplash.splashFactory,
+          ),
+        ),
+      ),
       debugShowCheckedModeBanner: false,
       routes: {
         '/': (context) => MainPage(),

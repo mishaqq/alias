@@ -89,7 +89,13 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                 // debugPrint('Countdown Changed $timeStamp');
               },
             ),
-            Text(guessingWord),
+            Text(
+              guessingWord,
+              style: TextStyle(fontSize: 28),
+            ),
+            SizedBox(
+              height: 100,
+            ),
             ElevatedButton(
               onPressed: () {
                 setState(() {});

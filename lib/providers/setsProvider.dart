@@ -5,6 +5,8 @@ import '../dict/word_sets.dart';
 Map<String, List<String>> setsTable = {
   "basic": basic,
   "expert": expert,
+  "ukr": ukr,
+  "tworoots": tworoots,
 };
 
 ///
