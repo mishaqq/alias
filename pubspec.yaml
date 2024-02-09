@@ -39,5 +39,7 @@ flutter:
         - asset: fonts/AnonymousPro-Regular.ttf
         - asset: fonts/AnonymousPro-Bold.ttf
           weight: 700
+        - asset: fonts/AnonymousPro-BoldItalic.ttf
+          style: italic
        
     
