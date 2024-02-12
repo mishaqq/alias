@@ -27,7 +27,8 @@ class _MainPageState extends ConsumerState<MainPage> {
   @override
   Widget build(BuildContext context) {
     oldSesion = ref.watch(gameProvider).oldSesion;
-
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
@@ -49,52 +50,52 @@ class _MainPageState extends ConsumerState<MainPage> {
                 fit: StackFit.expand,
                 children: [
                   Positioned(
-                    width: MediaQuery.of(context).size.width,
-                    bottom: MediaQuery.of(context).size.height * 0.42,
-                    right: MediaQuery.of(context).size.width * 0.22,
+                    width: w,
+                    bottom: h * 0.42,
+                    right: w * 0.22,
                     child: Image.asset(
                       "assets/images/cloud.png",
-                      height: MediaQuery.of(context).size.height * 0.11,
+                      height: h * 0.11,
                     ),
                   ),
                   Positioned(
-                    width: MediaQuery.of(context).size.width,
-                    bottom: MediaQuery.of(context).size.height * 0.55,
-                    left: MediaQuery.of(context).size.width * 0.3,
+                    width: w,
+                    bottom: h * 0.55,
+                    left: w * 0.28,
                     child: Image.asset(
                       "assets/images/cloud.png",
-                      height: MediaQuery.of(context).size.height * 0.11,
+                      height: h * 0.11,
                     ),
                   ),
                   Positioned(
-                    width: MediaQuery.of(context).size.width,
-                    bottom: MediaQuery.of(context).size.height * 0.75,
+                    width: w,
+                    bottom: h * 0.75,
                     child: Image.asset(
                       "assets/images/cloud.png",
-                      height: MediaQuery.of(context).size.height * 0.11,
+                      height: h * 0.11,
                     ),
                   ),
                   Positioned(
-                    width: MediaQuery.of(context).size.width,
-                    top: MediaQuery.of(context).size.height * 0.1,
-                    bottom: MediaQuery.of(context).size.height * 0.5,
+                    width: w,
+                    top: h * 0.1,
+                    bottom: h * 0.5,
                     child: Center(
                       child: Image.asset(
                         "assets/images/logo.png",
-                        height: MediaQuery.of(context).size.height * 0.20,
-                        width: MediaQuery.of(context).size.width * 1,
+                        height: h * 0.20,
+                        width: w * 1,
                       ),
                     ),
                   ),
                   if (oldSesion)
                     Positioned(
-                      top: MediaQuery.of(context).size.height * 0.50,
+                      top: h * 0.50,
                       bottom: 0,
-                      width: MediaQuery.of(context).size.width,
+                      width: w,
                       child: Center(
                         child: SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          height: MediaQuery.of(context).size.height * 0.055,
+                          width: w * 0.8,
+                          height: h * 0.055,
                           child: ElevatedButton(
                             onPressed: () async {
                               // fetches the data from SP to Game Provider
@@ -118,13 +119,13 @@ class _MainPageState extends ConsumerState<MainPage> {
                   else
                     const SizedBox(),
                   Positioned(
-                    top: MediaQuery.of(context).size.height * 0.63,
+                    top: h * 0.63,
                     bottom: 0,
-                    width: MediaQuery.of(context).size.width,
+                    width: w,
                     child: Center(
                       child: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        height: MediaQuery.of(context).size.height * 0.055,
+                        width: w * 0.8,
+                        height: h * 0.055,
                         child: ElevatedButton(
                             onPressed: () async {
                               ref.read(gameProvider.notifier).reset();
@@ -136,13 +137,13 @@ class _MainPageState extends ConsumerState<MainPage> {
                     ),
                   ),
                   Positioned(
-                    top: MediaQuery.of(context).size.height * 0.76,
+                    top: h * 0.76,
                     bottom: 0,
-                    width: MediaQuery.of(context).size.width,
+                    width: w,
                     child: Center(
                       child: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        height: MediaQuery.of(context).size.height * 0.055,
+                        width: w * 0.8,
+                        height: h * 0.055,
                         child: ElevatedButton(
                             onPressed: () async {
                               ref.read(gameProvider.notifier).reset();
@@ -166,164 +167,3 @@ class _MainPageState extends ConsumerState<MainPage> {
     );
   }
 }
-
-//Image.asset(
-//   "assets/images/logo.png",
-//   width: MediaQuery.of(context).size.width,
-// ),
-
-// if (oldSesion)
-//               ElevatedButton(
-//                 onPressed: () async {
-//                   // fetches the data from SP to Game Provider
-//                   await ref.read(gameProvider.notifier).readFormPrefs();
-
-//                   // makes a list of words for the current game
-//                   ref
-//                       .read(gameProvider.notifier)
-//                       .makeGameWordSet(ref.read(gameProvider).setsNames);
-
-//                   // ignore: use_build_context_synchronously
-//                   Navigator.pushNamed(context, '/score');
-//                 },
-//                 child: const Text("Continue"),
-//               )
-//             else
-//               const SizedBox(),
-//             ElevatedButton(
-//               onPressed: () async {
-//                 ref.read(gameProvider.notifier).reset();
-//                 Navigator.pushNamed(context, '/set_choosing');
-//               },
-//               child: const Text("Start Game!"),
-//             ),
-//  Positioned(
-//                           bottom: MediaQuery.of(context).size.height * 0.46,
-//                           left: MediaQuery.of(context).size.width * 0.31,
-//                           child: Image.asset(
-//                             "assets/images/cloud.png",
-//                             height: MediaQuery.of(context).size.height * 0.12,
-//                           ),
-//                         ),
-//                         Positioned(
-//                           top: 0,
-//                           bottom: 100,
-//                           child: Image.asset(
-//                             "assets/images/logo.png",
-//                             width: MediaQuery.of(context).size.width,
-//                           ),
-//                         ),
-
-
-
-//  return Scaffold(
-//       body: Container(
-//         alignment: Alignment.center,
-//         decoration: BoxDecoration(
-//           gradient: LinearGradient(
-//             begin: Alignment.topCenter,
-//             end: Alignment.bottomCenter,
-//             colors: [
-//               Color.fromARGB(255, 25, 178, 238),
-//               Color.fromARGB(255, 21, 236, 229)
-//             ],
-//           ),
-//         ),
-//         child: Column(
-//           mainAxisSize: MainAxisSize.max,
-//           children: [
-//             Expanded(
-//               flex: 5,
-//               child: Column(
-//                 children: [
-//                   Expanded(
-//                     child: Stack(
-//                       fit: StackFit.expand,
-//                       children: [
-//                         Positioned(
-//                           bottom: 240.h,
-//                           left: 100.w,
-//                           child: Image.asset(
-//                             "assets/images/cloud.png",
-//                             height: 100.r,
-//                           ),
-//                         ),
-//                         Positioned(
-//                           top: 0,
-//                           bottom: 100,
-//                           child: Image.asset(
-//                             "assets/images/logo.png",
-//                             width: MediaQuery.of(context).size.width,
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//             Expanded(
-//               flex: 3,
-//               child: Column(
-//                 children: [],
-//               ),
-//             )
-//           ],
-//         ),
-//       ),
-//     );
-
-
-
-// return Scaffold(
-//       body: Container(
-//         alignment: Alignment.center,
-//         decoration: BoxDecoration(
-//           gradient: LinearGradient(
-//             begin: Alignment.topCenter,
-//             end: Alignment.bottomCenter,
-//             colors: [
-//               Color.fromARGB(255, 25, 178, 238),
-//               Color.fromARGB(255, 21, 236, 229)
-//             ],
-//           ),
-//         ),
-//         child: Column(
-//           mainAxisSize: MainAxisSize.max,
-//           children: [
-//             SizedBox(
-//               height: 500.r,
-//               child: Stack(
-//                 fit: StackFit.expand,
-//                 children: [
-//                   Positioned(
-//                     bottom: 240.h,
-//                     left: 100.w,
-//                     child: Image.asset(
-//                       "assets/images/cloud.png",
-//                       height: 100.r,
-//                     ),
-//                   ),
-//                   Positioned(
-//                     top: 0.h,
-//                     bottom: 100.h,
-//                     child: Image.asset(
-//                       "assets/images/logo.png",
-//                       width: 400.w,
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//             SizedBox(
-//               height: (MediaQuery.of(context).size.height /
-//                       MediaQuery.of(context).size.width) *
-//                   0.4,
-//               child: Column(
-//                 children: [],
-//               ),
-//             )
-//           ],
-//         ),
-//       ),
-//     );

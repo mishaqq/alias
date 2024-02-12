@@ -50,7 +50,7 @@ class MyApp extends ConsumerWidget {
               fontWeight: FontWeight.w700,
               color: Colors.black,
               fontFamily: "Anonymous",
-              fontSize: MediaQuery.of(context).size.height * 0.031),
+              fontSize: MediaQuery.of(context).size.width * 0.065),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(

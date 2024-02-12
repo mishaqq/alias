@@ -25,6 +25,8 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
   final MultiSelectController<String> _controller = MultiSelectController();
   @override
   Widget build(BuildContext context) {
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
@@ -40,28 +42,26 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
         ),
         child: Padding(
           padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.09,
-            left: MediaQuery.of(context).size.width * 0.075,
-            right: MediaQuery.of(context).size.width * 0.075,
+            top: h * 0.09,
+            left: w * 0.075,
+            right: w * 0.075,
           ),
           child: Column(
             children: [
               Container(
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 248, 237, 255),
-                  border: Border.all(
-                      width: MediaQuery.of(context).size.height * 0.0024),
+                  border: Border.all(width: h * 0.0024),
                   borderRadius: BorderRadius.all(
-                    Radius.circular(MediaQuery.of(context).size.height * 0.018),
+                    Radius.circular(h * 0.018),
                   ),
                 ),
-                width: MediaQuery.of(context).size.width * 0.85,
-                height: MediaQuery.of(context).size.height * 0.75,
+                width: w * 0.85,
+                height: h * 0.75,
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.015),
+                      padding: EdgeInsets.only(top: h * 0.015),
                       child: Text(
                         'Слова',
                       ),
@@ -69,31 +69,27 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                     Expanded(
                       child: Padding(
                         padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.height * 0.015,
-                          right: MediaQuery.of(context).size.height * 0.015,
+                          left: h * 0.015,
+                          right: h * 0.015,
                         ),
                         child: MultiSelectCheckList(
-                          itemPadding: EdgeInsets.all(
-                              MediaQuery.of(context).size.height * 0.01),
+                          itemPadding: EdgeInsets.all(h * 0.01),
                           maxSelectableCount: 5,
                           textStyles: MultiSelectTextStyles(
                             selectedTextStyle: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 color: Colors.black,
                                 fontFamily: "Anonymous",
-                                fontSize:
-                                    MediaQuery.of(context).size.height * 0.020),
+                                fontSize: h * 0.020),
                           ),
                           itemsDecoration: MultiSelectDecorations(
                             selectedDecoration: BoxDecoration(
                               color: Color.fromARGB(255, 255, 221, 149),
-                              border: Border.all(
-                                  width: MediaQuery.of(context).size.height *
-                                      0.0015),
+                              border: Border.all(width: h * 0.0015),
                             ),
                           ),
                           listViewSettings: ListViewSettings(
-                            physics: const BouncingScrollPhysics(),
+                            physics: BouncingScrollPhysics(),
                           ),
                           controller: _controller,
                           items: List.generate(
@@ -102,14 +98,9 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                               contentPadding: EdgeInsets.all(0),
                               decorations: MultiSelectItemDecorations(
                                 decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width:
-                                          MediaQuery.of(context).size.height *
-                                              0.0015),
+                                  border: Border.all(width: h * 0.0015),
                                   borderRadius: BorderRadius.all(
-                                    Radius.circular(
-                                        MediaQuery.of(context).size.height *
-                                            0.018),
+                                    Radius.circular(h * 0.018),
                                   ),
                                 ),
                               ),
@@ -118,51 +109,33 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                                   fontWeight: FontWeight.w700,
                                   color: Colors.black,
                                   fontFamily: "Anonymous",
-                                  fontSize: MediaQuery.of(context).size.height *
-                                      0.020,
+                                  fontSize: h * 0.020,
                                 ),
                               ),
                               value: SETS[index],
                               title: Text(title[SETS[index]]!),
                               subtitle: Padding(
-                                padding: EdgeInsets.only(
-                                    top: MediaQuery.of(context).size.height *
-                                        0.0020),
+                                padding: EdgeInsets.only(top: h * 0.0020),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.only(
-                                          top: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.0015),
+                                      padding: EdgeInsets.only(top: h * 0.0015),
                                       child: Text(
                                         "${setsTable[SETS[index]]!.length} Слів",
-                                        style: TextStyle(
-                                            fontSize: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.015),
+                                        style: TextStyle(fontSize: h * 0.015),
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(
-                                          top: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.0015),
+                                      padding: EdgeInsets.only(top: h * 0.0015),
                                       child: Wrap(
                                         children: [
                                           Text(
                                             "${example[SETS[index]]}",
                                             style: TextStyle(
                                                 fontStyle: FontStyle.italic,
-                                                fontSize: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.015),
+                                                fontSize: h * 0.015),
                                           ),
                                         ],
                                       ),
@@ -176,8 +149,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                               checkBoxBorderSide:
                                   const BorderSide(color: Colors.black),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    MediaQuery.of(context).size.height * 0.005),
+                                borderRadius: BorderRadius.circular(h * 0.005),
                               ),
                             ),
                           ),
@@ -192,13 +164,13 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.01,
+                  top: h * 0.01,
                 ),
                 child: Row(
                   children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.18,
-                      height: MediaQuery.of(context).size.height * 0.06,
+                      width: w * 0.18,
+                      height: h * 0.06,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.black,
@@ -209,23 +181,27 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                         },
                         child: Icon(
                           Icons.arrow_back_ios_new_rounded,
-                          size: MediaQuery.of(context).size.height * 0.03,
+                          size: h * 0.03,
                         ),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width * 0.02,
+                        left: w * 0.02,
                       ),
                       child: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.65,
-                        height: MediaQuery.of(context).size.height * 0.06,
+                        width: w * 0.65,
+                        height: h * 0.06,
                         child: ElevatedButton(
                           onPressed: () {
-                            ref.read(gameProvider.notifier).makeGameWordSet(
-                                _controller.getSelectedItems());
+                            if (_controller.getSelectedItems().isNotEmpty) {
+                              ref.read(gameProvider.notifier).makeGameWordSet(
+                                  _controller.getSelectedItems());
 
-                            Navigator.pushNamed(context, "/settings");
+                              Navigator.pushNamed(context, "/settings");
+                            } else {
+                              //TO DO
+                            }
                           },
                           child: Text("Продовжити",
                               style: Theme.of(context).textTheme.bodyMedium),

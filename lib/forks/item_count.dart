@@ -65,9 +65,10 @@ class ItemCount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
     return Container(
-      padding: const EdgeInsets.all(4.0),
+      padding: EdgeInsets.all(w * 0.002),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
@@ -81,26 +82,28 @@ class ItemCount extends StatelessWidget {
                 alignment: Alignment(1, 1),
                 decoration: ShapeDecoration(
                     color: color ?? themeData.primaryColor,
-                    shape: const RoundedRectangleBorder(
+                    shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(
-                      Radius.circular(100),
+                      Radius.circular(w * 0.05),
                     ))),
-                child: const Center(
-                  child: Text(
-                    "–",
-                    style: TextStyle(fontSize: 45),
+                child: Center(
+                  child: Padding(
+                    padding:
+                        EdgeInsets.only(left: w * 0.002, bottom: w * 0.001),
+                    child: Text(
+                      "–",
+                      style: textStyle!.copyWith(fontSize: w * 0.04),
+                    ),
                   ),
                 ),
               ),
             ),
           ),
           Container(
-            padding: const EdgeInsets.all(4.0),
+            padding: EdgeInsets.only(left: w * 0.008, right: w * 0.005),
             child: Text(
                 '${num.parse((selectedValue).toStringAsFixed(decimalPlaces))}',
-                style: const TextStyle(
-                  fontSize: 50,
-                )),
+                style: textStyle),
           ),
           GestureDetector(
             onTap: _incrementCounter,
@@ -111,14 +114,18 @@ class ItemCount extends StatelessWidget {
                 alignment: Alignment(1, 0),
                 decoration: ShapeDecoration(
                     color: color ?? themeData.primaryColor,
-                    shape: const RoundedRectangleBorder(
+                    shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(
-                      Radius.circular(100),
+                      Radius.circular(w * 0.5),
                     ))),
-                child: const Center(
-                  child: Text(
-                    '+',
-                    style: TextStyle(color: Colors.black, fontSize: 40),
+                child: Center(
+                  child: Padding(
+                    padding:
+                        EdgeInsets.only(left: w * 0.002, bottom: w * 0.001),
+                    child: Text(
+                      '+',
+                      style: textStyle!.copyWith(fontSize: w * 0.04),
+                    ),
                   ),
                 ),
               ),

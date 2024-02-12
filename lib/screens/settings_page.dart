@@ -28,84 +28,326 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
   Widget build(BuildContext context) {
     final isSelected = ref.watch(isSelectedProvider);
     final wordsQuantity = ref.watch(counterProvider);
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("Settings"),
-            ToggleButtons(
-              borderWidth: 3,
-              // borderColor: Colors.black,
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text("10"),
+      body: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromARGB(255, 112, 150, 236),
+              Color.fromARGB(255, 52, 104, 192)
+            ],
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.only(
+            top: h * 0.09,
+            left: w * 0.075,
+            right: w * 0.075,
+          ),
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 248, 237, 255),
+                  border: Border.all(width: h * 0.0024),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(h * 0.018),
+                  ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text("30"),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text("60"),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text("90"),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text("120"),
-                ),
-              ],
-              isSelected: isSelected,
-              onPressed: (newIndex) {
-                ref
-                    .read(isSelectedProvider.notifier)
-                    .updateSelection(newIndex, true);
-              },
-            ),
-            ItemCount(
-              buttonSizeHeight: 50,
-              buttonSizeWidth: 50,
-              initialValue: wordsQuantity,
-              minValue: 10,
-              step: 10,
-              maxValue: double.infinity,
-              decimalPlaces: 0,
-              onChanged: (value) {
-                setState(() {
-                  ref.read(counterProvider.notifier).setValue(value.toInt());
-                });
-              },
-            ),
-            SwitchListTile(
-              value: ref.read(gameProvider).lastWord,
-              onChanged: (value) {
-                setState(() {
-                  ref.read(gameProvider.notifier).toggleLastWord();
-                });
-              },
-              title: const Text("Last word for all?"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                int durationIndex = isSelected.indexOf(true);
+                width: w * 0.85,
+                height: h * 0.75,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: h * 0.015,
+                    right: h * 0.015,
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: h * 0.015),
+                        child: Text(
+                          'Налаштування',
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: h * 0.05,
+                          ),
+                          Text(
+                            "Тривалість раунду:",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  fontSize: w * 0.047,
+                                ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(top: h * 0.02),
+                                child: ToggleButtons(
+                                  borderWidth: h * 0.002,
+                                  splashColor: Colors.transparent,
+                                  borderColor: Colors.black,
+                                  fillColor: Color.fromARGB(255, 255, 221, 149),
+                                  selectedBorderColor: Colors.black,
+                                  constraints: BoxConstraints(
+                                      maxWidth: w * 0.5, maxHeight: h * 0.1),
+                                  // borderColor: Colors.black,
 
-                ref
-                    .read(gameProvider.notifier)
-                    .setDuration(durationTable[durationIndex]!);
+                                  isSelected: isSelected,
+                                  onPressed: (newIndex) {
+                                    ref
+                                        .read(isSelectedProvider.notifier)
+                                        .updateSelection(newIndex, true);
+                                  },
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: w * 0.03,
+                                          right: w * 0.03,
+                                          top: h * 0.01,
+                                          bottom: h * 0.01),
+                                      child: Text(
+                                        "10",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                              fontSize: w * 0.047,
+                                            ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: w * 0.03,
+                                          right: w * 0.03,
+                                          top: h * 0.01,
+                                          bottom: h * 0.01),
+                                      child: Text(
+                                        "30",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                              fontSize: w * 0.047,
+                                            ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: w * 0.03,
+                                          right: w * 0.03,
+                                          top: h * 0.01,
+                                          bottom: h * 0.01),
+                                      child: Text(
+                                        "60",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                              fontSize: w * 0.047,
+                                            ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: w * 0.03,
+                                          right: w * 0.03,
+                                          top: h * 0.01,
+                                          bottom: h * 0.01),
+                                      child: Text(
+                                        "90",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                              fontSize: w * 0.047,
+                                            ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: w * 0.03,
+                                          right: w * 0.03,
+                                          top: h * 0.01,
+                                          bottom: h * 0.01),
+                                      child: Text(
+                                        "120",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium!
+                                            .copyWith(
+                                              fontSize: w * 0.047,
+                                            ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: h * 0.020,
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Слів до перемоги:",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        fontSize: w * 0.047,
+                                      ),
+                                ),
+                                ItemCount(
+                                  color: Color.fromARGB(255, 255, 221, 149),
+                                  buttonSizeHeight: w * 0.1,
+                                  buttonSizeWidth: w * 0.1,
+                                  initialValue: wordsQuantity,
+                                  minValue: 10,
+                                  step: 10,
+                                  maxValue: 200,
+                                  decimalPlaces: 0,
+                                  textStyle: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        fontSize: h * 0.022,
+                                      ),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      ref
+                                          .read(counterProvider.notifier)
+                                          .setValue(value.toInt());
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: h * 0.015,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Останнє слово для всіх:",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        fontSize: w * 0.047,
+                                      ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      top: h * 0.004, right: w * 0.005),
+                                  child: Transform.scale(
+                                    scale: w * 0.004,
+                                    child: Checkbox(
+                                      value: ref.read(gameProvider).lastWord,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          ref
+                                              .read(gameProvider.notifier)
+                                              .toggleLastWord();
+                                        });
+                                      },
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(h * 0.005),
+                                      ),
+                                      side: BorderSide(color: Colors.black),
+                                      fillColor: MaterialStatePropertyAll(
+                                          Color.fromARGB(255, 255, 221, 149)),
+                                      overlayColor: MaterialStatePropertyAll(
+                                        Colors.transparent,
+                                      ),
+                                      checkColor: Colors.black,
+                                      activeColor:
+                                          Color.fromARGB(255, 255, 221, 149),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: h * 0.01,
+                ),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: w * 0.18,
+                      height: h * 0.06,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.black,
+                          backgroundColor: Color.fromARGB(255, 255, 221, 149),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          size: h * 0.03,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: w * 0.02,
+                      ),
+                      child: SizedBox(
+                        width: w * 0.65,
+                        height: h * 0.06,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            int durationIndex = isSelected.indexOf(true);
 
-                ref.read(gameProvider.notifier).setWordsToWin(wordsQuantity);
+                            ref
+                                .read(gameProvider.notifier)
+                                .setDuration(durationTable[durationIndex]!);
 
-                Navigator.pushNamed(context, '/team');
-              },
-              child: Text("Continue"),
-            ),
-          ],
+                            ref
+                                .read(gameProvider.notifier)
+                                .setWordsToWin(wordsQuantity);
+
+                            Navigator.pushNamed(context, '/team');
+                          },
+                          child: Text("Продовжити",
+                              style: Theme.of(context).textTheme.bodyMedium),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
