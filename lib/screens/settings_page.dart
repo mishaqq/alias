@@ -226,7 +226,7 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                                       .textTheme
                                       .bodyMedium!
                                       .copyWith(
-                                        fontSize: h * 0.022,
+                                        fontSize: w * 0.047,
                                       ),
                                   onChanged: (value) {
                                     setState(() {
@@ -241,7 +241,7 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                              top: h * 0.015,
+                              top: h * 0.025,
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -257,31 +257,35 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                      top: h * 0.004, right: w * 0.005),
-                                  child: Transform.scale(
-                                    scale: w * 0.004,
-                                    child: Checkbox(
-                                      value: ref.read(gameProvider).lastWord,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          ref
-                                              .read(gameProvider.notifier)
-                                              .toggleLastWord();
-                                        });
-                                      },
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(h * 0.005),
+                                      top: h * 0.004, right: w * 0.02),
+                                  child: SizedBox(
+                                    width: w * 0.06,
+                                    height: w * 0.06,
+                                    child: Transform.scale(
+                                      scale: w * 0.004,
+                                      child: Checkbox(
+                                        value: ref.read(gameProvider).lastWord,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            ref
+                                                .read(gameProvider.notifier)
+                                                .toggleLastWord();
+                                          });
+                                        },
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(h * 0.005),
+                                        ),
+                                        side: BorderSide(color: Colors.black),
+                                        fillColor: MaterialStatePropertyAll(
+                                            Color.fromARGB(255, 255, 221, 149)),
+                                        overlayColor: MaterialStatePropertyAll(
+                                          Colors.transparent,
+                                        ),
+                                        checkColor: Colors.black,
+                                        activeColor:
+                                            Color.fromARGB(255, 255, 221, 149),
                                       ),
-                                      side: BorderSide(color: Colors.black),
-                                      fillColor: MaterialStatePropertyAll(
-                                          Color.fromARGB(255, 255, 221, 149)),
-                                      overlayColor: MaterialStatePropertyAll(
-                                        Colors.transparent,
-                                      ),
-                                      checkColor: Colors.black,
-                                      activeColor:
-                                          Color.fromARGB(255, 255, 221, 149),
                                     ),
                                   ),
                                 ),
