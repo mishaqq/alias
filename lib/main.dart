@@ -77,7 +77,7 @@ class MyApp extends ConsumerWidget {
         '/score': (context) => ScorePage(),
         '/guessing': (context) => GuessingPage(),
         '/set_choosing': (context) => ChoosingPage(),
-        '/settings': (context) => SettingsPage(),
+        '/settings': (context) => SettingsPage(fromGame: false),
         '/team': (context) => TeamPage(),
       },
     );

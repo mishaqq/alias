@@ -88,7 +88,7 @@ class GameNotifier extends StateNotifier<AliasData> {
     state = state.copyWith(duration: dur);
   }
 
-  void setWordsToWin(int quantity) {
+  void setWordsToWin(context, int quantity) {
     state = state.copyWith(wordsToWin: quantity);
   }
 

@@ -181,7 +181,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                         },
                         child: Icon(
                           Icons.arrow_back_ios_new_rounded,
-                          size: h * 0.03,
+                          size: w * 0.07,
                         ),
                       ),
                     ),

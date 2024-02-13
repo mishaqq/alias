@@ -7,7 +7,8 @@ import '../providers/game_model_provider.dart';
 import '../providers/selection.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
-  const SettingsPage({super.key});
+  final bool fromGame;
+  const SettingsPage({required this.fromGame, super.key});
 
   @override
   ConsumerState<SettingsPage> createState() => _SettingPageState();
@@ -317,7 +318,7 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                         },
                         child: Icon(
                           Icons.arrow_back_ios_new_rounded,
-                          size: h * 0.03,
+                          size: w * 0.07,
                         ),
                       ),
                     ),
@@ -338,12 +339,17 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
 
                             ref
                                 .read(gameProvider.notifier)
-                                .setWordsToWin(wordsQuantity);
-
-                            Navigator.pushNamed(context, '/team');
+                                .setWordsToWin(context, wordsQuantity);
+                            widget.fromGame
+                                ? Navigator.pop(context)
+                                : Navigator.pushNamed(context, '/team');
                           },
-                          child: Text("Продовжити",
-                              style: Theme.of(context).textTheme.bodyMedium),
+                          child: widget.fromGame
+                              ? Text("Перейняти",
+                                  style: Theme.of(context).textTheme.bodyMedium)
+                              : Text("Продовжити",
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium),
                         ),
                       ),
                     ),

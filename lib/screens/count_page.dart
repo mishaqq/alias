@@ -151,7 +151,7 @@ class _CountPageState extends ConsumerState<CountPage> {
             onPressed: () {
               // calculating the score
               int roundScore = 0;
-
+              //print(widget.raundWorlds);
               for (int i = 0;
                   i <
                       (game.lastWord
@@ -159,12 +159,13 @@ class _CountPageState extends ConsumerState<CountPage> {
                           : widget.raundWorlds.values.toList().length);
                   i++) {
                 // ignore: unrelated_type_equality_checks
-                if (widget.raundWorlds.values.toList()[i] == false) {
+                if (widget.raundWorlds.values.toList()[i] == 0) {
                   roundScore--;
                 } else {
                   roundScore++;
                 }
               }
+
               // for (int value in widget.raundWorlds.values) {
               //   if (value == 0) {
               //     roundScore--;

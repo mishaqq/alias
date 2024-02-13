@@ -131,7 +131,7 @@ class _MainPageState extends ConsumerState<MainPage> {
                               ref.read(gameProvider.notifier).reset();
                               Navigator.pushNamed(context, '/set_choosing');
                             },
-                            child: Text("Почати гру",
+                            child: Text("Нова гра",
                                 style: Theme.of(context).textTheme.bodyMedium)),
                       ),
                     ),

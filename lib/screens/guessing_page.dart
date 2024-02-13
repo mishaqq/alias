@@ -121,6 +121,99 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
   }
 }
 
+// Scaffold(
+//       appBar: AppBar(),
+//       body: Center(
+//         child: Column(
+//           children: [
+//             CircularCountDownTimer(
+//               duration: ref.read(gameProvider).duration,
+//               initialDuration: 0,
+//               controller: _countDownController,
+//               width: MediaQuery.of(context).size.width / 2,
+//               height: MediaQuery.of(context).size.height / 2,
+//               ringColor: Colors.grey[300]!,
+//               ringGradient: null,
+//               fillColor: Colors.purpleAccent[100]!,
+//               fillGradient: null,
+//               backgroundColor: Color.fromRGBO(252, 252, 252, 1),
+//               backgroundGradient: null,
+//               strokeWidth: 20.0,
+//               strokeCap: StrokeCap.round,
+//               textStyle: TextStyle(
+//                   fontSize: 33.0,
+//                   color: const Color.fromARGB(255, 0, 0, 0),
+//                   fontWeight: FontWeight.bold),
+//               textFormat: CountdownTextFormat.S,
+//               isReverse: true,
+//               isReverseAnimation: true,
+//               isTimerTextShown: true,
+//               autoStart: true,
+//               onStart: () {
+//                 //debugPrint('Countdown Started');
+//               },
+//               onComplete: () {
+//                 if (ref.read(gameProvider).lastWord) {
+//                   showDialog(
+//                     barrierDismissible: false,
+//                     context: context,
+//                     builder: (context) => CustomDialog(
+//                       teams: ref.read(gameProvider).teams,
+//                       lastWord: guessingWord,
+//                       roundWords: roundWords,
+//                     ),
+//                   );
+//                 } else {
+//                   Navigator.pop(context);
+//                   Navigator.push(
+//                       context,
+//                       MaterialPageRoute(
+//                         builder: (context) => CountPage(
+//                             raundWorlds: roundWords, nameOfLastTeam: ""),
+//                       ));
+//                 }
+
+//                 //Navigator.pop(context);
+//                 //Navigator.push(
+//                 //    context,
+//                 //    MaterialPageRoute(
+//                 //      builder: (context) => CountPage(raundWorlds: roundWords),
+//                 //    ));
+//               },
+//               onChange: (String timeStamp) {
+//                 // debugPrint('Countdown Changed $timeStamp');
+//               },
+//             ),
+//             Text(
+//               guessingWord,
+//               style: TextStyle(fontSize: 28),
+//             ),
+//             SizedBox(
+//               height: 100,
+//             ),
+//             ElevatedButton(
+//               onPressed: () {
+//                 setState(() {});
+//                 ref
+//                     .read(gameProvider.notifier)
+//                     .addUsedWord(guessingWord); // save used word
+//                 roundWords[guessingWord] = 1; // save this round words
+//               },
+//               child: Text("Positive"),
+//             ),
+//             ElevatedButton(
+//               onPressed: () {
+//                 setState(() {});
+//                 ref.read(gameProvider.notifier).addUsedWord(guessingWord);
+//                 roundWords[guessingWord] = 0;
+//               },
+//               child: Text("Negative"),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+
 class CustomDialog extends StatelessWidget {
   final List<String> teams;
   final String lastWord;
@@ -159,14 +252,15 @@ class CustomDialog extends StatelessWidget {
                     Navigator.popUntil(context, ModalRoute.withName('/score'));
 
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CountPage(
-                            raundWorlds: roundWords,
-                            nameOfLastTeam:
-                                index == teams.length ? "Nobody" : teams[index],
-                          ),
-                        ));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CountPage(
+                          raundWorlds: roundWords,
+                          nameOfLastTeam:
+                              index == teams.length ? "Nobody" : teams[index],
+                        ),
+                      ),
+                    );
                   },
                   child: Text(
                     index == teams.length ? "Nobody" : teams[index],
