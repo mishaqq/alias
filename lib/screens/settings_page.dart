@@ -216,8 +216,8 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                                 ),
                                 ItemCount(
                                   color: Color.fromARGB(255, 255, 221, 149),
-                                  buttonSizeHeight: w * 0.1,
-                                  buttonSizeWidth: w * 0.1,
+                                  buttonSizeHeight: w * 0.09,
+                                  buttonSizeWidth: w * 0.09,
                                   initialValue: wordsQuantity,
                                   minValue: 10,
                                   step: 10,
@@ -307,7 +307,7 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                   children: [
                     SizedBox(
                       width: w * 0.18,
-                      height: h * 0.06,
+                      height: h * 0.07,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.black,
@@ -328,7 +328,7 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                       ),
                       child: SizedBox(
                         width: w * 0.65,
-                        height: h * 0.06,
+                        height: h * 0.07,
                         child: ElevatedButton(
                           onPressed: () {
                             int durationIndex = isSelected.indexOf(true);
@@ -348,8 +348,12 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                               ? Text("Перейняти",
                                   style: Theme.of(context).textTheme.bodyMedium)
                               : Text("Продовжити",
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        fontSize: w * 0.055,
+                                      )),
                         ),
                       ),
                     ),

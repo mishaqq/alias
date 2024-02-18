@@ -172,7 +172,7 @@ class ScorePage extends ConsumerWidget {
                     children: [
                       SizedBox(
                         width: w * 0.18,
-                        height: h * 0.06,
+                        height: h * 0.07,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.black,
@@ -193,7 +193,7 @@ class ScorePage extends ConsumerWidget {
                         ),
                         child: SizedBox(
                           width: w * 0.65,
-                          height: h * 0.06,
+                          height: h * 0.07,
                           child: ElevatedButton(
                             onPressed: () async {
                               await ref
@@ -206,7 +206,12 @@ class ScorePage extends ConsumerWidget {
                             child: Text("Наступний раунд",
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
-                                style: Theme.of(context).textTheme.bodyMedium),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      fontSize: w * 0.055,
+                                    )),
                           ),
                         ),
                       ),

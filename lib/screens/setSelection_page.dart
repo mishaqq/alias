@@ -170,7 +170,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                   children: [
                     SizedBox(
                       width: w * 0.18,
-                      height: h * 0.06,
+                      height: h * 0.07,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.black,
@@ -191,7 +191,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                       ),
                       child: SizedBox(
                         width: w * 0.65,
-                        height: h * 0.06,
+                        height: h * 0.07,
                         child: ElevatedButton(
                           onPressed: () {
                             if (_controller.getSelectedItems().isNotEmpty) {
@@ -204,7 +204,12 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                             }
                           },
                           child: Text("Продовжити",
-                              style: Theme.of(context).textTheme.bodyMedium),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                    fontSize: w * 0.055,
+                                  )),
                         ),
                       ),
                     ),

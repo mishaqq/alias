@@ -89,10 +89,10 @@ class ItemCount extends StatelessWidget {
                 child: Center(
                   child: Padding(
                     padding:
-                        EdgeInsets.only(left: w * 0.002, bottom: w * 0.001),
+                        EdgeInsets.only(left: w * 0.004, bottom: w * 0.003),
                     child: Text(
                       "–",
-                      style: textStyle!.copyWith(fontSize: w * 0.04),
+                      style: textStyle!.copyWith(fontSize: w * 0.047),
                     ),
                   ),
                 ),
@@ -100,7 +100,7 @@ class ItemCount extends StatelessWidget {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(left: w * 0.008, right: w * 0.005),
+            padding: EdgeInsets.only(left: w * 0.004),
             child: Text(
                 '${num.parse((selectedValue).toStringAsFixed(decimalPlaces))}',
                 style: textStyle),
@@ -121,10 +121,10 @@ class ItemCount extends StatelessWidget {
                 child: Center(
                   child: Padding(
                     padding:
-                        EdgeInsets.only(left: w * 0.002, bottom: w * 0.001),
+                        EdgeInsets.only(left: w * 0.004, bottom: w * 0.003),
                     child: Text(
                       '+',
-                      style: textStyle!.copyWith(fontSize: w * 0.04),
+                      style: textStyle!.copyWith(fontSize: w * 0.047),
                     ),
                   ),
                 ),

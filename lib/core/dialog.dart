@@ -6,42 +6,57 @@ import '../providers/game_model_provider.dart';
 showAlertDialog(BuildContext context, ref) {
   double h = MediaQuery.of(context).size.height;
   double w = MediaQuery.of(context).size.width;
-  Widget cancelButton = TextButton(
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Color.fromARGB(255, 255, 221, 149),
-      side: BorderSide(width: MediaQuery.of(context).size.height * 0.0024),
-    ),
-    child: Text(
-      "Вийти",
-      style: TextStyle(
-          fontWeight: FontWeight.w700,
-          color: Colors.black,
-          fontFamily: "Anonymous",
-          fontSize: w * 0.040),
-    ),
-    onPressed: () {
-      ref.read(gameProvider.notifier).oldSesionTrue();
-      Navigator.of(context).popUntil((route) => route.isFirst);
-    },
-  );
-  Widget continueButton = TextButton(
-    style: ElevatedButton.styleFrom(
-      backgroundColor: Color.fromARGB(255, 255, 221, 149),
-      shape: RoundedRectangleBorder(
-        side: BorderSide(width: MediaQuery.of(context).size.height * 0.0024),
+  Widget cancelButton = Padding(
+    padding: EdgeInsets.only(left: w * 0.05),
+    child: SizedBox(
+      width: w * 0.17,
+      height: w * 0.1,
+      child: TextButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Color.fromARGB(255, 255, 221, 149),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.zero,
+            side: BorderSide(width: MediaQuery.of(context).size.height * 0.003),
+          ),
+        ),
+        child: Text(
+          "Вийти",
+          style: TextStyle(
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
+              fontFamily: "Anonymous",
+              fontSize: w * 0.040),
+        ),
+        onPressed: () {
+          ref.read(gameProvider.notifier).oldSesionTrue();
+          Navigator.of(context).popUntil((route) => route.isFirst);
+        },
       ),
     ),
-    child: Text(
-      "Продовжити",
-      style: TextStyle(
-          fontWeight: FontWeight.w700,
-          color: Colors.black,
-          fontFamily: "Anonymous",
-          fontSize: w * 0.040),
+  );
+  Widget continueButton = SizedBox(
+    width: w * 0.3,
+    height: w * 0.1,
+    child: TextButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Color.fromARGB(255, 255, 221, 149),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.zero,
+          side: BorderSide(width: MediaQuery.of(context).size.height * 0.003),
+        ),
+      ),
+      child: Text(
+        "Продовжити",
+        style: TextStyle(
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+            fontFamily: "Anonymous",
+            fontSize: w * 0.040),
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+      },
     ),
-    onPressed: () {
-      Navigator.pop(context);
-    },
   );
 
   AlertDialog alert = AlertDialog(
@@ -52,7 +67,7 @@ showAlertDialog(BuildContext context, ref) {
       ),
     ),
     actionsAlignment: MainAxisAlignment.end,
-    actionsPadding: EdgeInsets.only(right: w * 0.02, bottom: w * 0.03),
+    actionsPadding: EdgeInsets.only(right: w * 0.1, bottom: w * 0.03),
     title: Text(
       "Вийти з цієї гри?",
       style: TextStyle(

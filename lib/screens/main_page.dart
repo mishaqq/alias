@@ -95,7 +95,7 @@ class _MainPageState extends ConsumerState<MainPage> {
                       child: Center(
                         child: SizedBox(
                           width: w * 0.8,
-                          height: h * 0.055,
+                          height: h * 0.063,
                           child: ElevatedButton(
                             onPressed: () async {
                               // fetches the data from SP to Game Provider
@@ -119,13 +119,13 @@ class _MainPageState extends ConsumerState<MainPage> {
                   else
                     const SizedBox(),
                   Positioned(
-                    top: h * 0.63,
+                    top: h * 0.64,
                     bottom: 0,
                     width: w,
                     child: Center(
                       child: SizedBox(
                         width: w * 0.8,
-                        height: h * 0.055,
+                        height: h * 0.063,
                         child: ElevatedButton(
                             onPressed: () async {
                               ref.read(gameProvider.notifier).reset();
@@ -137,13 +137,13 @@ class _MainPageState extends ConsumerState<MainPage> {
                     ),
                   ),
                   Positioned(
-                    top: h * 0.76,
+                    top: h * 0.78,
                     bottom: 0,
                     width: w,
                     child: Center(
                       child: SizedBox(
                         width: w * 0.8,
-                        height: h * 0.055,
+                        height: h * 0.063,
                         child: ElevatedButton(
                             onPressed: () async {
                               ref.read(gameProvider.notifier).reset();

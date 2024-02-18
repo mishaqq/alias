@@ -201,7 +201,7 @@ class TeamPage extends ConsumerWidget {
                   children: [
                     SizedBox(
                       width: w * 0.18,
-                      height: h * 0.06,
+                      height: h * 0.07,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.black,
@@ -222,7 +222,7 @@ class TeamPage extends ConsumerWidget {
                       ),
                       child: SizedBox(
                         width: w * 0.65,
-                        height: h * 0.06,
+                        height: h * 0.07,
                         child: ElevatedButton(
                           onPressed: () async {
                             await ref
@@ -233,7 +233,12 @@ class TeamPage extends ConsumerWidget {
                             Navigator.pushNamed(context, '/score');
                           },
                           child: Text("Продовжити",
-                              style: Theme.of(context).textTheme.bodyMedium),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                    fontSize: w * 0.055,
+                                  )),
                         ),
                       ),
                     ),

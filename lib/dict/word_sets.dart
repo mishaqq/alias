@@ -418,6 +418,7 @@ List<String> tworoots = [
   "мікроконтролер",
   "часорозподіл",
   "словотворчість",
+  "словотворчістьasdfjsdjkfjksfjskdjfkl;asdjfsasdfaldkfj;lskdjf",
 ];
 
 final List<String> expert = [
