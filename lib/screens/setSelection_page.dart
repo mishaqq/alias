@@ -84,18 +84,18 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                           ),
                           itemsDecoration: MultiSelectDecorations(
                             selectedDecoration: BoxDecoration(
-                              color: Color.fromARGB(255, 255, 221, 149),
+                              color: const Color.fromARGB(255, 255, 221, 149),
                               border: Border.all(width: h * 0.0015),
                             ),
                           ),
-                          listViewSettings: ListViewSettings(
+                          listViewSettings: const ListViewSettings(
                             physics: BouncingScrollPhysics(),
                           ),
                           controller: _controller,
                           items: List.generate(
                             SETS.length,
                             (index) => CheckListCard(
-                              contentPadding: EdgeInsets.all(0),
+                              contentPadding: const EdgeInsets.all(0),
                               decorations: MultiSelectItemDecorations(
                                 decoration: BoxDecoration(
                                   border: Border.all(width: h * 0.0015),

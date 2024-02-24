@@ -60,7 +60,7 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
           overflow: TextOverflow.ellipsis,
           maxLines: 3,
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                fontSize: w * 0.08,
+                fontSize: w * 0.07, // fontSize of the guessing word
               ),
         ),
       ),
