@@ -11,6 +11,7 @@ import 'package:alias/screens/settings_page.dart';
 import 'package:alias/screens/team_page.dart';
 import 'package:alias/screens/winning_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'screens/score_page.dart';
@@ -30,7 +31,7 @@ List<String> initTeams() {
 final random = Random();
 String word = team_names[random.nextInt(team_names.length)];
 
-void main() {
+void main() async {
   runApp(
     const ProviderScope(
       child: MyApp(),
