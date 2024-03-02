@@ -1,13 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../dict/word_sets.dart';
-
-Map<String, List<String>> setsTable = {
-  "basic": basic,
-  "expert": expert,
-  "ukr": ukr,
-  "tworoots": tworoots,
-};
+import '../core/constants.dart';
 
 ///
 /// Provider that saves and contains oll words that will be used in current game
