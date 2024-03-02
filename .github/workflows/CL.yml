@@ -46,7 +46,9 @@ jobs:
 
         
       - name: Push to Releases
+        if: success()
         uses: ncipollo/release-action@v1
+        
         with:
           artifacts: |
             build/app/outputs/apk/release/*
