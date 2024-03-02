@@ -19,7 +19,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          flutter-version: '3.x.x' 
+          flutter-version: '3.10.6' 
       - run: flutter pub get
       #- run: flutter analyze
       - run: flutter test
@@ -37,7 +37,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable' 
-          flutter-version: '3.x.x' 
+          flutter-version: '3.10.6' 
       - run: flutter pub get
      
 
