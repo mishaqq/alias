@@ -24,3 +24,20 @@ Map<String, List<String>> setsTable = {
   "tworoots": tworoots,
   "slang": slang,
 };
+
+List<String> images = [
+  "assets/images/gost.jpg",
+  "assets/images/claus.jpg",
+  "assets/images/duck.jpg",
+  "assets/images/crab.jpg",
+  "assets/images/green.jpg",
+  "assets/images/hai.jpg",
+  "assets/images/mouse.jpg",
+  "assets/images/panda.jpg",
+  "assets/images/plate.jpg",
+  "assets/images/pumpkin.jpg",
+  "assets/images/sapce.jpg",
+  "assets/images/snowman.jpg",
+  "assets/images/vampire.jpg",
+  "assets/images/wale.jpg",
+];

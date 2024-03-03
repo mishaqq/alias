@@ -109,6 +109,10 @@ class ScorePage extends ConsumerWidget {
                                             padding: EdgeInsets.only(
                                                 right: w * 0.03),
                                             child: CircleAvatar(
+                                              child: ClipOval(
+                                                child: Image.asset(
+                                                    game.avatars[index]),
+                                              ),
                                               maxRadius: w * 0.05,
                                               backgroundColor: Color.fromARGB(
                                                   255, 255, 221, 149),

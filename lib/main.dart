@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:alias/core/constants.dart';
 import 'package:alias/dict/team_names.dart';
 import 'package:alias/models/game_model.dart';
 import 'package:alias/providers/game_model_provider.dart';
@@ -26,6 +27,18 @@ List<String> initTeams() {
   }
 
   return initialTeams.toList();
+}
+
+List<String> initTeamsAvatars() {
+  final random = Random();
+  Set<String> initialTeamsAvatars = {};
+
+  while (initialTeamsAvatars.length < 2) {
+    String image = images[random.nextInt(images.length)];
+    initialTeamsAvatars.add(image);
+  }
+
+  return initialTeamsAvatars.toList();
 }
 
 final random = Random();

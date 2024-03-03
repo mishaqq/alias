@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 
 class AliasData {
   final List<String> teams;
+  final List<String> avatars;
   final List<int> scores;
   final int turn;
   final Set<String> usedWords;
@@ -15,6 +16,7 @@ class AliasData {
   final bool oldSesion;
   AliasData({
     required this.teams,
+    required this.avatars,
     required this.scores,
     required this.turn,
     required this.usedWords,
@@ -27,6 +29,7 @@ class AliasData {
 
   AliasData copyWith({
     List<String>? teams,
+    List<String>? avatars,
     List<int>? scores,
     int? turn,
     Set<String>? usedWords,
@@ -38,6 +41,7 @@ class AliasData {
   }) {
     return AliasData(
       teams: teams ?? this.teams,
+      avatars: avatars ?? this.avatars,
       scores: scores ?? this.scores,
       turn: turn ?? this.turn,
       usedWords: usedWords ?? this.usedWords,
@@ -51,7 +55,7 @@ class AliasData {
 
   @override
   String toString() {
-    return 'AliasData(teams: $teams, scores: $scores, turn: $turn, usedWords: $usedWords, setsNames: $setsNames, duration: $duration, wordsToWin: $wordsToWin, lastWord: $lastWord, oldSesion: $oldSesion)';
+    return 'AliasData(teams: $teams, avatars: $avatars, scores: $scores, turn: $turn, usedWords: $usedWords, setsNames: $setsNames, duration: $duration, wordsToWin: $wordsToWin, lastWord: $lastWord, oldSesion: $oldSesion)';
   }
 
   @override
@@ -59,6 +63,7 @@ class AliasData {
     if (identical(this, other)) return true;
 
     return listEquals(other.teams, teams) &&
+        listEquals(other.avatars, avatars) &&
         listEquals(other.scores, scores) &&
         other.turn == turn &&
         setEquals(other.usedWords, usedWords) &&
@@ -72,6 +77,7 @@ class AliasData {
   @override
   int get hashCode {
     return teams.hashCode ^
+        avatars.hashCode ^
         scores.hashCode ^
         turn.hashCode ^
         usedWords.hashCode ^
@@ -85,6 +91,7 @@ class AliasData {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'teams': teams,
+      'avatars': avatars,
       'scores': scores,
       'turn': turn,
       'usedWords': usedWords.toList(),
@@ -95,6 +102,4 @@ class AliasData {
       'oldSesion': oldSesion,
     };
   }
-
-  String toJson() => json.encode(toMap());
 }

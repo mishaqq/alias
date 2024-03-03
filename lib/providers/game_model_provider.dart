@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:alias/core/constants.dart';
 import 'package:alias/providers/setsProvider.dart';
 import 'package:alias/screens/winning_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ final gameProvider = StateNotifierProvider<GameNotifier, AliasData>((ref) {
         turn: 0,
         usedWords: {},
         setsNames: [],
+        avatars: [],
         duration: 60,
         wordsToWin: 20,
         lastWord: true,
@@ -46,30 +48,49 @@ class GameNotifier extends StateNotifier<AliasData> {
 
   void addTeam() {
     final updatedTeams = List<String>.from(state.teams);
+    final updatedTeamsAvatars = List<String>.from(state.avatars);
     final random = Random();
+
+    // team update
     String team = team_names[random.nextInt(team_names.length)];
     while (state.teams.contains(team)) {
       team = team_names[random.nextInt(team_names.length)];
     }
 
-    if (state.teams.length > 20) {
+    if (state.teams.length > 10) {
       return;
     }
     updatedTeams.add(team);
 
+// score update
     final updatedScores = List<int>.from(state.scores);
     updatedScores.add(0);
 
-    state = state.copyWith(teams: updatedTeams, scores: updatedScores);
+// avatar update
+    String avatar = images[random.nextInt(images.length)];
+    while (state.avatars.contains(avatar)) {
+      avatar = images[random.nextInt(images.length)];
+    }
+    updatedTeamsAvatars.add(avatar);
+
+    state = state.copyWith(
+        teams: updatedTeams,
+        scores: updatedScores,
+        avatars: updatedTeamsAvatars);
   }
 
   void deleteTeam(int index) {
     final updatedTeams = List<String>.from(state.teams);
     final updatedScores = List<int>.from(state.scores);
+    final updatedTeamsAvatars = List<String>.from(state.avatars);
     updatedTeams.removeAt(index);
     updatedScores.removeAt(index);
+    updatedTeamsAvatars.removeAt(index);
 
-    state = state.copyWith(teams: updatedTeams, scores: updatedScores);
+    state = state.copyWith(
+        teams: updatedTeams,
+        scores: updatedScores,
+        avatars: updatedTeamsAvatars);
   }
 
   void nextTurn() {
@@ -104,6 +125,7 @@ class GameNotifier extends StateNotifier<AliasData> {
       turn: 0,
       usedWords: {},
       setsNames: [],
+      avatars: initTeamsAvatars(),
       duration: 60,
       wordsToWin: 20,
       lastWord: true,
@@ -191,6 +213,7 @@ class GameNotifier extends StateNotifier<AliasData> {
     final SharedPreferences pref = await SharedPreferences.getInstance();
 
     await pref.setStringList('teams', state.teams);
+    await pref.setStringList('avatars', state.avatars);
     await pref.setStringList('setsNames', state.setsNames);
     await pref.setStringList('scores', intArrToString(state.scores));
     await pref.setInt('turn', state.turn);
@@ -207,6 +230,7 @@ class GameNotifier extends StateNotifier<AliasData> {
 
     state = state.copyWith(
       teams: pref.getStringList('teams') ?? initTeams(),
+      avatars: pref.getStringList('avatars') ?? initTeamsAvatars(),
       scores: stringArrToInt(pref.getStringList('scores') ?? ["0 ", "0 "]),
       turn: pref.getInt('turn'),
       usedWords: pref.getStringList('usedWords')?.toSet() ?? {},
@@ -232,6 +256,7 @@ class GameNotifier extends StateNotifier<AliasData> {
     try {
       pref.clear();
       await pref.remove('teams');
+      await pref.remove('avatars');
       await pref.remove('setsNames');
       await pref.remove('scores');
       await pref.remove('turn');
