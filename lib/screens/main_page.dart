@@ -1,10 +1,5 @@
-import 'package:alias/providers/setsProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../main.dart';
 import '../providers/game_model_provider.dart';
 
 class MainPage extends ConsumerStatefulWidget {
@@ -85,6 +80,17 @@ class _MainPageState extends ConsumerState<MainPage> {
                         height: h * 0.20,
                         width: w * 1,
                       ),
+                    ),
+                  ),
+                  Positioned(
+                    left: w * 0.22,
+                    top: h * 0.26,
+                    bottom: h * 0.5,
+                    child: Image.asset(
+                      "assets/images/post_logo.png",
+                      height: h * 0.2,
+                      width: w,
+                      scale: 1.3,
                     ),
                   ),
                   if (oldSesion)

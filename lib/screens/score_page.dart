@@ -1,9 +1,7 @@
 import 'package:alias/screens/settings_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../core/dialog.dart';
-import '../main.dart';
 import '../providers/game_model_provider.dart';
 
 class ScorePage extends ConsumerWidget {

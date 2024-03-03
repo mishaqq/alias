@@ -3,18 +3,13 @@ import 'dart:math';
 
 import 'package:alias/core/constants.dart';
 import 'package:alias/dict/team_names.dart';
-import 'package:alias/models/game_model.dart';
-import 'package:alias/providers/game_model_provider.dart';
 import 'package:alias/screens/guessing_page.dart';
 import 'package:alias/screens/main_page.dart';
 import 'package:alias/screens/setSelection_page.dart';
 import 'package:alias/screens/settings_page.dart';
 import 'package:alias/screens/team_page.dart';
-import 'package:alias/screens/winning_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'screens/score_page.dart';
 
 List<String> initTeams() {
@@ -71,7 +66,7 @@ class MyApp extends ConsumerWidget {
             elevation: 10,
 
             shadowColor: Colors.black,
-            backgroundColor: Color.fromARGB(
+            backgroundColor: const Color.fromARGB(
                 255, 248, 237, 255), // Color.fromARGB(255, 255, 221, 149),
             foregroundColor: Color.fromARGB(255, 255, 174, 0), //TO FIX
             shape: RoundedRectangleBorder(
