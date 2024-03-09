@@ -83,7 +83,7 @@ class _MainPageState extends ConsumerState<MainPage> {
                     ),
                   ),
                   Positioned(
-                    left: w * 0.22,
+                    left: w * 0.15,
                     top: h * 0.26,
                     bottom: h * 0.5,
                     child: Image.asset(
@@ -152,8 +152,7 @@ class _MainPageState extends ConsumerState<MainPage> {
                         height: h * 0.063,
                         child: ElevatedButton(
                             onPressed: () async {
-                              ref.read(gameProvider.notifier).reset();
-                              Navigator.pushNamed(context, '/set_choosing');
+                              Navigator.pushNamed(context, '/rules');
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:

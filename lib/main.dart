@@ -5,6 +5,7 @@ import 'package:alias/core/constants.dart';
 import 'package:alias/dict/team_names.dart';
 import 'package:alias/screens/guessing_page.dart';
 import 'package:alias/screens/main_page.dart';
+import 'package:alias/screens/rules.dart';
 import 'package:alias/screens/setSelection_page.dart';
 import 'package:alias/screens/settings_page.dart';
 import 'package:alias/screens/team_page.dart';
@@ -88,6 +89,7 @@ class MyApp extends ConsumerWidget {
         '/set_choosing': (context) => ChoosingPage(),
         '/settings': (context) => SettingsPage(fromGame: false),
         '/team': (context) => TeamPage(),
+        '/rules': (context) => RulesPage(),
       },
     );
   }

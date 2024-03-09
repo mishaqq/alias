@@ -32,7 +32,6 @@ List<String> images = [
   "assets/images/crab.jpg",
   "assets/images/green.jpg",
   "assets/images/hai.jpg",
-  "assets/images/mouse.jpg",
   "assets/images/panda.jpg",
   "assets/images/plate.jpg",
   "assets/images/pumpkin.jpg",
