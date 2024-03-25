@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../forks/item_count.dart';
 import '../providers/game_model_provider.dart';
@@ -215,8 +216,8 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                                 ),
                                 ItemCount(
                                   color: Color.fromARGB(255, 255, 221, 149),
-                                  buttonSizeHeight: w * 0.09,
-                                  buttonSizeWidth: w * 0.09,
+                                  buttonSizeHeight: 30.sp,
+                                  buttonSizeWidth: 30.sp,
                                   initialValue: wordsQuantity,
                                   minValue: 5,
                                   step: 5,
@@ -257,12 +258,12 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
-                                      top: h * 0.004, right: w * 0.02),
+                                      top: h * 0.004, right: w * 0.015),
                                   child: SizedBox(
-                                    width: w * 0.06,
-                                    height: w * 0.06,
+                                    width: 20.sp,
+                                    height: 20.sp,
                                     child: Transform.scale(
-                                      scale: w * 0.004,
+                                      scale: 1.1.sp,
                                       child: Checkbox(
                                         value: ref.read(gameProvider).lastWord,
                                         onChanged: (value) {
@@ -317,7 +318,7 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                         },
                         child: Icon(
                           Icons.arrow_back_ios_new_rounded,
-                          size: w * 0.07,
+                          size: 20.sp,
                         ),
                       ),
                     ),
@@ -351,7 +352,7 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                                       .textTheme
                                       .bodyMedium!
                                       .copyWith(
-                                        fontSize: w * 0.055,
+                                        fontSize: 19.sp,
                                       )),
                         ),
                       ),

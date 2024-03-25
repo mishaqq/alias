@@ -2,6 +2,7 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../providers/game_model_provider.dart';
 import 'count_page.dart';
 
@@ -58,7 +59,7 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
           overflow: TextOverflow.ellipsis,
           maxLines: 3,
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                fontSize: w * 0.07, // fontSize of the guessing word
+                fontSize: 22.sp, // fontSize of the guessing word
               ),
         ),
       ),
@@ -155,7 +156,7 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                         strokeWidth: w * 0.009,
                         strokeCap: StrokeCap.round,
                         textStyle: TextStyle(
-                            fontSize: w * 0.055,
+                            fontSize: w * 0.044,
                             color: const Color.fromARGB(255, 0, 0, 0),
                             fontWeight: FontWeight.bold),
                         textFormat: CountdownTextFormat.S,
@@ -208,7 +209,7 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              fontSize: w * 0.055,
+                              fontSize: 16.sp,
                             ),
                       ),
                       // Divider(
@@ -350,15 +351,15 @@ class CustomDialog extends StatelessWidget {
             child: Text(
               "Хто вгадав - $lastWord?",
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontSize: w * 0.047,
+                    fontSize: 14.sp,
                   ),
             ),
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.5,
             height:
-                (h * 0.055) * teams.length < MediaQuery.of(context).size.height
-                    ? ((h * 0.055) * (teams.length + 1)).toDouble()
+                (h * 0.058) * teams.length < MediaQuery.of(context).size.height
+                    ? ((h * 0.058) * (teams.length + 1)).toDouble()
                     : MediaQuery.of(context).size.height * 0.8,
             child: ListView.builder(
               physics: const BouncingScrollPhysics(),
@@ -382,7 +383,7 @@ class CustomDialog extends StatelessWidget {
                             width: MediaQuery.of(context).size.height * 0.0024),
                         borderRadius: BorderRadius.all(
                           Radius.circular(
-                              MediaQuery.of(context).size.height * 0.018),
+                              MediaQuery.of(context).size.height * 0.00),
                         ),
                       ),
                       splashFactory: NoSplash.splashFactory,
@@ -412,6 +413,9 @@ class CustomDialog extends StatelessWidget {
                       index == teams.length ? "Ніхто" : teams[index],
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontSize: 10.sp,
+                          ),
                     ),
                   ),
                 ),

@@ -57,6 +57,7 @@ class MyApp extends ConsumerWidget {
     return ScreenUtilInit(
         designSize: const Size(360, 690),
         minTextAdapt: true,
+        splitScreenMode: true,
         builder: (_, child) {
           return MaterialApp(
             theme: ThemeData(
@@ -65,7 +66,7 @@ class MyApp extends ConsumerWidget {
                     fontWeight: FontWeight.w700,
                     color: Colors.black,
                     fontFamily: "Anonymous",
-                    fontSize: MediaQuery.of(context).size.width * 0.065),
+                    fontSize: 20.sp),
               ),
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(

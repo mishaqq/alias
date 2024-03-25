@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../providers/game_model_provider.dart';
 
 // ignore: must_be_immutable
@@ -126,13 +127,13 @@ class _CountPageState extends ConsumerState<CountPage> {
                                                 ? Icon(
                                                     Icons.check_circle_outline,
                                                     color: Colors.green,
-                                                    size: w * 0.06,
+                                                    size: 20.sp,
                                                   )
                                                 : Icon(
                                                     Icons
                                                         .radio_button_unchecked_outlined,
                                                     color: Colors.red,
-                                                    size: w * 0.06,
+                                                    size: 20.sp,
                                                   )),
                                       ),
                                     ),
@@ -152,7 +153,7 @@ class _CountPageState extends ConsumerState<CountPage> {
                                     });
                                   },
                                   child: Padding(
-                                    padding: EdgeInsets.only(top: h * 0.018),
+                                    padding: EdgeInsets.only(top: h * 0.01),
                                     child: ListTile(
                                         dense: true,
                                         minVerticalPadding: 0,
@@ -174,13 +175,13 @@ class _CountPageState extends ConsumerState<CountPage> {
                                             ? Icon(
                                                 Icons.check_circle_outline,
                                                 color: Colors.green,
-                                                size: w * 0.06,
+                                                size: 20.sp,
                                               )
                                             : Icon(
                                                 Icons
                                                     .radio_button_unchecked_outlined,
                                                 color: Colors.red,
-                                                size: w * 0.06,
+                                                size: 20.sp,
                                               )
                                         //Text(
                                         //raundWorlds.values.toList()[index].toString(),
@@ -215,7 +216,7 @@ class _CountPageState extends ConsumerState<CountPage> {
                           },
                           child: Icon(
                             Icons.arrow_back_ios_new_rounded,
-                            size: w * 0.07,
+                            size: 20.sp,
                           ),
                         ),
                       ),
@@ -285,7 +286,7 @@ class _CountPageState extends ConsumerState<CountPage> {
                                     .textTheme
                                     .bodyMedium!
                                     .copyWith(
-                                      fontSize: w * 0.055,
+                                      fontSize: 19.sp,
                                     )),
                           ),
                         ),
@@ -329,81 +330,88 @@ class CustomDialogScore extends StatelessWidget {
           Radius.circular(h * 0.018),
         ),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.5,
-            height:
-                (h * 0.055) * teams.length < MediaQuery.of(context).size.height
-                    ? ((h * 0.055) * (teams.length + 1)).toDouble()
-                    : MediaQuery.of(context).size.height * 0.8,
-            child: Padding(
-              padding: EdgeInsets.only(top: h * 0.002),
-              child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: teams.length + 1,
-                itemBuilder: (context, index) => Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: w * 0.01, vertical: h * 0.002),
-                  child: SizedBox(
-                    width: w * 0.85,
-                    height: h * 0.05,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        elevation: 10,
+      child: Padding(
+        padding: EdgeInsets.only(top: h * 0.006),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.5,
+              height: (h * 0.058) * teams.length <
+                      MediaQuery.of(context).size.height
+                  ? ((h * 0.058) * (teams.length + 1)).toDouble()
+                  : MediaQuery.of(context).size.height * 0.8,
+              child: Padding(
+                padding: EdgeInsets.only(top: h * 0.002),
+                child: ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: teams.length + 1,
+                  itemBuilder: (context, index) => Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: w * 0.01, vertical: h * 0.002),
+                    child: SizedBox(
+                      width: w * 0.85,
+                      height: h * 0.05,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          elevation: 10,
 
-                        shadowColor: Colors.black,
-                        backgroundColor: Color.fromARGB(255, 255, 221,
-                            149), // Color.fromARGB(255, 255, 221, 149),
-                        foregroundColor: Colors.black, //TO FIX
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                              width:
-                                  MediaQuery.of(context).size.height * 0.0024),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(
-                                MediaQuery.of(context).size.height * 0.018),
+                          shadowColor: Colors.black,
+                          backgroundColor: Color.fromARGB(255, 255, 221,
+                              149), // Color.fromARGB(255, 255, 221, 149),
+                          foregroundColor: Colors.black, //TO FIX
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                                width: MediaQuery.of(context).size.height *
+                                    0.0024),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(
+                                  MediaQuery.of(context).size.height * 0.00),
+                            ),
                           ),
+                          splashFactory: NoSplash.splashFactory,
                         ),
-                        splashFactory: NoSplash.splashFactory,
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop(
-                            index == teams.length ? "Nobody" : teams[index]);
-                      },
-                      child: Text(
-                        index == teams.length ? "Ніхто" : teams[index],
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                        onPressed: () {
+                          Navigator.of(context).pop(
+                              index == teams.length ? "Nobody" : teams[index]);
+                        },
+                        child: Text(
+                          index == teams.length ? "Ніхто" : teams[index],
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    fontSize: 10.sp,
+                                  ),
+                        ),
                       ),
                     ),
-                  ),
 
-                  //SizedBox(
-                  //   width: w * 0.85,
-                  //   height: h * 0.05,
-                  //   child: ElevatedButton(
-                  //     onPressed: () {
-                  //       Navigator.of(context).pop(
-                  //           index == teams.length ? "Nobody" : teams[index]);
-                  //     },
-                  //     child: Text(
-                  //       index == teams.length ? "Nobody" : teams[index],
-                  //       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  //             fontSize: w * 0.047,
-                  //           ),
-                  //       maxLines: 1,
-                  //       overflow: TextOverflow.ellipsis,
-                  //     ),
-                  //   ),
-                  // ),
+                    //SizedBox(
+                    //   width: w * 0.85,
+                    //   height: h * 0.05,
+                    //   child: ElevatedButton(
+                    //     onPressed: () {
+                    //       Navigator.of(context).pop(
+                    //           index == teams.length ? "Nobody" : teams[index]);
+                    //     },
+                    //     child: Text(
+                    //       index == teams.length ? "Nobody" : teams[index],
+                    //       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    //             fontSize: w * 0.047,
+                    //           ),
+                    //       maxLines: 1,
+                    //       overflow: TextOverflow.ellipsis,
+                    //     ),
+                    //   ),
+                    // ),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

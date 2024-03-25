@@ -40,3 +40,18 @@ List<String> images = [
   "assets/images/vampire.jpg",
   "assets/images/wale.jpg",
 ];
+// List<Image> cachimages = [
+//   Image.asset("assets/images/gost.jpg"),
+//   Image.asset("assets/images/claus.jpg"),
+//   Image.asset("assets/images/duck.jpg"),
+//   Image.asset("assets/images/crab.jpg"),
+//   Image.asset("assets/images/green.jpg"),
+//   Image.asset("assets/images/hai.jpg"),
+//   Image.asset("assets/images/panda.jpg"),
+//   Image.asset("assets/images/plate.jpg"),
+//   Image.asset("assets/images/pumpkin.jpg"),
+//   Image.asset("assets/images/sapce.jpg"),
+//   Image.asset("assets/images/snowman.jpg"),
+//   Image.asset("assets/images/vampire.jpg"),
+//   Image.asset("assets/images/wale.jpg"),
+// ];
