@@ -11,6 +11,7 @@ import 'package:alias/screens/settings_page.dart';
 import 'package:alias/screens/team_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'screens/score_page.dart';
 
 List<String> initTeams() {
@@ -53,45 +54,51 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp(
-      theme: ThemeData(
-        textTheme: TextTheme(
-          bodyMedium: TextStyle(
-              fontWeight: FontWeight.w700,
-              color: Colors.black,
-              fontFamily: "Anonymous",
-              fontSize: MediaQuery.of(context).size.width * 0.065),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            elevation: 10,
+    return ScreenUtilInit(
+        designSize: const Size(360, 690),
+        minTextAdapt: true,
+        builder: (_, child) {
+          return MaterialApp(
+            theme: ThemeData(
+              textTheme: TextTheme(
+                bodyMedium: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black,
+                    fontFamily: "Anonymous",
+                    fontSize: MediaQuery.of(context).size.width * 0.065),
+              ),
+              elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ElevatedButton.styleFrom(
+                  elevation: 10,
 
-            shadowColor: Colors.black,
-            backgroundColor: const Color.fromARGB(
-                255, 248, 237, 255), // Color.fromARGB(255, 255, 221, 149),
-            foregroundColor: Color.fromARGB(255, 255, 174, 0), //TO FIX
-            shape: RoundedRectangleBorder(
-              side: BorderSide(
-                  width: MediaQuery.of(context).size.height * 0.0024),
-              borderRadius: BorderRadius.all(
-                Radius.circular(MediaQuery.of(context).size.height * 0.018),
+                  shadowColor: Colors.black,
+                  backgroundColor: const Color.fromARGB(255, 248, 237,
+                      255), // Color.fromARGB(255, 255, 221, 149),
+                  foregroundColor: Color.fromARGB(255, 255, 174, 0), //TO FIX
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                        width: MediaQuery.of(context).size.height * 0.0024),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(
+                          MediaQuery.of(context).size.height * 0.018),
+                    ),
+                  ),
+                  splashFactory: NoSplash.splashFactory,
+                ),
               ),
             ),
-            splashFactory: NoSplash.splashFactory,
-          ),
-        ),
-      ),
-      debugShowCheckedModeBanner: false,
-      routes: {
-        '/': (context) => MainPage(),
-        '/score': (context) => ScorePage(),
-        '/guessing': (context) => GuessingPage(),
-        '/set_choosing': (context) => ChoosingPage(),
-        '/settings': (context) => SettingsPage(fromGame: false),
-        '/team': (context) => TeamPage(),
-        '/rules': (context) => RulesPage(),
-      },
-    );
+            debugShowCheckedModeBanner: false,
+            routes: {
+              '/': (context) => MainPage(),
+              '/score': (context) => ScorePage(),
+              '/guessing': (context) => GuessingPage(),
+              '/set_choosing': (context) => ChoosingPage(),
+              '/settings': (context) => SettingsPage(fromGame: false),
+              '/team': (context) => TeamPage(),
+              '/rules': (context) => RulesPage(),
+            },
+          );
+        });
   }
 }
 

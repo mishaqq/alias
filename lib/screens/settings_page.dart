@@ -218,8 +218,8 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                                   buttonSizeHeight: w * 0.09,
                                   buttonSizeWidth: w * 0.09,
                                   initialValue: wordsQuantity,
-                                  minValue: 10,
-                                  step: 10,
+                                  minValue: 5,
+                                  step: 5,
                                   maxValue: 200,
                                   decimalPlaces: 0,
                                   textStyle: Theme.of(context)

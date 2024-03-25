@@ -24,7 +24,7 @@ final counterProvider = StateNotifierProvider<CounterNotifier, int>((ref) {
 });
 
 class CounterNotifier extends StateNotifier<int> {
-  CounterNotifier() : super(20);
+  CounterNotifier() : super(10);
 
   void setValue(int val) {
     state = val;

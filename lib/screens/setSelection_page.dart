@@ -66,6 +66,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                         padding: EdgeInsets.only(
                           left: h * 0.015,
                           right: h * 0.015,
+                          top: h * 0.02,
                         ),
                         child: MultiSelectCheckList(
                           itemPadding: EdgeInsets.all(h * 0.01),
