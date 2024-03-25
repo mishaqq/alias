@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../providers/game_model_provider.dart';
 
 showAlertDialog(BuildContext context, ref) {
   double h = MediaQuery.of(context).size.height;
   double w = MediaQuery.of(context).size.width;
   Widget cancelButton = Padding(
-    padding: EdgeInsets.only(left: w * 0.05),
+    padding: EdgeInsets.only(left: w * 0.00),
     child: SizedBox(
       width: w * 0.17,
       height: w * 0.1,
@@ -23,7 +24,7 @@ showAlertDialog(BuildContext context, ref) {
               fontWeight: FontWeight.w700,
               color: Colors.black,
               fontFamily: "Anonymous",
-              fontSize: w * 0.040),
+              fontSize: 12.sp),
         ),
         onPressed: () {
           ref.read(gameProvider.notifier).oldSesionTrue();
@@ -33,7 +34,7 @@ showAlertDialog(BuildContext context, ref) {
     ),
   );
   Widget continueButton = SizedBox(
-    width: w * 0.3,
+    width: w * 0.25,
     height: w * 0.1,
     child: TextButton(
       style: ElevatedButton.styleFrom(
@@ -49,7 +50,7 @@ showAlertDialog(BuildContext context, ref) {
             fontWeight: FontWeight.w700,
             color: Colors.black,
             fontFamily: "Anonymous",
-            fontSize: w * 0.040),
+            fontSize: 12.sp),
       ),
       onPressed: () {
         Navigator.pop(context);
@@ -64,15 +65,15 @@ showAlertDialog(BuildContext context, ref) {
         Radius.circular(h * 0.018),
       ),
     ),
-    actionsAlignment: MainAxisAlignment.end,
-    actionsPadding: EdgeInsets.only(right: w * 0.1, bottom: w * 0.03),
+    actionsAlignment: MainAxisAlignment.center,
+    actionsPadding: EdgeInsets.only(right: w * 0.0, bottom: w * 0.03),
     title: Text(
       "Вийти з цієї гри?",
       style: TextStyle(
           fontWeight: FontWeight.w700,
           color: Colors.black,
           fontFamily: "Anonymous",
-          fontSize: w * 0.047),
+          fontSize: 18.sp),
     ),
     actions: [
       cancelButton,

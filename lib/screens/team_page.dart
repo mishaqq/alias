@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../providers/game_model_provider.dart';
 
 class TeamPage extends ConsumerWidget {
@@ -115,7 +116,7 @@ class TeamPage extends ConsumerWidget {
                                               ),
                                               icon: Icon(
                                                 Icons.delete_outline_outlined,
-                                                size: w * 0.06,
+                                                size: 19.sp,
                                               ),
                                               onPressed: () {
                                                 if (game.teams.length > 2) {
@@ -213,7 +214,7 @@ class TeamPage extends ConsumerWidget {
                         },
                         child: Icon(
                           Icons.arrow_back_ios_new_rounded,
-                          size: w * 0.07,
+                          size: 20.sp,
                         ),
                       ),
                     ),
@@ -238,7 +239,7 @@ class TeamPage extends ConsumerWidget {
                                   .textTheme
                                   .bodyMedium!
                                   .copyWith(
-                                    fontSize: w * 0.055,
+                                    fontSize: 19.sp,
                                   )),
                         ),
                       ),
