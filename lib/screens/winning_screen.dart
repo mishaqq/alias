@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:alias/providers/game_model_provider.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class WinningPage extends ConsumerStatefulWidget {
@@ -35,6 +36,7 @@ class _WinningPageState extends ConsumerState<WinningPage>
 
   @override
   void initState() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
     super.initState();
     controller = new AnimationController(
       duration: Duration(seconds: 1),

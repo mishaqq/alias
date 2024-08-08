@@ -1,5 +1,6 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,7 +22,8 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
   @override
   void initState() {
     super.initState();
-    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack); // hide status bar
+    SystemChrome.setEnabledSystemUIMode(
+        SystemUiMode.leanBack); // hide status bar
     _countDownController = CountDownController();
     controller = CardSwiperController();
   }

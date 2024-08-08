@@ -86,8 +86,8 @@ class TeamPage extends ConsumerWidget {
                                                     game.avatars[index]),
                                               ),
                                               maxRadius: w * 0.05,
-                                              backgroundColor: Color.fromARGB(
-                                                  255, 255, 221, 149),
+                                              backgroundColor:
+                                                  Colors.transparent,
                                             ),
                                           ),
                                           Expanded(

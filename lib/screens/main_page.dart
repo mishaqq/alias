@@ -15,6 +15,7 @@ bool oldSesion = false;
 class _MainPageState extends ConsumerState<MainPage> {
   @override
   void initState() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
     // when the page loads it reads from the SP if there was an old session and saves it to the Game Provider state
     ref.read(gameProvider.notifier).oldGame();
     super.initState();
