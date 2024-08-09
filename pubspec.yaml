@@ -4,10 +4,10 @@ publish_to: 'none'
 version: 0.1.0
 
 environment:
-  sdk: '>=3.0.6 <4.0.0'
+  sdk: '>=3.4.3 <4.0.0'
 
 dependencies:
-  circular_countdown_timer: ^0.2.3
+  circular_countdown_timer: ^0.2.4
   confetti: ^0.7.0
   drop_shadow_image: ^0.9.1
   flutter:

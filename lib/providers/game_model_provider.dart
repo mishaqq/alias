@@ -4,6 +4,7 @@ import 'package:alias/core/constants.dart';
 import 'package:alias/providers/setsProvider.dart';
 import 'package:alias/screens/winning_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../dict/team_names.dart';
@@ -171,26 +172,33 @@ class GameNotifier extends StateNotifier<AliasData> {
   }
 
   void winCheck(BuildContext context) {
-    List<int> winnersIndexes = [];
-    List<String> winners = [];
+    List<int> scores = [];
+    List<String> winnersNames = [];
     for (int el = 0; el < state.scores.length; el++) {
       if (state.scores[el] >= state.wordsToWin) {
-        winnersIndexes.add(el);
+        scores.add(state.scores[el]);
       }
     }
-    for (var element in winnersIndexes) {
-      winners.add(state.teams[element]);
+    if (scores.isEmpty) {
+      return;
     }
-    if (winnersIndexes.isNotEmpty) {
-      Navigator.push(
+    scores.sort();
+    int maxScore = scores.last;
+
+    for (int i = 0; i < state.scores.length; i++) {
+      if (state.scores[i] == maxScore) {
+        winnersNames.add(state.teams[i]);
+      }
+    }
+
+    if (winnersNames.isNotEmpty) {
+      Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) => WinningPage(
-              winners: winners,
+              winners: winnersNames,
             ),
           ));
-    } else {
-      Navigator.pop(context);
     }
   }
 

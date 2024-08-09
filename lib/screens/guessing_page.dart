@@ -126,7 +126,7 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                         splashRadius: 30,
                         iconSize: w * 0.08,
                         onPressed: () {
-                          _countDownController.isPaused
+                          _countDownController.isPaused.value
                               ? _countDownController.resume()
                               : _countDownController.pause();
                           showDialog(
