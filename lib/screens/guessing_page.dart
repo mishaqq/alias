@@ -21,11 +21,10 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
   int minus = 0;
   @override
   void initState() {
-    super.initState();
-    SystemChrome.setEnabledSystemUIMode(
-        SystemUiMode.leanBack); // hide status bar
+    // hide status bar
     _countDownController = CountDownController();
     controller = CardSwiperController();
+    super.initState();
   }
 
   // @override
