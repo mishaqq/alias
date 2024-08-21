@@ -180,6 +180,7 @@ class GameNotifier extends StateNotifier<AliasData> {
       }
     }
     if (scores.isEmpty) {
+      Navigator.pop(context);
       return;
     }
     scores.sort();

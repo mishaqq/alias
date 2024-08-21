@@ -16,7 +16,7 @@ class ChoosingPage extends ConsumerStatefulWidget {
 class _GuessingPageState extends ConsumerState<ChoosingPage> {
   @override
   void initState() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
+    //SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
     super.initState();
   }
 

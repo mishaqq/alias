@@ -34,7 +34,7 @@ showAlertDialog(BuildContext context, ref) {
     ),
   );
   Widget continueButton = SizedBox(
-    width: w * 0.25,
+    width: w * 0.17,
     height: w * 0.1,
     child: TextButton(
       style: ElevatedButton.styleFrom(
@@ -45,7 +45,7 @@ showAlertDialog(BuildContext context, ref) {
         ),
       ),
       child: Text(
-        "Продовжити",
+        "Ні",
         style: TextStyle(
             fontWeight: FontWeight.w700,
             color: Colors.black,
@@ -66,14 +66,16 @@ showAlertDialog(BuildContext context, ref) {
       ),
     ),
     actionsAlignment: MainAxisAlignment.center,
-    actionsPadding: EdgeInsets.only(right: w * 0.0, bottom: w * 0.03),
-    title: Text(
-      "Вийти з цієї гри?",
-      style: TextStyle(
-          fontWeight: FontWeight.w700,
-          color: Colors.black,
-          fontFamily: "Anonymous",
-          fontSize: 18.sp),
+    actionsPadding: EdgeInsets.only(right: w * 0.0, bottom: w * 0.07),
+    title: Center(
+      child: Text(
+        "Вийти з цієї гри?",
+        style: TextStyle(
+            fontWeight: FontWeight.w700,
+            color: Colors.black,
+            fontFamily: "Anonymous",
+            fontSize: 18.sp),
+      ),
     ),
     actions: [
       cancelButton,

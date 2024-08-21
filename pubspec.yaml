@@ -20,6 +20,7 @@ dependencies:
   flutter_screenutil: ^5.9.0
   flutter_svg: ^2.0.9
   shared_preferences: ^2.2.2
+  url_launcher: ^6.3.0
 
 
 

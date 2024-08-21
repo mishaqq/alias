@@ -20,7 +20,7 @@ late final CardSwiperController controller;
 class _MainPageState extends ConsumerState<MainPage> {
   @override
   void initState() {
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     // when the page loads it reads from the SP if there was an old session and saves it to the Game Provider state
     ref.read(gameProvider.notifier).oldGame();
     controller = CardSwiperController();
@@ -152,9 +152,11 @@ class _MainPageState extends ConsumerState<MainPage> {
                     width: w,
                     top: h * 0.09,
                     left: w * 0.31,
-                    child: Image.asset(
-                      "assets/images/wow.png",
-                      height: h * 0.30,
+                    child: IgnorePointer(
+                      child: Image.asset(
+                        "assets/images/wow.png",
+                        height: h * 0.30,
+                      ),
                     ),
                   ),
                   Positioned(
