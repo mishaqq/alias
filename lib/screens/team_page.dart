@@ -50,8 +50,10 @@ class TeamPage extends ConsumerWidget {
                   child: Column(
                     children: [
                       Padding(
-                        padding:
-                            EdgeInsets.only(top: h * 0.015, bottom: w * 0.03),
+                        padding: EdgeInsets.only(
+                          top: h * 0.015,
+                          bottom: w * 0.03,
+                        ),
                         child: Text(
                           'Команди',
                         ),
