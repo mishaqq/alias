@@ -199,7 +199,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
 
                               Navigator.pushNamed(context, "/settings");
                             } else {
-                              //TO DO
+                              //TO DO add popup no sets selected :/
                             }
                           },
                           child: Text("Продовжити",

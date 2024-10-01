@@ -12,7 +12,7 @@ showAlertDialog(BuildContext context, ref) {
       height: w * 0.1,
       child: TextButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Color.fromARGB(255, 255, 221, 149),
+          backgroundColor: const Color.fromARGB(255, 255, 221, 149),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.zero,
             side: BorderSide(width: MediaQuery.of(context).size.height * 0.003),
@@ -38,7 +38,7 @@ showAlertDialog(BuildContext context, ref) {
     height: w * 0.1,
     child: TextButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Color.fromARGB(255, 255, 221, 149),
+        backgroundColor: const Color.fromARGB(255, 255, 221, 149),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.zero,
           side: BorderSide(width: MediaQuery.of(context).size.height * 0.003),
