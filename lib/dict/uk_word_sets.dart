@@ -1,4 +1,4 @@
-List<String> basic = [
+const List<String> basic = [
   "квітка",
   "м'ячик",
   "лісовик",
@@ -401,7 +401,7 @@ List<String> basic = [
   "тихіш",
 ]; // Add more words
 
-List<String> tworoots = [
+const List<String> tworoots = [
   "шибайголова",
   "відеоігри",
   "сонцезахисний",
@@ -457,7 +457,7 @@ List<String> tworoots = [
   "словотворчість",
 ];
 
-final List<String> expert = [
+const List<String> expert = [
   "гукати",
   "фрустрація",
   "тендітна",
@@ -659,7 +659,7 @@ final List<String> expert = [
   "Сапковський",
   "Рівія",
 ];
-List<String> slang = [
+const List<String> slang = [
   "твіт",
   "скролити",
   "кайф",
@@ -694,7 +694,7 @@ List<String> slang = [
   "гвинтик",
 ];
 
-List<String> ukr = [
+const List<String> ukr = [
   "мліти",
   "воліти",
   "гамір",

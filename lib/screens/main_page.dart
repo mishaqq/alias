@@ -1,3 +1,5 @@
+import 'package:alias/core/constants.dart';
+import 'package:alias/providers/locale_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
@@ -16,18 +18,50 @@ class MainPage extends ConsumerStatefulWidget {
 bool oldSesion = false;
 late final CardSwiperController controller;
 
-class _MainPageState extends ConsumerState<MainPage> {
+class _MainPageState extends ConsumerState<MainPage>
+    with TickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _heightPosition;
+
   @override
   void initState() {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+
     // when the page loads it reads from the SP if there was an old session and saves it to the Game Provider state
     ref.read(gameProvider.notifier).oldGame();
     controller = CardSwiperController();
+
     super.initState();
   }
 
   @override
+  void didChangeDependencies() {
+    // Initialize AnimationController
+    _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    );
+
+    // Define animations for top and left positions
+    _heightPosition = Tween<double>(
+      begin: MediaQuery.of(context).size.height * 0.20,
+      end: MediaQuery.of(context).size.height * 0.24,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeIn,
+      ),
+    );
+
+    // Start the animation on build
+    _controller.forward();
+
+    super.didChangeDependencies();
+  }
+
+  @override
   void dispose() {
+    _controller.dispose();
     super.dispose();
   }
 
@@ -163,9 +197,11 @@ class _MainPageState extends ConsumerState<MainPage> {
                     width: w,
                     bottom: h * 0.42,
                     right: w * 0.22,
-                    child: Image.asset(
-                      "assets/images/cloud.png",
-                      height: h * 0.11,
+                    child: IgnorePointer(
+                      child: Image.asset(
+                        "assets/images/cloud.png",
+                        height: h * 0.11,
+                      ),
                     ),
                   ),
                   Positioned(
@@ -223,15 +259,19 @@ class _MainPageState extends ConsumerState<MainPage> {
                   //   ),
                   // ),
                   if (oldSesion)
-                    Positioned(
-                      width: w,
-                      bottom: h * 0.24,
-                      left: w * 0.22,
-                      child: Image.asset(
-                        "assets/images/cat_shy.png",
-                        height: h * 0.11,
-                      ),
-                    ),
+                    AnimatedBuilder(
+                        animation: _heightPosition,
+                        builder: (context, child) {
+                          return Positioned(
+                            width: w,
+                            bottom: _heightPosition.value,
+                            left: w * 0.22,
+                            child: Image.asset(
+                              "assets/images/cat_shy.png",
+                              height: h * 0.11,
+                            ),
+                          );
+                        }),
                   if (oldSesion)
                     Positioned(
                       top: h * 0.50,
@@ -249,8 +289,17 @@ class _MainPageState extends ConsumerState<MainPage> {
                                   .readFormPrefs();
 
                               // makes a list of words for the current game
-                              ref.read(gameProvider.notifier).makeGameWordSet(
-                                  ref.read(gameProvider).setsNames);
+                              Locale curLocale = ref.read(localeProvider);
+                              final localizedSetList = setLocalizationModel
+                                  .localizedSetList[curLocale]!;
+                              final usedSetsTitles =
+                                  ref.read(gameProvider).setsNames;
+                              final usedSets = localizedSetList
+                                  .where((s) => usedSetsTitles.contains(s.id))
+                                  .toList();
+                              ref
+                                  .read(gameProvider.notifier)
+                                  .makeGameWordSet(usedSets);
 
                               // ignore: use_build_context_synchronously
                               Navigator.pushNamed(context, '/score');

@@ -8,7 +8,7 @@ final localeProvider = StateNotifierProvider<LocaleNotifier, Locale>(
 );
 
 class LocaleNotifier extends StateNotifier<Locale> {
-  LocaleNotifier() : super(const Locale("uk"));
+  LocaleNotifier() : super(const Locale("en"));
 
   void updateLocale(Locale newLocale) {
     state = newLocale;

@@ -1,6 +1,8 @@
 import 'dart:math';
+import 'dart:developer' as dev;
 
 import 'package:alias/core/constants.dart';
+import 'package:alias/models/set_model.dart';
 import 'package:alias/providers/locale_provider.dart';
 import 'package:alias/providers/setsProvider.dart';
 import 'package:alias/screens/winning_screen.dart';
@@ -145,10 +147,13 @@ class GameNotifier extends StateNotifier<AliasData> {
     );
   }
 
-  void makeGameWordSet(List<String> sets) async {
-    ref.read(setsProvider.notifier).updateWords(sets);
+  void makeGameWordSet(List<AliasSet> sets) async {
+    ref.read(wordsProvider.notifier).updateWords(sets);
+    final List<String> setNames = sets.map((s) => s.id).toList();
 
-    state = state.copyWith(setsNames: sets);
+    dev.log("Saved sets to AliasData: ");
+    dev.log(setNames.toString());
+    state = state.copyWith(setsNames: setNames);
   }
 
   void addUsedWord(String word) {
@@ -156,14 +161,14 @@ class GameNotifier extends StateNotifier<AliasData> {
     updatedUsedWords.add(word);
     state = state.copyWith(usedWords: updatedUsedWords);
 
-    if (state.usedWords.length == ref.read(setsProvider).length) {
+    if (state.usedWords.length == ref.read(wordsProvider).length) {
       state = state.copyWith(usedWords: {});
     }
   }
 
   String selectRandomWord() {
     final random = Random();
-    List<String> allWords = ref.read(setsProvider);
+    List<String> allWords = ref.read(wordsProvider);
     String word = allWords[random.nextInt(allWords.length)];
 
     while (state.usedWords.contains(word)) {
