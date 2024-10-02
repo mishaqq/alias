@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:alias/core/constants.dart';
 import 'package:alias/dict/team_names.dart';
+import 'package:alias/providers/locale_provider.dart';
 import 'package:alias/screens/guessing_page.dart';
 import 'package:alias/screens/main_page.dart';
 import 'package:alias/screens/rules.dart';
@@ -12,7 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'screens/score_page.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart'; // ;ocale
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // locale
 
 void main() async {
   runApp(
@@ -61,15 +63,28 @@ class MyApp extends ConsumerWidget {
                 ),
               ),
             ),
+            localizationsDelegates: const [
+              AppLocalizations.delegate, // Add this line
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en'), // English
+              Locale('uk'), // Ukrainian
+            ],
+            locale: ref.watch(
+              localeProvider,
+            ),
             debugShowCheckedModeBanner: false,
             routes: {
-              '/': (context) => MainPage(),
-              '/score': (context) => ScorePage(),
-              '/guessing': (context) => GuessingPage(),
-              '/set_choosing': (context) => ChoosingPage(),
-              '/settings': (context) => SettingsPage(fromGame: false),
-              '/team': (context) => TeamPage(),
-              '/rules': (context) => RulesPage(),
+              '/': (context) => const MainPage(),
+              '/score': (context) => const ScorePage(),
+              '/guessing': (context) => const GuessingPage(),
+              '/set_choosing': (context) => const ChoosingPage(),
+              '/settings': (context) => const SettingsPage(fromGame: false),
+              '/team': (context) => const TeamPage(),
+              '/rules': (context) => const RulesPage(),
             },
           );
         });

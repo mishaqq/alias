@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:alias/core/constants.dart';
+import 'package:alias/providers/locale_provider.dart';
 import 'package:alias/providers/setsProvider.dart';
 import 'package:alias/screens/winning_screen.dart';
 import 'package:alias/utils/helper_functions.dart';
@@ -13,25 +14,32 @@ import '../models/game_model.dart';
 // Game Provider
 final gameProvider = StateNotifierProvider<GameNotifier, AliasData>((ref) {
   return GameNotifier(
-      AliasData(
-        teams: initTeams(),
-        scores: [0, 0],
-        turn: 0,
-        usedWords: {},
-        setsNames: [],
-        avatars: [],
-        duration: 60,
-        wordsToWin: 20,
-        lastWord: true,
-        oldSesion: false,
-      ),
-      ref);
+    AliasData(
+      teams: initTeams(),
+      scores: [0, 0],
+      turn: 0,
+      usedWords: {},
+      setsNames: [],
+      avatars: [],
+      duration: 60,
+      wordsToWin: 20,
+      lastWord: true,
+      oldSesion: false,
+    ),
+    ref,
+    ref.watch(localeProvider.notifier),
+  );
 });
 
 // Game Object
 class GameNotifier extends StateNotifier<AliasData> {
   final Ref ref;
-  GameNotifier(super.state, this.ref);
+  final LocaleNotifier _localeNotifier;
+  GameNotifier(
+    super.state,
+    this.ref,
+    this._localeNotifier,
+  );
 
   ///
   /// Game Logic Section

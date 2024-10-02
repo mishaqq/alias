@@ -4,6 +4,7 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../providers/game_model_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainPage extends ConsumerStatefulWidget {
   const MainPage({super.key});
@@ -48,6 +49,7 @@ class _MainPageState extends ConsumerState<MainPage> {
         height: h * 0.3,
         alignment: Alignment.center,
         child: Text(
+          //AppLocalizations.of(context)!.understood,
           "Аліас",
           overflow: TextOverflow.ellipsis,
           maxLines: 3,

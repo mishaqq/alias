@@ -14,11 +14,14 @@ dependencies:
     sdk: flutter
   flutter_card_swiper: ^7.0.0
 
+  flutter_localizations:
+    sdk: flutter
   flutter_multi_select_items: ^0.4.2
   flutter_native_splash: ^2.3.7
   flutter_riverpod: ^2.4.9
   flutter_screenutil: ^5.9.0
   flutter_svg: ^2.0.9
+  intl: any
   shared_preferences: ^2.2.2
   url_launcher: ^6.3.0
 
@@ -46,6 +49,7 @@ flutter:
           weight: 700
         - asset: fonts/AnonymousPro-BoldItalic.ttf
           style: italic
+  generate: true 
 
 flutter_native_splash:
   ios: true
