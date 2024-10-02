@@ -276,8 +276,15 @@ class _CountPageState extends ConsumerState<CountPage> {
 
                               //next turn
                               ref.read(gameProvider.notifier).nextTurn();
-                              ref.read(gameProvider.notifier).winCheck(context);
-                              //Navigator.pop(context);
+
+                              //checks winner if all other teams played
+                              if (ref.read(gameProvider).turn == 0) {
+                                ref
+                                    .read(gameProvider.notifier)
+                                    .winCheck(context);
+                              } else {
+                                Navigator.pop(context);
+                              }
                             },
                             child: Text("Далі",
                                 overflow: TextOverflow.ellipsis,

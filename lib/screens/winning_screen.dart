@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:alias/providers/game_model_provider.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class WinningPage extends ConsumerStatefulWidget {
@@ -28,13 +29,19 @@ class _WinningPageState extends ConsumerState<WinningPage>
       return "${winners[0]} перемогли!";
     }
     if (winners.length == 2) {
-      return "${winners[0]} and ${winners[1]} перемогли, це нічия!";
+      return "${winners[0]} і ${winners[1]} перемогли, це нічия!";
     }
-    return "Розробник помилився)";
+    if (winners.length == ref.read(gameProvider).teams.length) {
+      return "Всі перемогли, це нічия!";
+    }
+    String winnersString = " ";
+    winners.forEach((w) => winnersString += "$w, ");
+    return "$winnersString перемогли, це нічия!";
   }
 
   @override
   void initState() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
     super.initState();
     controller = new AnimationController(
       duration: Duration(seconds: 1),

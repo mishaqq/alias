@@ -1,5 +1,6 @@
 import 'package:alias/core/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_multi_select_items/flutter_multi_select_items.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +16,7 @@ class ChoosingPage extends ConsumerStatefulWidget {
 class _GuessingPageState extends ConsumerState<ChoosingPage> {
   @override
   void initState() {
+    //SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
     super.initState();
   }
 
@@ -67,7 +69,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                         padding: EdgeInsets.only(
                           left: h * 0.015,
                           right: h * 0.015,
-                          top: h * 0.02,
+                          top: h * 0.01,
                         ),
                         child: MultiSelectCheckList(
                           itemPadding: EdgeInsets.all(h * 0.01),
@@ -197,7 +199,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
 
                               Navigator.pushNamed(context, "/settings");
                             } else {
-                              //TO DO
+                              //TO DO add popup no sets selected :/
                             }
                           },
                           child: Text("Продовжити",
