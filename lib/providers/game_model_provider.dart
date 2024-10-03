@@ -17,7 +17,7 @@ import '../models/game_model.dart';
 final gameProvider = StateNotifierProvider<GameNotifier, AliasData>((ref) {
   return GameNotifier(
     AliasData(
-      teams: initTeams(),
+      teams: initTeams(ref),
       scores: [0, 0],
       turn: 0,
       usedWords: {},
@@ -29,18 +29,15 @@ final gameProvider = StateNotifierProvider<GameNotifier, AliasData>((ref) {
       oldSesion: false,
     ),
     ref,
-    ref.watch(localeProvider.notifier),
   );
 });
 
 // Game Object
 class GameNotifier extends StateNotifier<AliasData> {
   final Ref ref;
-  final LocaleNotifier _localeNotifier;
   GameNotifier(
     super.state,
     this.ref,
-    this._localeNotifier,
   );
 
   ///
@@ -58,11 +55,13 @@ class GameNotifier extends StateNotifier<AliasData> {
     final updatedTeams = List<String>.from(state.teams);
     final updatedTeamsAvatars = List<String>.from(state.avatars);
     final random = Random();
-
+    Locale curLocale = ref.read(localeProvider);
+    final List<String> localizedTeamList =
+        teamLocalizationModel.localizedTeamList[curLocale]!;
     // team update
-    String team = team_names[random.nextInt(team_names.length)];
+    String team = localizedTeamList[random.nextInt(localizedTeamList.length)];
     while (state.teams.contains(team)) {
-      team = team_names[random.nextInt(team_names.length)];
+      team = localizedTeamList[random.nextInt(localizedTeamList.length)];
     }
 
     if (state.teams.length > 10) {
@@ -128,7 +127,7 @@ class GameNotifier extends StateNotifier<AliasData> {
   void reset() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     state = state.copyWith(
-      teams: initTeams(),
+      teams: initTeams(ref),
       scores: [0, 0],
       turn: 0,
       usedWords: {},
@@ -248,7 +247,7 @@ class GameNotifier extends StateNotifier<AliasData> {
     final SharedPreferences pref = await SharedPreferences.getInstance();
 
     state = state.copyWith(
-      teams: pref.getStringList('teams') ?? initTeams(),
+      teams: pref.getStringList('teams') ?? initTeams(ref),
       avatars: pref.getStringList('avatars') ?? initTeamsAvatars(),
       scores: stringArrToInt(pref.getStringList('scores') ?? ["0 ", "0 "]),
       turn: pref.getInt('turn'),

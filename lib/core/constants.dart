@@ -1,7 +1,9 @@
 import 'package:alias/core/en_sets_list.dart';
 import 'package:alias/core/uk_sets_list.dart';
+import 'package:alias/dict/team_names.dart';
 import 'package:alias/models/set_localization_model.dart';
 import 'package:alias/models/set_model.dart';
+import 'package:alias/models/team_localization_model.dart';
 import 'package:flutter/material.dart';
 
 import '../dict/uk_word_sets.dart';
@@ -9,6 +11,11 @@ import '../dict/uk_word_sets.dart';
 final setLocalizationModel = SetLocalizationModel(localizedSetList: {
   const Locale('uk'): ukSetsList,
   const Locale('en'): enSetsList,
+});
+
+final teamLocalizationModel = TeamLocalizationModel(localizedTeamList: {
+  const Locale('uk'): ukTeamNames,
+  const Locale('en'): enTeamNames,
 });
 
 List<String> images = [

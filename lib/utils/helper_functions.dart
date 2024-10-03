@@ -2,13 +2,19 @@ import 'dart:math';
 
 import 'package:alias/core/constants.dart';
 import 'package:alias/dict/team_names.dart';
+import 'package:alias/providers/locale_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-List<String> initTeams() {
+List<String> initTeams(Ref ref) {
   final random = Random();
+  Locale curLocale = ref.read(localeProvider);
+  final List<String> localizedTeamList =
+      teamLocalizationModel.localizedTeamList[curLocale]!;
   Set<String> initialTeams = {};
 
   while (initialTeams.length < 2) {
-    String word = team_names[random.nextInt(team_names.length)];
+    String word = localizedTeamList[random.nextInt(localizedTeamList.length)];
     initialTeams.add(word);
   }
 

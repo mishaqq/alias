@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../providers/game_model_provider.dart';
 import 'count_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GuessingPage extends ConsumerStatefulWidget {
   const GuessingPage({super.key});
@@ -350,7 +351,7 @@ class CustomDialog extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(h * 0.01),
             child: Text(
-              "Хто вгадав - $lastWord?",
+              "${AppLocalizations.of(context)!.whoGuessed} - $lastWord?",
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     fontSize: 14.sp,
                   ),
@@ -411,7 +412,9 @@ class CustomDialog extends StatelessWidget {
                       );
                     },
                     child: Text(
-                      index == teams.length ? "Ніхто" : teams[index],
+                      index == teams.length
+                          ? AppLocalizations.of(context)!.nobody
+                          : teams[index],
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(

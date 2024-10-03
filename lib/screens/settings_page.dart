@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../forks/item_count.dart';
 import '../providers/game_model_provider.dart';
 import '../providers/selection.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsPage extends ConsumerStatefulWidget {
   final bool fromGame;
@@ -34,7 +35,7 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -72,7 +73,7 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                       Padding(
                         padding: EdgeInsets.only(top: h * 0.015),
                         child: Text(
-                          'Налаштування',
+                          AppLocalizations.of(context)!.settingsTitle,
                         ),
                       ),
                       Column(
@@ -82,7 +83,7 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                             height: h * 0.05,
                           ),
                           Text(
-                            "Тривалість раунду:",
+                            AppLocalizations.of(context)!.durationTitle,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium!
@@ -206,7 +207,7 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Слів до перемоги:",
+                                  AppLocalizations.of(context)!.wordsToWinTitle,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium!
@@ -248,7 +249,7 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "Останнє слово для всіх:",
+                                  AppLocalizations.of(context)!.lastWordTitle,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium!
@@ -345,9 +346,10 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                                 : Navigator.pushNamed(context, '/team');
                           },
                           child: widget.fromGame
-                              ? Text("Перейняти",
+                              ? Text(AppLocalizations.of(context)!.acceptButton,
                                   style: Theme.of(context).textTheme.bodyMedium)
-                              : Text("Продовжити",
+                              : Text(
+                                  AppLocalizations.of(context)!.continueButton,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium!

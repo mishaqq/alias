@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:ui';
+
 import 'package:alias/core/constants.dart';
 import 'package:alias/providers/locale_provider.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +20,14 @@ class MainPage extends ConsumerStatefulWidget {
 
 bool oldSesion = false;
 late final CardSwiperController controller;
+Map<int, Locale> languageMap = {
+  1: Locale('uk'),
+  2: Locale('en'),
+};
+Map<Locale, int> reverseLanguageMap = {
+  Locale('uk'): 1,
+  Locale('en'): 2,
+};
 
 class _MainPageState extends ConsumerState<MainPage>
     with TickerProviderStateMixin {
@@ -25,13 +36,25 @@ class _MainPageState extends ConsumerState<MainPage>
 
   @override
   void initState() {
+    super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
 
     // when the page loads it reads from the SP if there was an old session and saves it to the Game Provider state
     ref.read(gameProvider.notifier).oldGame();
+
     controller = CardSwiperController();
 
-    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final List<Locale> systemLocales =
+          View.of(context).platformDispatcher.locales;
+      await ref.read(localeProvider.notifier).initLocale(systemLocales);
+      //   ref.read(localeProvider) == Locale('uk')
+      //       ? controller.swipe(CardSwiperDirection.left)
+      //       : () {
+      //           controller.swipe(CardSwiperDirection.left);
+      //           controller.swipe(CardSwiperDirection.left);
+      //         };
+    });
   }
 
   @override
@@ -84,7 +107,7 @@ class _MainPageState extends ConsumerState<MainPage>
         alignment: Alignment.center,
         child: Text(
           //AppLocalizations.of(context)!.understood,
-          "Аліас",
+          AppLocalizations.of(context)!.appTitle,
           overflow: TextOverflow.ellipsis,
           maxLines: 3,
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -105,6 +128,26 @@ class _MainPageState extends ConsumerState<MainPage>
         alignment: Alignment.center,
         child: Text(
           "Українською",
+          overflow: TextOverflow.ellipsis,
+          maxLines: 3,
+          style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                fontSize: 30.sp, // fontSize of the guessing word
+              ),
+        ),
+      ),
+      Container(
+        decoration: BoxDecoration(
+          color: Color.fromARGB(255, 248, 237, 255),
+          border: Border.all(width: h * 0.0024),
+          borderRadius: BorderRadius.all(
+            Radius.circular(h * 0.018),
+          ),
+        ),
+        width: w * 0.3,
+        height: h * 0.3,
+        alignment: Alignment.center,
+        child: Text(
+          "English",
           overflow: TextOverflow.ellipsis,
           maxLines: 3,
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -175,6 +218,11 @@ class _MainPageState extends ConsumerState<MainPage>
                             return cards[index];
                           },
                           onSwipe: (previousIndex, currentIndex, direction) {
+                            if (currentIndex != 0) {
+                              ref
+                                  .read(localeProvider.notifier)
+                                  .updateLocale(languageMap[currentIndex]!);
+                            }
                             setState(() {});
                             return true;
                           },
@@ -304,7 +352,8 @@ class _MainPageState extends ConsumerState<MainPage>
                               // ignore: use_build_context_synchronously
                               Navigator.pushNamed(context, '/score');
                             },
-                            child: Text("Продовжити",
+                            child: Text(
+                                AppLocalizations.of(context)!.continueButton,
                                 style: Theme.of(context).textTheme.bodyMedium),
                           ),
                         ),
@@ -324,8 +373,13 @@ class _MainPageState extends ConsumerState<MainPage>
                             onPressed: () async {
                               ref.read(gameProvider.notifier).reset();
                               Navigator.pushNamed(context, '/set_choosing');
+                              Future.delayed(
+                                const Duration(milliseconds: 200),
+                                () => controller.moveTo(0),
+                              );
                             },
-                            child: Text("Нова гра",
+                            child: Text(
+                                AppLocalizations.of(context)!.newGameButton,
                                 style: Theme.of(context).textTheme.bodyMedium)),
                       ),
                     ),
@@ -346,7 +400,8 @@ class _MainPageState extends ConsumerState<MainPage>
                               backgroundColor:
                                   Color.fromARGB(255, 248, 237, 255),
                             ),
-                            child: Text("Правила",
+                            child: Text(
+                                AppLocalizations.of(context)!.rulesButton,
                                 style: Theme.of(context).textTheme.bodyMedium)),
                       ),
                     ),

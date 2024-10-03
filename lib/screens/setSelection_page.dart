@@ -68,7 +68,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                     Padding(
                       padding: EdgeInsets.only(top: h * 0.015),
                       child: Text(
-                        'Слова',
+                        AppLocalizations.of(context)!.words,
                       ),
                     ),
                     Expanded(
@@ -209,7 +209,8 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                               //TO DO add popup no sets selected :/
                             }
                           },
-                          child: Text("Продовжити",
+                          child: Text(
+                              AppLocalizations.of(context)!.continueButton,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
