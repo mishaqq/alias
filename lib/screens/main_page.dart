@@ -1,6 +1,3 @@
-import 'dart:developer';
-import 'dart:ui';
-
 import 'package:alias/core/constants.dart';
 import 'package:alias/providers/locale_provider.dart';
 import 'package:flutter/material.dart';
@@ -21,12 +18,12 @@ class MainPage extends ConsumerStatefulWidget {
 bool oldSesion = false;
 late final CardSwiperController controller;
 Map<int, Locale> languageMap = {
-  1: Locale('uk'),
-  2: Locale('en'),
+  1: const Locale('uk'),
+  2: const Locale('en'),
 };
 Map<Locale, int> reverseLanguageMap = {
-  Locale('uk'): 1,
-  Locale('en'): 2,
+  const Locale('uk'): 1,
+  const Locale('en'): 2,
 };
 
 class _MainPageState extends ConsumerState<MainPage>

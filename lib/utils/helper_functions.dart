@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:alias/core/constants.dart';
-import 'package:alias/dict/team_names.dart';
 import 'package:alias/providers/locale_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

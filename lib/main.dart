@@ -1,7 +1,3 @@
-import 'dart:math';
-
-import 'package:alias/core/constants.dart';
-import 'package:alias/dict/team_names.dart';
 import 'package:alias/providers/locale_provider.dart';
 import 'package:alias/screens/guessing_page.dart';
 import 'package:alias/screens/main_page.dart';

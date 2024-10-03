@@ -1,4 +1,4 @@
-import 'package:alias/dict/uk_word_sets.dart';
+import 'package:alias/dict/en_word_sets.dart';
 import 'package:alias/models/set_model.dart';
 
 const List<AliasSet> enSetsList = [

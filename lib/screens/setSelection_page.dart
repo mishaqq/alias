@@ -79,6 +79,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                           top: h * 0.01,
                         ),
                         child: MultiSelectCheckList(
+                          chechboxScaleFactor: 0.8,
                           itemPadding: EdgeInsets.all(h * 0.01),
                           maxSelectableCount: 5,
                           textStyles: MultiSelectTextStyles(
