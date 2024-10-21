@@ -24,5 +24,6 @@
     "moreThenTwoWinners": "Всі перемогли, це нічия!",
     "leaveGame": "Вийти",
     "no": "Ні",
-    "leaveGameTitle": "Вийти з цієї гри?"
+    "leaveGameTitle": "Вийти з цієї гри?",
+    "catPopup": "Свайпни картки щоб змінити мову"
 }

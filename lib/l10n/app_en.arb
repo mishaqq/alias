@@ -24,5 +24,6 @@
     "moreThenTwoWinners": "Everyone won, it's a draw!",
     "leaveGame": "Leave",
     "no": "No",
-    "leaveGameTitle": "Quit this game?"
+    "leaveGameTitle": "Quit this game?",
+    "catPopup": "Swipe cards to change language"
 }

@@ -130,7 +130,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                                     Padding(
                                       padding: EdgeInsets.only(top: h * 0.0015),
                                       child: Text(
-                                        "${localizedSetList[index].contents.length} Слів",
+                                        "${localizedSetList[index].contents.length} Слів", //TODO : Translate
                                         style: TextStyle(fontSize: h * 0.015),
                                       ),
                                     ),

@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:ffi';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -42,6 +43,17 @@ class LocaleNotifier extends StateNotifier<Locale> {
       }
     }
     _saveCurLocaleToSP();
+  }
+
+  Future<bool> ifCatPopup() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    // what is the difference beetwen Bool and bool
+    final bool? isCat = pref.getBool("catPopup");
+    if (isCat != null) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   Future<void> _saveCurLocaleToSP() async {

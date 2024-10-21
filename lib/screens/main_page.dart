@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:alias/core/constants.dart';
 import 'package:alias/providers/locale_provider.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:typewritertext/typewritertext.dart';
 import '../providers/game_model_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -16,6 +20,7 @@ class MainPage extends ConsumerStatefulWidget {
 }
 
 bool oldSesion = false;
+bool isCat = true;
 late final CardSwiperController controller;
 Map<int, Locale> languageMap = {
   1: const Locale('uk'),
@@ -30,6 +35,9 @@ class _MainPageState extends ConsumerState<MainPage>
     with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _heightPosition;
+  late AnimationController _controllerCat;
+  late Animation<double> _catAnimationController;
+  late OverlayPortalController overlayPortalController;
 
   @override
   void initState() {
@@ -41,16 +49,54 @@ class _MainPageState extends ConsumerState<MainPage>
 
     controller = CardSwiperController();
 
+    //init overlay controller
+    overlayPortalController = OverlayPortalController();
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final List<Locale> systemLocales =
           View.of(context).platformDispatcher.locales;
       await ref.read(localeProvider.notifier).initLocale(systemLocales);
-      //   ref.read(localeProvider) == Locale('uk')
-      //       ? controller.swipe(CardSwiperDirection.left)
-      //       : () {
-      //           controller.swipe(CardSwiperDirection.left);
-      //           controller.swipe(CardSwiperDirection.left);
-      //         };
+
+      // Cat popUp animaiton
+
+      // Initialize AnimationController
+      _controllerCat = AnimationController(
+        duration: const Duration(milliseconds: 800),
+        vsync: this,
+      );
+
+      // Define animations for top and left positions
+      _catAnimationController = Tween<double>(
+        begin: MediaQuery.of(context).size.height * -0.08,
+        end: MediaQuery.of(context).size.height * 0.05,
+      ).animate(
+        CurvedAnimation(
+          parent: _controllerCat,
+          curve: Curves.easeIn,
+        ),
+      );
+      //cat popUp animation routine
+      isCat = await ref.read(localeProvider.notifier).ifCatPopup();
+      if (isCat) {
+        Future.delayed(
+          const Duration(milliseconds: 2000),
+          () => {
+            overlayPortalController.show(),
+            _controllerCat.forward(),
+          },
+        ).then((_) {
+          return Future.delayed(
+            const Duration(milliseconds: 6000),
+            () => {
+              _controllerCat.reverse(),
+              if (_controllerCat.isCompleted)
+                {
+                  overlayPortalController.hide(),
+                }
+            },
+          );
+        });
+      }
     });
   }
 
@@ -155,171 +201,234 @@ class _MainPageState extends ConsumerState<MainPage>
     ];
 
     return Scaffold(
-      body: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 112, 150, 236),
-              Color.fromARGB(255, 52, 104, 192)
-            ],
-          ),
+      body: OverlayPortal(
+        controller: overlayPortalController,
+        overlayChildBuilder: (context) => AnimatedBuilder(
+          animation: _catAnimationController,
+          builder: (context, child) {
+            return LCatPopUp(
+              h: h,
+              w: w,
+              controller: _catAnimationController,
+            );
+          },
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Expanded(
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  Positioned(
-                    width: w,
-                    bottom: h * 0.75,
-                    child: Image.asset(
-                      "assets/images/cloud.png",
-                      height: h * 0.11,
-                    ),
-                  ),
-                  Positioned(
-                    width: w,
-                    bottom: h * 0.55,
-                    left: w * 0.28,
-                    child: Image.asset(
-                      "assets/images/cloud.png",
-                      height: h * 0.11,
-                    ),
-                  ),
-
-                  Positioned(
-                    bottom: h * 0.51,
-                    right: w * 0.16,
-                    child: Padding(
-                      padding: EdgeInsets.only(top: h * 0.25),
-                      child: SizedBox(
-                        width: w * 0.7,
-                        height: h * 0.25,
-                        child: CardSwiper(
-                          backCardOffset: Offset.zero,
-                          padding: EdgeInsets.zero,
-                          controller: controller,
-                          allowedSwipeDirection:
-                              const AllowedSwipeDirection.symmetric(
-                            horizontal: true,
-                            vertical: true,
-                          ),
-                          cardsCount: cards.length,
-                          cardBuilder: (context, index, percentThresholdX,
-                              percentThresholdY) {
-                            return cards[index];
-                          },
-                          onSwipe: (previousIndex, currentIndex, direction) {
-                            if (currentIndex != 0) {
-                              ref
-                                  .read(localeProvider.notifier)
-                                  .updateLocale(languageMap[currentIndex]!);
-                            }
-                            setState(() {});
-                            return true;
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    width: w,
-                    top: h * 0.09,
-                    left: w * 0.31,
-                    child: IgnorePointer(
-                      child: Image.asset(
-                        "assets/images/wow.png",
-                        height: h * 0.30,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    width: w,
-                    bottom: h * 0.42,
-                    right: w * 0.22,
-                    child: IgnorePointer(
+        child: Container(
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromARGB(255, 112, 150, 236),
+                Color.fromARGB(255, 52, 104, 192)
+              ],
+            ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Positioned(
+                      width: w,
+                      bottom: h * 0.75,
                       child: Image.asset(
                         "assets/images/cloud.png",
                         height: h * 0.11,
                       ),
                     ),
-                  ),
-                  Positioned(
-                    width: w,
-                    bottom: h * 0.005,
-                    right: w * 0.42,
-                    child: Image.asset(
-                      "assets/images/fish_dead.png",
-                      height: h * 0.08,
-                    ),
-                  ),
-                  Positioned(
-                    width: w,
-                    bottom: h * 0.45,
-                    left: w * 0.35,
-                    child: Transform.scale(
-                      scaleX: -1,
-                      child: Transform.rotate(
-                        angle: -320 / 360,
-                        child: IgnorePointer(
-                          child: Image.asset(
-                            "assets/images/arrow_home.png",
-                            height: h * 0.35,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    width: w,
-                    bottom: h * 0.45,
-                    right: w * 0.36,
-                    child: Transform.scale(
-                      scaleX: 1,
-                      child: Transform.rotate(
-                        angle: -320 / 360,
-                        child: IgnorePointer(
-                          child: Image.asset(
-                            "assets/images/arrow_home.png",
-                            height: h * 0.35,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  // Positioned(
-                  //   left: w * 0.15,
-                  //   top: h * 0.26,
-                  //   bottom: h * 0.5,
-                  //   child: Image.asset(
-                  //     "assets/images/post_logo.png",
-                  //     height: h * 0.2,
-                  //     width: w,
-                  //     scale: 1.3,
-                  //   ),
-                  // ),
-                  if (oldSesion)
-                    AnimatedBuilder(
-                        animation: _heightPosition,
-                        builder: (context, child) {
-                          return Positioned(
-                            width: w,
-                            bottom: _heightPosition.value,
-                            left: w * 0.22,
-                            child: Image.asset(
-                              "assets/images/cat_shy.png",
-                              height: h * 0.11,
-                            ),
-                          );
-                        }),
-                  if (oldSesion)
                     Positioned(
-                      top: h * 0.50,
+                      width: w,
+                      bottom: h * 0.55,
+                      left: w * 0.28,
+                      child: Image.asset(
+                        "assets/images/cloud.png",
+                        height: h * 0.11,
+                      ),
+                    ),
+
+                    Positioned(
+                      bottom: h * 0.51,
+                      right: w * 0.16,
+                      child: Padding(
+                        padding: EdgeInsets.only(top: h * 0.25),
+                        child: SizedBox(
+                          width: w * 0.7,
+                          height: h * 0.25,
+                          child: CardSwiper(
+                            backCardOffset: Offset.zero,
+                            padding: EdgeInsets.zero,
+                            controller: controller,
+                            allowedSwipeDirection:
+                                const AllowedSwipeDirection.symmetric(
+                              horizontal: true,
+                              vertical: true,
+                            ),
+                            cardsCount: cards.length,
+                            cardBuilder: (context, index, percentThresholdX,
+                                percentThresholdY) {
+                              return cards[index];
+                            },
+                            onSwipe:
+                                (previousIndex, currentIndex, direction) async {
+                              if (currentIndex != 0) {
+                                ref
+                                    .read(localeProvider.notifier)
+                                    .updateLocale(languageMap[currentIndex]!);
+                              }
+
+                              if (currentIndex == cards.length - 1) {
+                                log("last card achived");
+
+                                final SharedPreferences pref =
+                                    await SharedPreferences.getInstance();
+                                // what is the difference beetwen Bool and bool
+                                pref.setBool("catPopup", false);
+                              }
+                              setState(() {});
+                              return true;
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      width: w,
+                      top: h * 0.09,
+                      left: w * 0.31,
+                      child: IgnorePointer(
+                        child: Image.asset(
+                          "assets/images/wow.png",
+                          height: h * 0.30,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      width: w,
+                      bottom: h * 0.42,
+                      right: w * 0.22,
+                      child: IgnorePointer(
+                        child: Image.asset(
+                          "assets/images/cloud.png",
+                          height: h * 0.11,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      width: w,
+                      bottom: h * 0.005,
+                      right: w * 0.42,
+                      child: Image.asset(
+                        "assets/images/fish_dead.png",
+                        height: h * 0.08,
+                      ),
+                    ),
+                    // Positioned(
+                    //   width: w,
+                    //   bottom: h * 0.45,
+                    //   left: w * 0.35,
+                    //   child: Transform.scale(
+                    //     scaleX: -1,
+                    //     child: Transform.rotate(
+                    //       angle: -320 / 360,
+                    //       child: IgnorePointer(
+                    //         child: Image.asset(
+                    //           "assets/images/arrow_home.png",
+                    //           height: h * 0.35,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // Positioned(
+                    //   width: w,
+                    //   bottom: h * 0.45,
+                    //   right: w * 0.36,
+                    //   child: Transform.scale(
+                    //     scaleX: 1,
+                    //     child: Transform.rotate(
+                    //       angle: -320 / 360,
+                    //       child: IgnorePointer(
+                    //         child: Image.asset(
+                    //           "assets/images/arrow_home.png",
+                    //           height: h * 0.35,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // Positioned(
+                    //   left: w * 0.15,
+                    //   top: h * 0.26,
+                    //   bottom: h * 0.5,
+                    //   child: Image.asset(
+                    //     "assets/images/post_logo.png",
+                    //     height: h * 0.2,
+                    //     width: w,
+                    //     scale: 1.3,
+                    //   ),
+                    // ),
+                    if (oldSesion)
+                      AnimatedBuilder(
+                          animation: _heightPosition,
+                          builder: (context, child) {
+                            return Positioned(
+                              width: w,
+                              bottom: _heightPosition.value,
+                              left: w * 0.22,
+                              child: Image.asset(
+                                "assets/images/cat_shy.png",
+                                height: h * 0.11,
+                              ),
+                            );
+                          }),
+                    if (oldSesion)
+                      Positioned(
+                        top: h * 0.50,
+                        bottom: 0,
+                        width: w,
+                        child: Center(
+                          child: SizedBox(
+                            width: w * 0.8,
+                            height: h * 0.063,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                // fetches the data from SP to Game Provider
+                                await ref
+                                    .read(gameProvider.notifier)
+                                    .readFormPrefs();
+
+                                // makes a list of words for the current game
+                                Locale curLocale = ref.read(localeProvider);
+                                final localizedSetList = setLocalizationModel
+                                    .localizedSetList[curLocale]!;
+                                final usedSetsTitles =
+                                    ref.read(gameProvider).setsNames;
+                                final usedSets = localizedSetList
+                                    .where((s) => usedSetsTitles.contains(s.id))
+                                    .toList();
+                                ref
+                                    .read(gameProvider.notifier)
+                                    .makeGameWordSet(usedSets);
+
+                                // ignore: use_build_context_synchronously
+                                Navigator.pushNamed(context, '/score');
+                              },
+                              child: Text(
+                                  AppLocalizations.of(context)!.continueButton,
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium),
+                            ),
+                          ),
+                        ),
+                      )
+                    else
+                      const SizedBox(),
+                    Positioned(
+                      top: h * 0.64,
                       bottom: 0,
                       width: w,
                       child: Center(
@@ -327,94 +436,115 @@ class _MainPageState extends ConsumerState<MainPage>
                           width: w * 0.8,
                           height: h * 0.063,
                           child: ElevatedButton(
-                            onPressed: () async {
-                              // fetches the data from SP to Game Provider
-                              await ref
-                                  .read(gameProvider.notifier)
-                                  .readFormPrefs();
-
-                              // makes a list of words for the current game
-                              Locale curLocale = ref.read(localeProvider);
-                              final localizedSetList = setLocalizationModel
-                                  .localizedSetList[curLocale]!;
-                              final usedSetsTitles =
-                                  ref.read(gameProvider).setsNames;
-                              final usedSets = localizedSetList
-                                  .where((s) => usedSetsTitles.contains(s.id))
-                                  .toList();
-                              ref
-                                  .read(gameProvider.notifier)
-                                  .makeGameWordSet(usedSets);
-
-                              // ignore: use_build_context_synchronously
-                              Navigator.pushNamed(context, '/score');
-                            },
-                            child: Text(
-                                AppLocalizations.of(context)!.continueButton,
-                                style: Theme.of(context).textTheme.bodyMedium),
-                          ),
+                              onPressed: () async {
+                                ref.read(gameProvider.notifier).reset();
+                                Navigator.pushNamed(context, '/set_choosing');
+                                Future.delayed(
+                                  const Duration(milliseconds: 200),
+                                  () => controller.moveTo(0),
+                                );
+                              },
+                              child: Text(
+                                  AppLocalizations.of(context)!.newGameButton,
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium)),
                         ),
                       ),
-                    )
-                  else
-                    const SizedBox(),
-                  Positioned(
-                    top: h * 0.64,
-                    bottom: 0,
-                    width: w,
-                    child: Center(
-                      child: SizedBox(
-                        width: w * 0.8,
-                        height: h * 0.063,
-                        child: ElevatedButton(
-                            onPressed: () async {
-                              ref.read(gameProvider.notifier).reset();
-                              Navigator.pushNamed(context, '/set_choosing');
-                              Future.delayed(
-                                const Duration(milliseconds: 200),
-                                () => controller.moveTo(0),
-                              );
-                            },
-                            child: Text(
-                                AppLocalizations.of(context)!.newGameButton,
-                                style: Theme.of(context).textTheme.bodyMedium)),
+                    ),
+                    Positioned(
+                      top: h * 0.78,
+                      bottom: 0,
+                      width: w,
+                      child: Center(
+                        child: SizedBox(
+                          width: w * 0.8,
+                          height: h * 0.063,
+                          child: ElevatedButton(
+                              onPressed: () async {
+                                Navigator.pushNamed(context, '/rules');
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    Color.fromARGB(255, 248, 237, 255),
+                              ),
+                              child: Text(
+                                  AppLocalizations.of(context)!.rulesButton,
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium)),
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    top: h * 0.78,
-                    bottom: 0,
-                    width: w,
-                    child: Center(
-                      child: SizedBox(
-                        width: w * 0.8,
-                        height: h * 0.063,
-                        child: ElevatedButton(
-                            onPressed: () async {
-                              Navigator.pushNamed(context, '/rules');
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Color.fromARGB(255, 248, 237, 255),
-                            ),
-                            child: Text(
-                                AppLocalizations.of(context)!.rulesButton,
-                                style: Theme.of(context).textTheme.bodyMedium)),
+                    Positioned(
+                      width: w,
+                      bottom: h * 0.08,
+                      left: w * 0.37,
+                      child: IgnorePointer(
+                        child: Image.asset(
+                          "assets/images/datebaio.png",
+                          height: h * 0.1,
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    width: w,
-                    bottom: h * 0.08,
-                    left: w * 0.37,
-                    child: IgnorePointer(
-                      child: Image.asset(
-                        "assets/images/datebaio.png",
-                        height: h * 0.1,
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class LCatPopUp extends StatelessWidget {
+  const LCatPopUp({
+    super.key,
+    required this.h,
+    required this.w,
+    required this.controller,
+  });
+
+  final double h;
+  final double w;
+  final Animation<double> controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: controller.value,
+      left: w * 0.15,
+      child: Container(
+        width: w * 0.7,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(width: h * 0.0024, color: Colors.black),
+          borderRadius: BorderRadius.all(
+            Radius.circular(h * 0.018),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(w * 0.03),
+              child: Image.asset(
+                "assets/images/taping_cat.gif",
+                height: h * 0.04,
+              ),
+            ),
+            Center(
+              child: SizedBox(
+                width: w * 0.45,
+                child: TypeWriter.text(
+                  AppLocalizations.of(context)!.catPopup,
+                  duration: const Duration(milliseconds: 50),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium!
+                      .copyWith(fontSize: 18.sp, height: 0.0.sp),
+                ),
               ),
             ),
           ],
