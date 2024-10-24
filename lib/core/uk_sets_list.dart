@@ -27,4 +27,9 @@ const List<AliasSet> ukSetsList = [
       title: "Молодіжний сленг",
       contents: slang,
       example: "твіт, казуал, зашквар..."),
+  AliasSet(
+      id: "test",
+      title: "Тест",
+      contents: test,
+      example: "твіт, казуал, зашквар..."),
 ];

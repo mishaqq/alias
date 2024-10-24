@@ -46,6 +46,7 @@ flutter:
     - family: Anonymous
       fonts:
         - asset: fonts/AnonymousPro-Regular.ttf
+          weight: 500
         - asset: fonts/AnonymousPro-Bold.ttf
           weight: 700
         - asset: fonts/AnonymousPro-BoldItalic.ttf

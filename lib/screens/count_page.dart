@@ -120,6 +120,7 @@ class _CountPageState extends ConsumerState<CountPage> {
                                                   .bodyMedium!
                                                   .copyWith(
                                                     fontSize: w * 0.047,
+                                                    height: 1.2,
                                                   ),
                                             ),
                                             trailing: widget.raundWorlds.values
@@ -168,6 +169,7 @@ class _CountPageState extends ConsumerState<CountPage> {
                                               .bodyMedium!
                                               .copyWith(
                                                 fontSize: w * 0.047,
+                                                height: 1.2,
                                               ),
                                         ),
                                         trailing: widget.raundWorlds.values

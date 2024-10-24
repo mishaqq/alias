@@ -766,6 +766,12 @@ const List<String> basic = [
   "лебідь",
 ]; // Add more words
 
+const List<String> test = [
+  "Штани за 40 гривень",
+  "Я теж хочу шоколадку, ну я теж хочу",
+  "Ці руки нічого не крали"
+];
+
 const List<String> tworoots = [
   "шибайголова",
   "відеоігри",

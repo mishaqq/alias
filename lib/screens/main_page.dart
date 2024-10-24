@@ -154,7 +154,8 @@ class _MainPageState extends ConsumerState<MainPage>
           overflow: TextOverflow.ellipsis,
           maxLines: 3,
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                fontSize: 35.sp, // fontSize of the guessing word
+                fontSize: 34.sp, // fontSize of the guessing word
+                letterSpacing: -1,
               ),
         ),
       ),
@@ -195,6 +196,7 @@ class _MainPageState extends ConsumerState<MainPage>
           maxLines: 3,
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontSize: 30.sp, // fontSize of the guessing word
+                letterSpacing: 0,
               ),
         ),
       ),
@@ -392,7 +394,7 @@ class _MainPageState extends ConsumerState<MainPage>
                         width: w,
                         child: Center(
                           child: SizedBox(
-                            width: w * 0.8,
+                            width: w * 0.7,
                             height: h * 0.063,
                             child: ElevatedButton(
                               onPressed: () async {
@@ -433,7 +435,7 @@ class _MainPageState extends ConsumerState<MainPage>
                       width: w,
                       child: Center(
                         child: SizedBox(
-                          width: w * 0.8,
+                          width: w * 0.7,
                           height: h * 0.063,
                           child: ElevatedButton(
                               onPressed: () async {
@@ -446,8 +448,12 @@ class _MainPageState extends ConsumerState<MainPage>
                               },
                               child: Text(
                                   AppLocalizations.of(context)!.newGameButton,
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium)),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        wordSpacing: -2,
+                                      ))),
                         ),
                       ),
                     ),
@@ -457,27 +463,31 @@ class _MainPageState extends ConsumerState<MainPage>
                       width: w,
                       child: Center(
                         child: SizedBox(
-                          width: w * 0.8,
+                          width: w * 0.7,
                           height: h * 0.063,
                           child: ElevatedButton(
-                              onPressed: () async {
-                                Navigator.pushNamed(context, '/rules');
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    Color.fromARGB(255, 248, 237, 255),
-                              ),
-                              child: Text(
-                                  AppLocalizations.of(context)!.rulesButton,
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium)),
+                            onPressed: () async {
+                              Navigator.pushNamed(context, '/rules');
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Color.fromARGB(255, 248, 237, 255),
+                            ),
+                            child: Text(
+                              AppLocalizations.of(context)!.rulesButton,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(),
+                            ),
+                          ),
                         ),
                       ),
                     ),
                     Positioned(
                       width: w,
                       bottom: h * 0.08,
-                      left: w * 0.37,
+                      left: w * 0.34,
                       child: IgnorePointer(
                         child: Image.asset(
                           "assets/images/datebaio.png",

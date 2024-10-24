@@ -53,15 +53,18 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
             Radius.circular(h * 0.018),
           ),
         ),
-        width: w * 0.3,
+        width: w * 0.7,
         height: h * 0.3,
+        padding: EdgeInsets.all(4.0),
         alignment: Alignment.center,
         child: Text(
           guessingWord,
+          textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
-          maxLines: 3,
+          maxLines: 7,
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontSize: 22.sp, // fontSize of the guessing word
+                height: 1.1,
               ),
         ),
       ),
@@ -76,7 +79,7 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
         width: w * 0.3,
         height: h * 0.3,
         alignment: Alignment.center,
-        child: Text(""),
+        child: const Text(""),
       ),
     ];
 

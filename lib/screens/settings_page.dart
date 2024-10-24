@@ -100,7 +100,8 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                                   borderWidth: h * 0.002,
                                   splashColor: Colors.transparent,
                                   borderColor: Colors.black,
-                                  fillColor: Color.fromARGB(255, 255, 221, 149),
+                                  fillColor:
+                                      const Color.fromARGB(255, 255, 221, 149),
                                   selectedBorderColor: Colors.black,
                                   constraints: BoxConstraints(
                                       maxWidth: w * 0.5, maxHeight: h * 0.1),
@@ -278,15 +279,17 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                                           borderRadius:
                                               BorderRadius.circular(h * 0.005),
                                         ),
-                                        side: BorderSide(color: Colors.black),
-                                        fillColor: MaterialStatePropertyAll(
+                                        side: const BorderSide(
+                                            color: Colors.black),
+                                        fillColor: const WidgetStatePropertyAll(
                                             Color.fromARGB(255, 255, 221, 149)),
-                                        overlayColor: MaterialStatePropertyAll(
+                                        overlayColor:
+                                            const WidgetStatePropertyAll(
                                           Colors.transparent,
                                         ),
                                         checkColor: Colors.black,
-                                        activeColor:
-                                            Color.fromARGB(255, 255, 221, 149),
+                                        activeColor: const Color.fromARGB(
+                                            255, 255, 221, 149),
                                       ),
                                     ),
                                   ),

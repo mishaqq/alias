@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../providers/game_model_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+// TODO : Add animation for teama appearence
 class TeamPage extends ConsumerWidget {
   const TeamPage({super.key});
 
