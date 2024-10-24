@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../providers/game_model_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 showAlertDialog(BuildContext context, ref) {
   double h = MediaQuery.of(context).size.height;
@@ -19,7 +20,7 @@ showAlertDialog(BuildContext context, ref) {
           ),
         ),
         child: Text(
-          "Вийти",
+          AppLocalizations.of(context)!.leaveGame,
           style: TextStyle(
               fontWeight: FontWeight.w700,
               color: Colors.black,
@@ -45,7 +46,7 @@ showAlertDialog(BuildContext context, ref) {
         ),
       ),
       child: Text(
-        "Ні",
+        AppLocalizations.of(context)!.no,
         style: TextStyle(
             fontWeight: FontWeight.w700,
             color: Colors.black,
@@ -69,7 +70,7 @@ showAlertDialog(BuildContext context, ref) {
     actionsPadding: EdgeInsets.only(right: w * 0.0, bottom: w * 0.07),
     title: Center(
       child: Text(
-        "Вийти з цієї гри?",
+        AppLocalizations.of(context)!.leaveGameTitle,
         style: TextStyle(
             fontWeight: FontWeight.w700,
             color: Colors.black,

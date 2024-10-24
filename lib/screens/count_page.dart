@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../providers/game_model_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class CountPage extends ConsumerStatefulWidget {
@@ -119,6 +120,7 @@ class _CountPageState extends ConsumerState<CountPage> {
                                                   .bodyMedium!
                                                   .copyWith(
                                                     fontSize: w * 0.047,
+                                                    height: 1.2,
                                                   ),
                                             ),
                                             trailing: widget.raundWorlds.values
@@ -167,6 +169,7 @@ class _CountPageState extends ConsumerState<CountPage> {
                                               .bodyMedium!
                                               .copyWith(
                                                 fontSize: w * 0.047,
+                                                height: 1.2,
                                               ),
                                         ),
                                         trailing: widget.raundWorlds.values
@@ -286,7 +289,7 @@ class _CountPageState extends ConsumerState<CountPage> {
                                 Navigator.pop(context);
                               }
                             },
-                            child: Text("Далі",
+                            child: Text(AppLocalizations.of(context)!.next,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
                                 style: Theme.of(context)
@@ -384,7 +387,9 @@ class CustomDialogScore extends StatelessWidget {
                               index == teams.length ? "Nobody" : teams[index]);
                         },
                         child: Text(
-                          index == teams.length ? "Ніхто" : teams[index],
+                          index == teams.length
+                              ? AppLocalizations.of(context)!.nobody
+                              : teams[index],
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style:

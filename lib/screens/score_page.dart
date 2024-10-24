@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../core/dialog.dart';
 import '../providers/game_model_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ScorePage extends ConsumerWidget {
   const ScorePage({super.key});
@@ -153,7 +154,7 @@ class ScorePage extends ConsumerWidget {
                           padding:
                               EdgeInsets.only(top: w * 0.03, bottom: w * 0.03),
                           child: Text(
-                            "Зараз: ${game.teams[game.turn]}",
+                            "${AppLocalizations.of(context)!.currentTurn} ${game.teams[game.turn]}",
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium!
@@ -206,7 +207,8 @@ class ScorePage extends ConsumerWidget {
                               // ignore: use_build_context_synchronously
                               Navigator.pushNamed(context, '/guessing');
                             },
-                            child: Text("Наступний раунд",
+                            child: Text(
+                                AppLocalizations.of(context)!.nextRoundButton,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
                                 style: Theme.of(context)

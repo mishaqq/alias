@@ -1,10 +1,13 @@
 import 'package:alias/core/constants.dart';
+import 'package:alias/models/set_model.dart';
+import 'package:alias/providers/locale_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_multi_select_items/flutter_multi_select_items.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../providers/game_model_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChoosingPage extends ConsumerStatefulWidget {
   const ChoosingPage({super.key});
@@ -14,13 +17,17 @@ class ChoosingPage extends ConsumerStatefulWidget {
 }
 
 class _GuessingPageState extends ConsumerState<ChoosingPage> {
+  late List<AliasSet> localizedSetList;
+
   @override
   void initState() {
     //SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
+    Locale curLocale = ref.read(localeProvider);
+    localizedSetList = setLocalizationModel.localizedSetList[curLocale]!;
     super.initState();
   }
 
-  final MultiSelectController<String> _controller = MultiSelectController();
+  final MultiSelectController<AliasSet> _controller = MultiSelectController();
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -28,7 +35,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
     return Scaffold(
       body: Container(
         alignment: Alignment.center,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -61,7 +68,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                     Padding(
                       padding: EdgeInsets.only(top: h * 0.015),
                       child: Text(
-                        'Слова',
+                        AppLocalizations.of(context)!.words,
                       ),
                     ),
                     Expanded(
@@ -72,6 +79,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                           top: h * 0.01,
                         ),
                         child: MultiSelectCheckList(
+                          chechboxScaleFactor: 0.8,
                           itemPadding: EdgeInsets.all(h * 0.01),
                           maxSelectableCount: 5,
                           textStyles: MultiSelectTextStyles(
@@ -92,7 +100,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                           ),
                           controller: _controller,
                           items: List.generate(
-                            SETS.length,
+                            localizedSetList.length,
                             (index) => CheckListCard(
                               contentPadding: const EdgeInsets.all(0),
                               decorations: MultiSelectItemDecorations(
@@ -111,8 +119,8 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                                   fontSize: h * 0.020,
                                 ),
                               ),
-                              value: SETS[index],
-                              title: Text(title[SETS[index]]!),
+                              value: localizedSetList[index],
+                              title: Text(localizedSetList[index].title),
                               subtitle: Padding(
                                 padding: EdgeInsets.only(top: h * 0.0020),
                                 child: Column(
@@ -122,7 +130,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                                     Padding(
                                       padding: EdgeInsets.only(top: h * 0.0015),
                                       child: Text(
-                                        "${setsTable[SETS[index]]!.length} Слів",
+                                        "${localizedSetList[index].contents.length} Слів", //TODO : Translate
                                         style: TextStyle(fontSize: h * 0.015),
                                       ),
                                     ),
@@ -131,7 +139,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                                       child: Wrap(
                                         children: [
                                           Text(
-                                            "${example[SETS[index]]}",
+                                            localizedSetList[index].example,
                                             style: TextStyle(
                                                 fontStyle: FontStyle.italic,
                                                 fontSize: h * 0.015),
@@ -202,7 +210,8 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                               //TO DO add popup no sets selected :/
                             }
                           },
-                          child: Text("Продовжити",
+                          child: Text(
+                              AppLocalizations.of(context)!.continueButton,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!

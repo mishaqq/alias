@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../providers/game_model_provider.dart';
 import 'count_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GuessingPage extends ConsumerStatefulWidget {
   const GuessingPage({super.key});
@@ -52,15 +53,18 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
             Radius.circular(h * 0.018),
           ),
         ),
-        width: w * 0.3,
+        width: w * 0.7,
         height: h * 0.3,
+        padding: EdgeInsets.all(4.0),
         alignment: Alignment.center,
         child: Text(
           guessingWord,
+          textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
-          maxLines: 3,
+          maxLines: 7,
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 fontSize: 22.sp, // fontSize of the guessing word
+                height: 1.1,
               ),
         ),
       ),
@@ -75,7 +79,7 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
         width: w * 0.3,
         height: h * 0.3,
         alignment: Alignment.center,
-        child: Text(""),
+        child: const Text(""),
       ),
     ];
 
@@ -350,7 +354,7 @@ class CustomDialog extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(h * 0.01),
             child: Text(
-              "Хто вгадав - $lastWord?",
+              "${AppLocalizations.of(context)!.whoGuessed} - $lastWord?",
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     fontSize: 14.sp,
                   ),
@@ -411,7 +415,9 @@ class CustomDialog extends StatelessWidget {
                       );
                     },
                     child: Text(
-                      index == teams.length ? "Ніхто" : teams[index],
+                      index == teams.length
+                          ? AppLocalizations.of(context)!.nobody
+                          : teams[index],
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(

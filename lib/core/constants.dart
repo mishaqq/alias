@@ -1,29 +1,19 @@
-import '../dict/word_sets.dart';
+import 'package:alias/core/en_sets_list.dart';
+import 'package:alias/core/uk_sets_list.dart';
+import 'package:alias/dict/team_names.dart';
+import 'package:alias/models/set_localization_model.dart';
+import 'package:alias/models/team_localization_model.dart';
+import 'package:flutter/material.dart';
 
-final List<String> SETS = ["basic", "expert", "ukr", "tworoots", "slang"];
-final Map<String, String> title = {
-  "basic": "Базові слова",
-  "expert": "Експерт",
-  "ukr": "Файні українські слова",
-  "tworoots": "Складні слова",
-  "slang": "Молодіжний сленг",
-};
+final setLocalizationModel = SetLocalizationModel(localizedSetList: {
+  const Locale('uk'): ukSetsList,
+  const Locale('en'): enSetsList,
+});
 
-final Map<String, String> example = {
-  "basic": "кіт, корабель, вино...",
-  "expert": "багатогранний, чаклун, дискусія...",
-  "ukr": "ґава, ятрити, говірка...",
-  "tworoots": "фотосинтез, шибайголова, зорепад...",
-  "slang": "твіт, казуал, зашквар...",
-};
-
-Map<String, List<String>> setsTable = {
-  "basic": basic,
-  "expert": expert,
-  "ukr": ukr,
-  "tworoots": tworoots,
-  "slang": slang,
-};
+final teamLocalizationModel = TeamLocalizationModel(localizedTeamList: {
+  const Locale('uk'): ukTeamNames,
+  const Locale('en'): enTeamNames,
+});
 
 List<String> images = [
   "assets/images/gost.jpg",
@@ -40,6 +30,32 @@ List<String> images = [
   "assets/images/vampire.jpg",
   "assets/images/wale.jpg",
 ];
+// final List<String> SETS = ["basic", "expert", "ukr", "tworoots", "slang"];
+// final Map<String, String> title = {
+//   "basic": "Базові слова",
+//   "expert": "Експерт",
+//   "ukr": "Файні українські слова",
+//   "tworoots": "Складні слова",
+//   "slang": "Молодіжний сленг",
+// };
+
+// final Map<String, String> example = {
+//   "basic": "кіт, корабель, вино...",
+//   "expert": "багатогранний, чаклун, дискусія...",
+//   "ukr": "ґава, ятрити, говірка...",
+//   "tworoots": "фотосинтез, шибайголова, зорепад...",
+//   "slang": "твіт, казуал, зашквар...",
+// };
+
+// Map<String, List<String>> setsTable = {
+//   "basic": basic,
+//   "expert": expert,
+//   "ukr": ukr,
+//   "tworoots": tworoots,
+//   "slang": slang,
+// };
+
+
 // List<Image> cachimages = [
 //   Image.asset("assets/images/gost.jpg"),
 //   Image.asset("assets/images/claus.jpg"),
@@ -55,3 +71,4 @@ List<String> images = [
 //   Image.asset("assets/images/vampire.jpg"),
 //   Image.asset("assets/images/wale.jpg"),
 // ];
+

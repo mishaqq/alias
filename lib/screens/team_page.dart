@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../providers/game_model_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+// TODO : Add animation for teama appearence
 class TeamPage extends ConsumerWidget {
   const TeamPage({super.key});
 
@@ -55,7 +57,7 @@ class TeamPage extends ConsumerWidget {
                           bottom: w * 0.03,
                         ),
                         child: Text(
-                          'Команди',
+                          AppLocalizations.of(context)!.teamsTitle,
                         ),
                       ),
                       // Divider(
@@ -174,7 +176,8 @@ class TeamPage extends ConsumerWidget {
                                                 ),
                                               ),
                                               Text(
-                                                "Додати команду",
+                                                AppLocalizations.of(context)!
+                                                    .addTeamButton,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodyMedium!
@@ -236,7 +239,8 @@ class TeamPage extends ConsumerWidget {
                             // ignore: use_build_context_synchronously
                             Navigator.pushNamed(context, '/score');
                           },
-                          child: Text("Продовжити",
+                          child: Text(
+                              AppLocalizations.of(context)!.continueButton,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!

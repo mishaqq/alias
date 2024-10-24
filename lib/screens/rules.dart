@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RulesPage extends ConsumerWidget {
   const RulesPage({super.key});
@@ -57,22 +58,7 @@ class RulesPage extends ConsumerWidget {
                       child: Column(
                         children: [
                           Text(
-                            """1. Команди грають по черзі. Мінімум два гравця в кожній.
-
-2. Один гравець має пояснювати слова для своєї команди. Інші члени команди вгадують.
-
-3. Ви не маєте права використовувати будь-яку частину слова, коли ви пояснюєте, а також слова з одним коренем. Наприклад слово “автобус” не можна пояснити як “автомобільний транспортний засіб”. Ви можете сказати “маршрутний транспортний засіб”.
-
-Ви не можете пояснити слово “банкір” як “людина, яка працює в банку”, тому що слова “банк” та “банкір” мають спільний корінь.
-
-Слова не можна пояснювати іноземними мовами, якщо про це гравці не домовилися перед початком гри.
-
-4. Кількість вгаданих слів відповідає кількості пунктів. Зроблені помилки і незрозумілі слова забирають пункти.
-
-5. Якщо ввімкнене “Останнє слово для всіх”, то слово на момент закінчення часу в раунді може вгадувати будь-яка команда.
-
-6. Команда перемагає коли набирає достатню кількість пунктів для перемоги (визначається в налаштуваннях).
-""",
+                            AppLocalizations.of(context)!.gameRules,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium!

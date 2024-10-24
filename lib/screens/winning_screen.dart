@@ -6,6 +6,7 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WinningPage extends ConsumerStatefulWidget {
   final List<String> winners;
@@ -26,17 +27,17 @@ class _WinningPageState extends ConsumerState<WinningPage>
 
   String whoWins(List<String> winners) {
     if (winners.length == 1) {
-      return "${winners[0]} перемогли!";
+      return "${winners[0]} ${AppLocalizations.of(context)!.oneWinner}";
     }
     if (winners.length == 2) {
-      return "${winners[0]} і ${winners[1]} перемогли, це нічия!";
+      return "${winners[0]} і ${winners[1]} ${AppLocalizations.of(context)!.twoWinners}";
     }
     if (winners.length == ref.read(gameProvider).teams.length) {
-      return "Всі перемогли, це нічия!";
+      return AppLocalizations.of(context)!.moreThenTwoWinners;
     }
     String winnersString = " ";
     winners.forEach((w) => winnersString += "$w, ");
-    return "$winnersString перемогли, це нічия!";
+    return "$winnersString ${AppLocalizations.of(context)!.twoWinners}";
   }
 
   @override
