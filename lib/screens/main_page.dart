@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:math';
 
 import 'package:alias/core/constants.dart';
 import 'package:alias/providers/locale_provider.dart';
@@ -30,6 +31,15 @@ Map<Locale, int> reverseLanguageMap = {
   const Locale('uk'): 1,
   const Locale('en'): 2,
 };
+
+class ScaleSize {
+  static double textScaleFactor(BuildContext context,
+      {double maxTextScaleFactor = 2}) {
+    final width = MediaQuery.of(context).size.width;
+    double val = (width / 720) * maxTextScaleFactor;
+    return max(1, min(val, maxTextScaleFactor));
+  }
+}
 
 class _MainPageState extends ConsumerState<MainPage>
     with TickerProviderStateMixin {
@@ -88,11 +98,9 @@ class _MainPageState extends ConsumerState<MainPage>
           return Future.delayed(
             const Duration(milliseconds: 6000),
             () => {
-              _controllerCat.reverse(),
-              if (_controllerCat.isCompleted)
-                {
-                  overlayPortalController.hide(),
-                }
+              _controllerCat.reverse().then((_) {
+                overlayPortalController.hide();
+              }),
             },
           );
         });
@@ -140,9 +148,9 @@ class _MainPageState extends ConsumerState<MainPage>
       Container(
         decoration: BoxDecoration(
           color: Color.fromARGB(255, 248, 237, 255),
-          border: Border.all(width: h * 0.0024),
+          border: Border.all(width: 2),
           borderRadius: BorderRadius.all(
-            Radius.circular(h * 0.018),
+            Radius.circular(20),
           ),
         ),
         width: w * 0.3,
@@ -154,7 +162,9 @@ class _MainPageState extends ConsumerState<MainPage>
           overflow: TextOverflow.ellipsis,
           maxLines: 3,
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                fontSize: 34.sp, // fontSize of the guessing word
+                fontSize: MediaQuery.of(context).size.width < 720
+                    ? 34.sp
+                    : 50, // fontSize of the guessing word
                 letterSpacing: -1,
               ),
         ),
@@ -162,9 +172,9 @@ class _MainPageState extends ConsumerState<MainPage>
       Container(
         decoration: BoxDecoration(
           color: Color.fromARGB(255, 248, 237, 255),
-          border: Border.all(width: h * 0.0024),
+          border: Border.all(width: 2),
           borderRadius: BorderRadius.all(
-            Radius.circular(h * 0.018),
+            Radius.circular(20),
           ),
         ),
         width: w * 0.3,
@@ -182,9 +192,9 @@ class _MainPageState extends ConsumerState<MainPage>
       Container(
         decoration: BoxDecoration(
           color: Color.fromARGB(255, 248, 237, 255),
-          border: Border.all(width: h * 0.0024),
+          border: Border.all(width: 2),
           borderRadius: BorderRadius.all(
-            Radius.circular(h * 0.018),
+            Radius.circular(20),
           ),
         ),
         width: w * 0.3,
@@ -283,8 +293,6 @@ class _MainPageState extends ConsumerState<MainPage>
                               }
 
                               if (currentIndex == cards.length - 1) {
-                                log("last card achived");
-
                                 final SharedPreferences pref =
                                     await SharedPreferences.getInstance();
                                 // what is the difference beetwen Bool and bool

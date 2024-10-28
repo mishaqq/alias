@@ -399,25 +399,6 @@ class CustomDialogScore extends StatelessWidget {
                         ),
                       ),
                     ),
-
-                    //SizedBox(
-                    //   width: w * 0.85,
-                    //   height: h * 0.05,
-                    //   child: ElevatedButton(
-                    //     onPressed: () {
-                    //       Navigator.of(context).pop(
-                    //           index == teams.length ? "Nobody" : teams[index]);
-                    //     },
-                    //     child: Text(
-                    //       index == teams.length ? "Nobody" : teams[index],
-                    //       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    //             fontSize: w * 0.047,
-                    //           ),
-                    //       maxLines: 1,
-                    //       overflow: TextOverflow.ellipsis,
-                    //     ),
-                    //   ),
-                    // ),
                   ),
                 ),
               ),

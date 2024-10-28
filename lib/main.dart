@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:alias/providers/locale_provider.dart';
 import 'package:alias/screens/guessing_page.dart';
 import 'package:alias/screens/main_page.dart';
@@ -34,10 +36,12 @@ class MyApp extends ConsumerWidget {
             theme: ThemeData(
               textTheme: TextTheme(
                 bodyMedium: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black,
-                    fontFamily: "Anonymous",
-                    fontSize: 20.sp),
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black,
+                  fontFamily: "Anonymous",
+                  fontSize:
+                      MediaQuery.of(context).size.width < 720 ? 20.sp : 34,
+                ),
               ),
               elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ElevatedButton.styleFrom(
@@ -48,11 +52,10 @@ class MyApp extends ConsumerWidget {
                       255), // Color.fromARGB(255, 255, 221, 149),
                   foregroundColor: Color.fromARGB(255, 255, 174, 0), //TO FIX
                   shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                        width: MediaQuery.of(context).size.height * 0.0024),
+                    side: BorderSide(width: 2),
                     borderRadius: BorderRadius.all(
                       Radius.circular(
-                          MediaQuery.of(context).size.height * 0.018),
+                          MediaQuery.of(context).size.width * 0.035),
                     ),
                   ),
                   splashFactory: NoSplash.splashFactory,
