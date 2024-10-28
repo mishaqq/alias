@@ -56,16 +56,16 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
               Container(
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 248, 237, 255),
-                  border: Border.all(width: h * 0.0024),
+                  border: Border.all(width: 2),
                   borderRadius: BorderRadius.all(
-                    Radius.circular(h * 0.018),
+                    Radius.circular(w * 0.035),
                   ),
                 ),
                 width: w * 0.85,
-                height: h * 0.75,
+                height: h * 0.72,
                 child: Padding(
                   padding: EdgeInsets.only(
-                    left: h * 0.015,
+                    left: h * 0.01,
                     right: h * 0.015,
                   ),
                   child: Column(
@@ -74,13 +74,17 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                         padding: EdgeInsets.only(top: h * 0.015),
                         child: Text(
                           AppLocalizations.of(context)!.settingsTitle,
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    fontSize: 24.sp,
+                                  ),
                         ),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            height: h * 0.05,
+                            height: h * 0.03,
                           ),
                           Text(
                             AppLocalizations.of(context)!.durationTitle,
@@ -88,7 +92,7 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                                 .textTheme
                                 .bodyMedium!
                                 .copyWith(
-                                  fontSize: w * 0.047,
+                                  fontSize: 18.sp,
                                 ),
                           ),
                           Row(
@@ -213,7 +217,7 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                                       .textTheme
                                       .bodyMedium!
                                       .copyWith(
-                                        fontSize: w * 0.047,
+                                        fontSize: 18.sp,
                                       ),
                                 ),
                                 ItemCount(
@@ -255,7 +259,7 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                                       .textTheme
                                       .bodyMedium!
                                       .copyWith(
-                                        fontSize: w * 0.047,
+                                        fontSize: 18.sp,
                                       ),
                                 ),
                                 Padding(
@@ -310,12 +314,14 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                 child: Row(
                   children: [
                     SizedBox(
-                      width: w * 0.18,
-                      height: h * 0.07,
+                      width: w * 0.15,
+                      height: w * 0.15,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.black,
                           backgroundColor: Color.fromARGB(255, 255, 221, 149),
+
+                          padding: EdgeInsets.zero, // Remove any padding
                         ),
                         onPressed: () {
                           Navigator.of(context).pop();
@@ -331,8 +337,8 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                         left: w * 0.02,
                       ),
                       child: SizedBox(
-                        width: w * 0.65,
-                        height: h * 0.07,
+                        width: w * 0.68,
+                        height: w * 0.15,
                         child: ElevatedButton(
                           onPressed: () {
                             int durationIndex = isSelected.indexOf(true);
@@ -357,7 +363,7 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                                       .textTheme
                                       .bodyMedium!
                                       .copyWith(
-                                        fontSize: 19.sp,
+                                        fontSize: 20.sp,
                                       )),
                         ),
                       ),

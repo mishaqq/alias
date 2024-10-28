@@ -25,5 +25,6 @@
     "leaveGame": "Leave",
     "no": "No",
     "leaveGameTitle": "Quit this game?",
-    "catPopup": "Swipe cards to change language"
+    "catPopup": "Swipe cards to change language",
+    "wordsAmount": "Words"
 }

@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:math';
 
 import 'package:alias/core/constants.dart';
 import 'package:alias/providers/locale_provider.dart';
@@ -30,6 +31,15 @@ Map<Locale, int> reverseLanguageMap = {
   const Locale('uk'): 1,
   const Locale('en'): 2,
 };
+
+class ScaleSize {
+  static double textScaleFactor(BuildContext context,
+      {double maxTextScaleFactor = 2}) {
+    final width = MediaQuery.of(context).size.width;
+    double val = (width / 720) * maxTextScaleFactor;
+    return max(1, min(val, maxTextScaleFactor));
+  }
+}
 
 class _MainPageState extends ConsumerState<MainPage>
     with TickerProviderStateMixin {
@@ -88,11 +98,9 @@ class _MainPageState extends ConsumerState<MainPage>
           return Future.delayed(
             const Duration(milliseconds: 6000),
             () => {
-              _controllerCat.reverse(),
-              if (_controllerCat.isCompleted)
-                {
-                  overlayPortalController.hide(),
-                }
+              _controllerCat.reverse().then((_) {
+                overlayPortalController.hide();
+              }),
             },
           );
         });
@@ -140,9 +148,9 @@ class _MainPageState extends ConsumerState<MainPage>
       Container(
         decoration: BoxDecoration(
           color: Color.fromARGB(255, 248, 237, 255),
-          border: Border.all(width: h * 0.0024),
+          border: Border.all(width: 2),
           borderRadius: BorderRadius.all(
-            Radius.circular(h * 0.018),
+            Radius.circular(w * 0.035),
           ),
         ),
         width: w * 0.3,
@@ -154,7 +162,9 @@ class _MainPageState extends ConsumerState<MainPage>
           overflow: TextOverflow.ellipsis,
           maxLines: 3,
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                fontSize: 34.sp, // fontSize of the guessing word
+                fontSize: MediaQuery.of(context).size.width < 720
+                    ? 34.sp
+                    : 50, // fontSize of the guessing word
                 letterSpacing: -1,
               ),
         ),
@@ -162,9 +172,9 @@ class _MainPageState extends ConsumerState<MainPage>
       Container(
         decoration: BoxDecoration(
           color: Color.fromARGB(255, 248, 237, 255),
-          border: Border.all(width: h * 0.0024),
+          border: Border.all(width: 2),
           borderRadius: BorderRadius.all(
-            Radius.circular(h * 0.018),
+            Radius.circular(w * 0.035),
           ),
         ),
         width: w * 0.3,
@@ -182,9 +192,9 @@ class _MainPageState extends ConsumerState<MainPage>
       Container(
         decoration: BoxDecoration(
           color: Color.fromARGB(255, 248, 237, 255),
-          border: Border.all(width: h * 0.0024),
+          border: Border.all(width: 2),
           borderRadius: BorderRadius.all(
-            Radius.circular(h * 0.018),
+            Radius.circular(w * 0.035),
           ),
         ),
         width: w * 0.3,
@@ -236,78 +246,87 @@ class _MainPageState extends ConsumerState<MainPage>
                   children: [
                     Positioned(
                       width: w,
-                      bottom: h * 0.75,
-                      child: Image.asset(
-                        "assets/images/cloud.png",
-                        height: h * 0.11,
-                      ),
-                    ),
-                    Positioned(
-                      width: w,
-                      bottom: h * 0.55,
+                      top: h * 0.35,
                       left: w * 0.28,
                       child: Image.asset(
                         "assets/images/cloud.png",
                         height: h * 0.11,
                       ),
                     ),
-
                     Positioned(
                       bottom: h * 0.51,
-                      right: w * 0.16,
-                      child: Padding(
-                        padding: EdgeInsets.only(top: h * 0.25),
-                        child: SizedBox(
-                          width: w * 0.7,
-                          height: h * 0.25,
-                          child: CardSwiper(
-                            backCardOffset: Offset.zero,
-                            padding: EdgeInsets.zero,
-                            controller: controller,
-                            allowedSwipeDirection:
-                                const AllowedSwipeDirection.symmetric(
-                              horizontal: true,
-                              vertical: true,
+                      right: w * 0.15,
+                      child: SizedBox(
+                        width: w * 0.7,
+                        height: w * 0.55,
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Positioned(
+                              width: w,
+                              bottom: w * 0.58,
+                              right: w * 0.01,
+                              child: Image.asset(
+                                "assets/images/cloud.png",
+                                height: h * 0.11,
+                              ),
                             ),
-                            cardsCount: cards.length,
-                            cardBuilder: (context, index, percentThresholdX,
-                                percentThresholdY) {
-                              return cards[index];
-                            },
-                            onSwipe:
-                                (previousIndex, currentIndex, direction) async {
-                              if (currentIndex != 0) {
-                                ref
-                                    .read(localeProvider.notifier)
-                                    .updateLocale(languageMap[currentIndex]!);
-                              }
+                            Positioned(
+                              left: 0,
+                              bottom: 0,
+                              child: SizedBox(
+                                width: w * 0.7,
+                                height: w * 0.55,
+                                child: CardSwiper(
+                                  backCardOffset: Offset.zero,
+                                  padding: EdgeInsets.zero,
+                                  controller: controller,
+                                  allowedSwipeDirection:
+                                      const AllowedSwipeDirection.symmetric(
+                                    horizontal: true,
+                                    vertical: true,
+                                  ),
+                                  cardsCount: cards.length,
+                                  cardBuilder: (context, index,
+                                      percentThresholdX, percentThresholdY) {
+                                    return cards[index];
+                                  },
+                                  onSwipe: (previousIndex, currentIndex,
+                                      direction) async {
+                                    if (currentIndex != 0) {
+                                      ref
+                                          .read(localeProvider.notifier)
+                                          .updateLocale(
+                                              languageMap[currentIndex]!);
+                                    }
 
-                              if (currentIndex == cards.length - 1) {
-                                log("last card achived");
-
-                                final SharedPreferences pref =
-                                    await SharedPreferences.getInstance();
-                                // what is the difference beetwen Bool and bool
-                                pref.setBool("catPopup", false);
-                              }
-                              setState(() {});
-                              return true;
-                            },
-                          ),
+                                    if (currentIndex == cards.length - 1) {
+                                      final SharedPreferences pref =
+                                          await SharedPreferences.getInstance();
+                                      // what is the difference beetwen Bool and bool
+                                      pref.setBool("catPopup", false);
+                                    }
+                                    setState(() {});
+                                    return true;
+                                  },
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              bottom: w * 0.3,
+                              left: w * 0.52,
+                              child: IgnorePointer(
+                                child: Image.asset(
+                                  "assets/images/wow.png",
+                                  height: w * 0.5,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                    Positioned(
-                      width: w,
-                      top: h * 0.09,
-                      left: w * 0.31,
-                      child: IgnorePointer(
-                        child: Image.asset(
-                          "assets/images/wow.png",
-                          height: h * 0.30,
-                        ),
-                      ),
-                    ),
+
                     Positioned(
                       width: w,
                       bottom: h * 0.42,
@@ -438,22 +457,24 @@ class _MainPageState extends ConsumerState<MainPage>
                           width: w * 0.7,
                           height: h * 0.063,
                           child: ElevatedButton(
-                              onPressed: () async {
-                                ref.read(gameProvider.notifier).reset();
-                                Navigator.pushNamed(context, '/set_choosing');
-                                Future.delayed(
-                                  const Duration(milliseconds: 200),
-                                  () => controller.moveTo(0),
-                                );
-                              },
-                              child: Text(
-                                  AppLocalizations.of(context)!.newGameButton,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                        wordSpacing: -2,
-                                      ))),
+                            onPressed: () async {
+                              ref.read(gameProvider.notifier).reset();
+                              Navigator.pushNamed(context, '/set_choosing');
+                              Future.delayed(
+                                const Duration(milliseconds: 200),
+                                () => controller.moveTo(0),
+                              );
+                            },
+                            child: Text(
+                              AppLocalizations.of(context)!.newGameButton,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium!
+                                  .copyWith(
+                                    wordSpacing: -2,
+                                  ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -529,7 +550,7 @@ class LCatPopUp extends StatelessWidget {
           color: Colors.white,
           border: Border.all(width: h * 0.0024, color: Colors.black),
           borderRadius: BorderRadius.all(
-            Radius.circular(h * 0.018),
+            Radius.circular(w * 0.035),
           ),
         ),
         child: Row(

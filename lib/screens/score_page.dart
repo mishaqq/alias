@@ -42,13 +42,13 @@ class ScorePage extends ConsumerWidget {
                 Container(
                   decoration: BoxDecoration(
                     color: Color.fromARGB(255, 248, 237, 255),
-                    border: Border.all(width: h * 0.0024),
+                    border: Border.all(width: 2),
                     borderRadius: BorderRadius.all(
-                      Radius.circular(h * 0.018),
+                      Radius.circular(w * 0.035),
                     ),
                   ),
                   width: w * 0.85,
-                  height: h * 0.75,
+                  height: h * 0.72,
                   child: Padding(
                     padding: EdgeInsets.only(
                       left: h * 0.015,
@@ -74,7 +74,7 @@ class ScorePage extends ConsumerWidget {
                                   },
                                   child: Icon(
                                     Icons.settings_outlined,
-                                    size: w * 0.06,
+                                    size: 22.sp,
                                   ),
                                 ),
                                 Spacer(),
@@ -84,7 +84,7 @@ class ScorePage extends ConsumerWidget {
                                       .textTheme
                                       .bodyMedium!
                                       .copyWith(
-                                        fontSize: w * 0.047,
+                                        fontSize: 20.sp,
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                 )
@@ -127,7 +127,7 @@ class ScorePage extends ConsumerWidget {
                                                   .textTheme
                                                   .bodyMedium!
                                                   .copyWith(
-                                                    fontSize: w * 0.047,
+                                                    fontSize: 18.sp,
                                                   ),
                                             ),
                                           ),
@@ -137,7 +137,7 @@ class ScorePage extends ConsumerWidget {
                                                 .textTheme
                                                 .bodyMedium!
                                                 .copyWith(
-                                                  fontSize: w * 0.047,
+                                                  fontSize: 20.sp,
                                                 ),
                                           ),
                                         ],
@@ -159,7 +159,7 @@ class ScorePage extends ConsumerWidget {
                                 .textTheme
                                 .bodyMedium!
                                 .copyWith(
-                                  fontSize: w * 0.047,
+                                  fontSize: 18.sp,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                           ),
@@ -175,12 +175,13 @@ class ScorePage extends ConsumerWidget {
                   child: Row(
                     children: [
                       SizedBox(
-                        width: w * 0.18,
-                        height: h * 0.07,
+                        width: w * 0.15,
+                        height: w * 0.15,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.black,
                             backgroundColor: Color.fromARGB(255, 255, 221, 149),
+                            padding: EdgeInsets.zero, // Remove any padding
                           ),
                           onPressed: () {
                             return showAlertDialog(context, ref);
@@ -196,8 +197,8 @@ class ScorePage extends ConsumerWidget {
                           left: w * 0.02,
                         ),
                         child: SizedBox(
-                          width: w * 0.65,
-                          height: h * 0.07,
+                          width: w * 0.68,
+                          height: w * 0.15,
                           child: ElevatedButton(
                             onPressed: () async {
                               await ref
@@ -215,7 +216,7 @@ class ScorePage extends ConsumerWidget {
                                     .textTheme
                                     .bodyMedium!
                                     .copyWith(
-                                      fontSize: 19.sp,
+                                      fontSize: 20.sp,
                                     )),
                           ),
                         ),

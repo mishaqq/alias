@@ -54,13 +54,13 @@ class _CountPageState extends ConsumerState<CountPage> {
                 Container(
                   decoration: BoxDecoration(
                     color: Color.fromARGB(255, 248, 237, 255),
-                    border: Border.all(width: h * 0.0024),
+                    border: Border.all(width: 2),
                     borderRadius: BorderRadius.all(
-                      Radius.circular(h * 0.018),
+                      Radius.circular(w * 0.035),
                     ),
                   ),
                   width: w * 0.85,
-                  height: h * 0.75,
+                  height: h * 0.72,
                   child: Padding(
                     padding: EdgeInsets.only(
                       left: h * 0.015,
@@ -106,7 +106,8 @@ class _CountPageState extends ConsumerState<CountPage> {
                                         });
                                       },
                                       child: Padding(
-                                        padding: EdgeInsets.only(top: h * 0.01),
+                                        padding: EdgeInsets.only(
+                                            top: h * 0.01, bottom: h * 0.025),
                                         child: ListTile(
                                             dense: true,
                                             minVerticalPadding: 0,
@@ -119,7 +120,7 @@ class _CountPageState extends ConsumerState<CountPage> {
                                                   .textTheme
                                                   .bodyMedium!
                                                   .copyWith(
-                                                    fontSize: w * 0.047,
+                                                    fontSize: 20.sp,
                                                     height: 1.2,
                                                   ),
                                             ),
@@ -168,7 +169,7 @@ class _CountPageState extends ConsumerState<CountPage> {
                                               .textTheme
                                               .bodyMedium!
                                               .copyWith(
-                                                fontSize: w * 0.047,
+                                                fontSize: 20.sp,
                                                 height: 1.2,
                                               ),
                                         ),
@@ -207,12 +208,13 @@ class _CountPageState extends ConsumerState<CountPage> {
                   child: Row(
                     children: [
                       SizedBox(
-                        width: w * 0.18,
-                        height: h * 0.07,
+                        width: w * 0.15,
+                        height: w * 0.15,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.black,
                             backgroundColor: Color.fromARGB(255, 255, 221, 149),
+                            padding: EdgeInsets.zero,
                           ),
                           onPressed: () {
                             // return showAlertDialog(context, ref); // TO DO
@@ -228,8 +230,8 @@ class _CountPageState extends ConsumerState<CountPage> {
                           left: w * 0.02,
                         ),
                         child: SizedBox(
-                          width: w * 0.65,
-                          height: h * 0.07,
+                          width: w * 0.68,
+                          height: w * 0.15,
                           child: ElevatedButton(
                             onPressed: () async {
                               //       calculating the score
@@ -296,7 +298,7 @@ class _CountPageState extends ConsumerState<CountPage> {
                                     .textTheme
                                     .bodyMedium!
                                     .copyWith(
-                                      fontSize: 19.sp,
+                                      fontSize: 20.sp,
                                     )),
                           ),
                         ),
@@ -335,9 +337,9 @@ class CustomDialogScore extends StatelessWidget {
     return Dialog(
       backgroundColor: Color.fromARGB(255, 248, 237, 255),
       shape: RoundedRectangleBorder(
-        side: BorderSide(width: h * 0.0024),
+        side: BorderSide(width: 2),
         borderRadius: BorderRadius.all(
-          Radius.circular(h * 0.018),
+          Radius.circular(w * 0.035),
         ),
       ),
       child: Padding(
@@ -399,25 +401,6 @@ class CustomDialogScore extends StatelessWidget {
                         ),
                       ),
                     ),
-
-                    //SizedBox(
-                    //   width: w * 0.85,
-                    //   height: h * 0.05,
-                    //   child: ElevatedButton(
-                    //     onPressed: () {
-                    //       Navigator.of(context).pop(
-                    //           index == teams.length ? "Nobody" : teams[index]);
-                    //     },
-                    //     child: Text(
-                    //       index == teams.length ? "Nobody" : teams[index],
-                    //       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    //             fontSize: w * 0.047,
-                    //           ),
-                    //       maxLines: 1,
-                    //       overflow: TextOverflow.ellipsis,
-                    //     ),
-                    //   ),
-                    // ),
                   ),
                 ),
               ),

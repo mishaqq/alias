@@ -6,30 +6,30 @@ const List<AliasSet> ukSetsList = [
       id: "basic",
       title: "Базові слова",
       contents: basic,
-      example: "кіт, корабель, вино..."),
+      example: "кіт, корабель, вино"),
   AliasSet(
       id: "expert",
       title: "Експерт",
       contents: expert,
-      example: "багатогранний, чаклун, дискусія..."),
+      example: "багатогранний, чаклун, дискусія"),
   AliasSet(
       id: "ukr",
       title: "Файні українські слова",
       contents: ukr,
-      example: "ґава, ятрити, говірка..."),
+      example: "ґава, ятрити, говірка"),
   AliasSet(
       id: "tworoots",
       title: "Складні слова",
       contents: tworoots,
-      example: "фотосинтез, шибайголова, зорепад..."),
+      example: "фотосинтез, шибайголова, зорепад"),
   AliasSet(
       id: "slang",
       title: "Молодіжний сленг",
       contents: slang,
-      example: "твіт, казуал, зашквар..."),
+      example: "твіт, казуал, зашквар"),
   AliasSet(
       id: "test",
-      title: "Тест",
+      title: "Меми",
       contents: test,
-      example: "твіт, казуал, зашквар..."),
+      example: "Штани за 40 гривень, Астанавітєсь!"),
 ];

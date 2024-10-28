@@ -50,7 +50,10 @@
       background-color: #ffffff;
           background-size: 100% 100%;
     }
-
+    div{
+      width: 400;
+        height: 800;
+    }
     .center {
       margin: 0;
       position: absolute;
@@ -111,21 +114,37 @@
       <source srcset="splash/img/dark-1x.png 1x, splash/img/dark-2x.png 2x, splash/img/dark-3x.png 3x, splash/img/dark-4x.png 4x" media="(prefers-color-scheme: dark)">
       <img class="center" aria-hidden="true" src="splash/img/light-1x.png" alt="">
   </picture>
-  
+  <div id="flutter-app"></div>
   <script>
-    window.addEventListener('load', function(ev) {
+
+window.addEventListener('load', function(ev) {
+      let target = document.getElementById("#flutter-app")
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
         },
-        onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
-            appRunner.runApp();
+        onEntrypointLoaded: async function (engineInitializer) {
+          const appRunner = await engineInitializer.initializeEngine({
+            hostElement: target,
           });
+          await appRunner.runApp();
         }
       });
     });
+    // window.addEventListener('load', function(ev) {
+    //   // Download main.dart.js
+    //   _flutter.loader.loadEntrypoint({
+    //     serviceWorker: {
+    //       serviceWorkerVersion: serviceWorkerVersion,
+    //     },
+    //     onEntrypointLoaded: function(engineInitializer) {
+    //       engineInitializer.initializeEngine().then(function(appRunner) {
+    //         appRunner.runApp();
+    //       });
+    //     }
+    //   });
+    // });
   </script>
 
 

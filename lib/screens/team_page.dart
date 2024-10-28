@@ -37,13 +37,13 @@ class TeamPage extends ConsumerWidget {
               Container(
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 248, 237, 255),
-                  border: Border.all(width: h * 0.0024),
+                  border: Border.all(width: 2),
                   borderRadius: BorderRadius.all(
-                    Radius.circular(h * 0.018),
+                    Radius.circular(w * 0.035),
                   ),
                 ),
                 width: w * 0.85,
-                height: h * 0.75,
+                height: h * 0.72,
                 child: Padding(
                   padding: EdgeInsets.only(
                     left: h * 0.015,
@@ -53,11 +53,15 @@ class TeamPage extends ConsumerWidget {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(
-                          top: h * 0.015,
+                          top: h * 0.01,
                           bottom: w * 0.03,
                         ),
                         child: Text(
                           AppLocalizations.of(context)!.teamsTitle,
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    fontSize: 24.sp,
+                                  ),
                         ),
                       ),
                       // Divider(
@@ -103,33 +107,31 @@ class TeamPage extends ConsumerWidget {
                                                   .textTheme
                                                   .bodyMedium!
                                                   .copyWith(
-                                                    fontSize: w * 0.047,
+                                                    fontSize: 18.sp,
                                                   ),
                                             ),
                                           ),
                                           Padding(
                                             padding: EdgeInsets.only(
                                                 left: w * 0.015),
-                                            child: IconButton(
-                                              padding: EdgeInsets.zero,
-                                              constraints: BoxConstraints(
-                                                minHeight: w * 0.08,
-                                                minWidth: w * 0.06,
-                                                maxWidth: w * 0.06,
-                                                maxHeight: w * 0.08,
+                                            child: SizedBox(
+                                              width: 30.sp,
+                                              height: 30.sp,
+                                              child: IconButton(
+                                                padding: EdgeInsets.zero,
+                                                icon: Icon(
+                                                  Icons.delete_outline_outlined,
+                                                  size: 22.sp,
+                                                ),
+                                                onPressed: () {
+                                                  if (game.teams.length > 2) {
+                                                    ref
+                                                        .read(gameProvider
+                                                            .notifier)
+                                                        .deleteTeam(index);
+                                                  }
+                                                },
                                               ),
-                                              icon: Icon(
-                                                Icons.delete_outline_outlined,
-                                                size: 19.sp,
-                                              ),
-                                              onPressed: () {
-                                                if (game.teams.length > 2) {
-                                                  ref
-                                                      .read(
-                                                          gameProvider.notifier)
-                                                      .deleteTeam(index);
-                                                }
-                                              },
                                             ),
                                           )
                                         ],
@@ -182,7 +184,7 @@ class TeamPage extends ConsumerWidget {
                                                     .textTheme
                                                     .bodyMedium!
                                                     .copyWith(
-                                                      fontSize: w * 0.047,
+                                                      fontSize: 18.sp,
                                                       fontStyle:
                                                           FontStyle.italic,
                                                     ),
@@ -207,12 +209,14 @@ class TeamPage extends ConsumerWidget {
                 child: Row(
                   children: [
                     SizedBox(
-                      width: w * 0.18,
-                      height: h * 0.07,
+                      width: w * 0.15,
+                      height: w * 0.15,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.black,
                           backgroundColor: Color.fromARGB(255, 255, 221, 149),
+
+                          padding: EdgeInsets.zero, // Remove any padding
                         ),
                         onPressed: () {
                           Navigator.of(context).pop();
@@ -228,8 +232,8 @@ class TeamPage extends ConsumerWidget {
                         left: w * 0.02,
                       ),
                       child: SizedBox(
-                        width: w * 0.65,
-                        height: h * 0.07,
+                        width: w * 0.68,
+                        height: w * 0.15,
                         child: ElevatedButton(
                           onPressed: () async {
                             await ref
@@ -245,7 +249,7 @@ class TeamPage extends ConsumerWidget {
                                   .textTheme
                                   .bodyMedium!
                                   .copyWith(
-                                    fontSize: 19.sp,
+                                    fontSize: 20.sp,
                                   )),
                         ),
                       ),
@@ -260,7 +264,7 @@ class TeamPage extends ConsumerWidget {
     );
   }
 }
-
+// TODO add popup "you cant add more teams"
 // Scaffold(
 //       appBar: AppBar(),
 //       body: Column(
