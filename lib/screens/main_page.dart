@@ -548,7 +548,7 @@ class LCatPopUp extends StatelessWidget {
         width: w * 0.7,
         decoration: BoxDecoration(
           color: Colors.white,
-          border: Border.all(width: h * 0.0024, color: Colors.black),
+          border: Border.all(width: 2, color: Colors.black),
           borderRadius: BorderRadius.all(
             Radius.circular(w * 0.035),
           ),
@@ -557,7 +557,7 @@ class LCatPopUp extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.all(w * 0.03),
+              padding: const EdgeInsets.all(12),
               child: Image.asset(
                 "assets/images/taping_cat.gif",
                 height: h * 0.04,
@@ -568,13 +568,14 @@ class LCatPopUp extends StatelessWidget {
                 width: w * 0.45,
                 child: TypeWriter.text(
                   AppLocalizations.of(context)!.catPopup,
+                  maintainSize: false,
                   duration: const Duration(milliseconds: 50),
                   overflow: TextOverflow.ellipsis,
-                  maxLines: 3,
+                  maxLines: 2,
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium!
-                      .copyWith(fontSize: 18.sp, height: 0.0.sp),
+                      .copyWith(fontSize: 16.sp, height: 0.0.sp),
                 ),
               ),
             ),
