@@ -37,13 +37,13 @@ class RulesPage extends ConsumerWidget {
               Container(
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 248, 237, 255),
-                  border: Border.all(width: h * 0.0024),
+                  border: Border.all(width: 2),
                   borderRadius: BorderRadius.all(
-                    Radius.circular(h * 0.018),
+                    Radius.circular(w * 0.035),
                   ),
                 ),
                 width: w * 0.85,
-                height: h * 0.75,
+                height: h * 0.72,
                 child: Padding(
                   padding: EdgeInsets.only(
                     left: h * 0.015,
@@ -63,7 +63,7 @@ class RulesPage extends ConsumerWidget {
                                 .textTheme
                                 .bodyMedium!
                                 .copyWith(
-                                  fontSize: h * 0.018,
+                                  fontSize: 20.sp,
                                 ),
                           ),
                           Padding(
@@ -79,14 +79,14 @@ class RulesPage extends ConsumerWidget {
                                         decoration: TextDecoration.underline,
                                         fontStyle: FontStyle.italic),
                                 children: [
-                                  TextSpan(
-                                    text: "Privacy Policy",
-                                    recognizer: tapGestureRecognizer(
-                                      onTap: () => launch(
-                                          'https://github.com/mishaqq/alias-privacy/blob/main/privacy-policy.md',
-                                          isNewTab: true),
-                                    ),
-                                  ),
+                                  // TextSpan(
+                                  //   text: "Privacy Policy",
+                                  //   recognizer: tapGestureRecognizer(
+                                  //     onTap: () => launch(
+                                  //         'https://github.com/mishaqq/alias-privacy/blob/main/privacy-policy.md',
+                                  //         isNewTab: true),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
@@ -105,7 +105,7 @@ class RulesPage extends ConsumerWidget {
                   children: [
                     SizedBox(
                       width: w * 0.85,
-                      height: h * 0.07,
+                      height: w * 0.15,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.black,

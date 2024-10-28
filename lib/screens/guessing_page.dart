@@ -8,6 +8,8 @@ import '../providers/game_model_provider.dart';
 import 'count_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+//TODO
+// add popUp "you cant go back"
 class GuessingPage extends ConsumerStatefulWidget {
   const GuessingPage({super.key});
 
@@ -48,13 +50,13 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
       Container(
         decoration: BoxDecoration(
           color: Color.fromARGB(255, 248, 237, 255),
-          border: Border.all(width: h * 0.0024),
+          border: Border.all(width: 2),
           borderRadius: BorderRadius.all(
-            Radius.circular(h * 0.018),
+            Radius.circular(MediaQuery.of(context).size.width * 0.035),
           ),
         ),
         width: w * 0.7,
-        height: h * 0.3,
+        height: w * 0.7,
         padding: EdgeInsets.all(4.0),
         alignment: Alignment.center,
         child: Text(
@@ -63,7 +65,7 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
           overflow: TextOverflow.ellipsis,
           maxLines: 7,
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                fontSize: 22.sp, // fontSize of the guessing word
+                fontSize: 24.sp, // fontSize of the guessing word
                 height: 1.1,
               ),
         ),
@@ -71,13 +73,13 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
       Container(
         decoration: BoxDecoration(
           color: Color.fromARGB(255, 248, 237, 255),
-          border: Border.all(width: h * 0.0024),
+          border: Border.all(width: 2),
           borderRadius: BorderRadius.all(
-            Radius.circular(h * 0.018),
+            Radius.circular(w * 0.035),
           ),
         ),
         width: w * 0.3,
-        height: h * 0.3,
+        height: w * 0.3,
         alignment: Alignment.center,
         child: const Text(""),
       ),
@@ -104,16 +106,17 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 248, 237, 255),
-                  border: Border.all(width: h * 0.0024),
+                  border: Border.all(width: 2),
                   borderRadius: BorderRadius.all(
-                    Radius.circular(h * 0.018),
+                    Radius.circular(w * 0.035),
                   ),
                 ),
-                width: w * 0.92,
+                width: w * 0.8,
                 height: h * 0.09,
                 child: Padding(
                   padding: EdgeInsets.only(
@@ -124,10 +127,13 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                     children: [
                       IconButton(
                         padding: EdgeInsets.zero,
-                        icon: Icon(Icons.pause_outlined),
+                        icon: Icon(
+                          Icons.pause_outlined,
+                          color: Colors.black,
+                        ),
                         splashColor: Colors.grey,
                         splashRadius: 30,
-                        iconSize: w * 0.08,
+                        iconSize: 22.sp,
                         onPressed: () {
                           _countDownController.isPaused.value
                               ? _countDownController.resume()
@@ -152,16 +158,16 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                         controller: _countDownController,
                         width: h * 0.065,
                         height: h * 0.065,
-                        ringColor: Colors.grey[300]!,
+                        ringColor: Color.fromARGB(255, 255, 221, 149),
                         ringGradient: null,
-                        fillColor: Colors.black,
+                        fillColor: Color.fromARGB(255, 255, 174, 0),
                         fillGradient: null,
                         backgroundColor: Color.fromARGB(255, 248, 237, 255),
                         backgroundGradient: null,
                         strokeWidth: w * 0.009,
                         strokeCap: StrokeCap.round,
                         textStyle: TextStyle(
-                            fontSize: w * 0.044,
+                            fontSize: 18.sp,
                             color: const Color.fromARGB(255, 0, 0, 0),
                             fontWeight: FontWeight.bold),
                         textFormat: CountdownTextFormat.S,
@@ -214,7 +220,7 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              fontSize: 16.sp,
+                              fontSize: 18.sp,
                             ),
                       ),
                       // Divider(
@@ -228,95 +234,102 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(top: h * 0.25),
-                child: SizedBox(
-                  width: w * 0.8,
-                  height: h * 0.32,
-                  child: CardSwiper(
-                    backCardOffset: Offset.zero,
-                    padding: EdgeInsets.zero,
-                    controller: controller,
-                    allowedSwipeDirection:
-                        const AllowedSwipeDirection.symmetric(
-                      horizontal: true,
-                      vertical: false,
+              Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(bottom: h * 0.03),
+                    child: SizedBox(
+                      width: w * 0.8,
+                      height: w * 0.8,
+                      child: CardSwiper(
+                        backCardOffset: Offset.zero,
+                        padding: EdgeInsets.zero,
+                        controller: controller,
+                        allowedSwipeDirection:
+                            const AllowedSwipeDirection.symmetric(
+                          horizontal: true,
+                          vertical: false,
+                        ),
+                        cardsCount: cards.length,
+                        cardBuilder: (context, index, percentThresholdX,
+                            percentThresholdY) {
+                          return cards[index];
+                        },
+                        onSwipe: (previousIndex, currentIndex, direction) {
+                          if (direction == CardSwiperDirection.right) {
+                            ref
+                                .read(gameProvider.notifier)
+                                .addUsedWord(guessingWord); // save used word
+                            roundWords[guessingWord] =
+                                1; // save this round words
+                            plus++;
+                          } else {
+                            ref
+                                .read(gameProvider.notifier)
+                                .addUsedWord(guessingWord);
+                            roundWords[guessingWord] = 0;
+                            minus++;
+                          }
+                          controller.moveTo(1);
+
+                          setState(() {});
+
+                          return true;
+                        },
+                      ),
                     ),
-                    cardsCount: cards.length,
-                    cardBuilder:
-                        (context, index, percentThresholdX, percentThresholdY) {
-                      return cards[index];
-                    },
-                    onSwipe: (previousIndex, currentIndex, direction) {
-                      if (direction == CardSwiperDirection.right) {
-                        ref
-                            .read(gameProvider.notifier)
-                            .addUsedWord(guessingWord); // save used word
-                        roundWords[guessingWord] = 1; // save this round words
-                        plus++;
-                      } else {
-                        ref
-                            .read(gameProvider.notifier)
-                            .addUsedWord(guessingWord);
-                        roundWords[guessingWord] = 0;
-                        minus++;
-                      }
-                      controller.moveTo(1);
-
-                      setState(() {});
-
-                      return true;
-                    },
                   ),
-                ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      bottom: h * 0.08,
+                      left: w * 0.06,
+                      right: w * 0.06,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: w * 0.23,
+                          height: w * 0.23,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.black,
+                              backgroundColor:
+                                  Color.fromARGB(255, 255, 221, 149),
+                            ),
+                            onPressed: () {
+                              controller.swipe(CardSwiperDirection.left);
+                            },
+                            child: Icon(
+                              Icons.remove,
+                              size: w * 0.07,
+                            ),
+                          ),
+                        ),
+                        Spacer(),
+                        SizedBox(
+                          width: w * 0.23,
+                          height: w * 0.23,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.black,
+                              backgroundColor:
+                                  Color.fromARGB(255, 255, 221, 149),
+                            ),
+                            onPressed: () {
+                              controller.swipe(CardSwiperDirection.right);
+                            },
+                            child: Icon(
+                              Icons.add,
+                              size: w * 0.07,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: h * 0.03,
-                  left: w * 0.06,
-                  right: w * 0.06,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: w * 0.23,
-                      height: h * 0.1,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.black,
-                          backgroundColor: Color.fromARGB(255, 255, 221, 149),
-                        ),
-                        onPressed: () {
-                          controller.swipe(CardSwiperDirection.left);
-                        },
-                        child: Icon(
-                          Icons.remove,
-                          size: w * 0.07,
-                        ),
-                      ),
-                    ),
-                    Spacer(),
-                    SizedBox(
-                      width: w * 0.23,
-                      height: h * 0.1,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.black,
-                          backgroundColor: Color.fromARGB(255, 255, 221, 149),
-                        ),
-                        onPressed: () {
-                          controller.swipe(CardSwiperDirection.right);
-                        },
-                        child: Icon(
-                          Icons.add,
-                          size: w * 0.07,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
             ],
           ),
         ),

@@ -7,5 +7,5 @@ const List<AliasSet> enSetsList = [
       id: "basic",
       title: "Basic Words",
       contents: basic,
-      example: "flower, worm, dance..."),
+      example: "flower, worm, dance"),
 ];

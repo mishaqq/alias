@@ -56,19 +56,22 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
               Container(
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 248, 237, 255),
-                  border: Border.all(width: h * 0.0024),
+                  border: Border.all(width: 2),
                   borderRadius: BorderRadius.all(
-                    Radius.circular(h * 0.018),
+                    Radius.circular(w * 0.035),
                   ),
                 ),
                 width: w * 0.85,
-                height: h * 0.75,
+                height: h * 0.72,
                 child: Column(
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(top: h * 0.015),
+                      padding: EdgeInsets.only(top: h * 0.01),
                       child: Text(
                         AppLocalizations.of(context)!.words,
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              fontSize: 24.sp,
+                            ),
                       ),
                     ),
                     Expanded(
@@ -80,19 +83,19 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                         ),
                         child: MultiSelectCheckList(
                           chechboxScaleFactor: 0.8,
-                          itemPadding: EdgeInsets.all(h * 0.01),
+                          itemPadding: EdgeInsets.all(w * 0.02),
                           maxSelectableCount: 5,
                           textStyles: MultiSelectTextStyles(
                             selectedTextStyle: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 color: Colors.black,
                                 fontFamily: "Anonymous",
-                                fontSize: h * 0.020),
+                                fontSize: 18.sp),
                           ),
                           itemsDecoration: MultiSelectDecorations(
                             selectedDecoration: BoxDecoration(
                               color: const Color.fromARGB(255, 255, 221, 149),
-                              border: Border.all(width: h * 0.0015),
+                              border: Border.all(width: 2),
                             ),
                           ),
                           listViewSettings: const ListViewSettings(
@@ -105,9 +108,9 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                               contentPadding: const EdgeInsets.all(0),
                               decorations: MultiSelectItemDecorations(
                                 decoration: BoxDecoration(
-                                  border: Border.all(width: h * 0.0015),
+                                  border: Border.all(width: 2),
                                   borderRadius: BorderRadius.all(
-                                    Radius.circular(h * 0.018),
+                                    Radius.circular(w * 0.035),
                                   ),
                                 ),
                               ),
@@ -116,33 +119,36 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                                   fontWeight: FontWeight.w700,
                                   color: Colors.black,
                                   fontFamily: "Anonymous",
-                                  fontSize: h * 0.020,
+                                  fontSize: 18.sp,
                                 ),
                               ),
                               value: localizedSetList[index],
                               title: Text(localizedSetList[index].title),
                               subtitle: Padding(
-                                padding: EdgeInsets.only(top: h * 0.0020),
+                                padding: EdgeInsets.only(top: w * 0.01),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.only(top: h * 0.0015),
+                                      padding: EdgeInsets.only(top: w * 0.001),
                                       child: Text(
-                                        "${localizedSetList[index].contents.length} Слів", //TODO : Translate
-                                        style: TextStyle(fontSize: h * 0.015),
+                                        "${localizedSetList[index].contents.length} ${AppLocalizations.of(context)!.wordsAmount}", //TODO : Translate
+                                        style: TextStyle(fontSize: 14.sp),
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(top: h * 0.0015),
+                                      padding: EdgeInsets.only(top: w * 0.001),
                                       child: Wrap(
                                         children: [
                                           Text(
                                             localizedSetList[index].example,
+                                            maxLines: 1,
                                             style: TextStyle(
-                                                fontStyle: FontStyle.italic,
-                                                fontSize: h * 0.015),
+                                              fontStyle: FontStyle.italic,
+                                              fontSize: 14.sp,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -176,12 +182,13 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                 child: Row(
                   children: [
                     SizedBox(
-                      width: w * 0.18,
-                      height: h * 0.07,
+                      width: w * 0.15,
+                      height: w * 0.15,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.black,
                           backgroundColor: Color.fromARGB(255, 255, 221, 149),
+                          padding: EdgeInsets.zero, // Remove any padding
                         ),
                         onPressed: () {
                           Navigator.of(context).pop();
@@ -197,8 +204,8 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                         left: w * 0.02,
                       ),
                       child: SizedBox(
-                        width: w * 0.65,
-                        height: h * 0.07,
+                        width: w * 0.68,
+                        height: w * 0.15,
                         child: ElevatedButton(
                           onPressed: () {
                             if (_controller.getSelectedItems().isNotEmpty) {
@@ -216,7 +223,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                                   .textTheme
                                   .bodyMedium!
                                   .copyWith(
-                                    fontSize: 19.sp,
+                                    fontSize: 20.sp,
                                   )),
                         ),
                       ),

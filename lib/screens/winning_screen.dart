@@ -121,9 +121,9 @@ class _WinningPageState extends ConsumerState<WinningPage>
                             child: Container(
                               decoration: BoxDecoration(
                                 color: Color.fromARGB(255, 248, 237, 255),
-                                border: Border.all(width: h * 0.0024),
+                                border: Border.all(width: 2),
                                 borderRadius: BorderRadius.all(
-                                  Radius.circular(h * 0.018),
+                                  Radius.circular(w * 0.035),
                                 ),
                               ),
                               width: w * 0.8,
@@ -151,9 +151,9 @@ class _WinningPageState extends ConsumerState<WinningPage>
                           child: Container(
                             decoration: BoxDecoration(
                               color: Color.fromARGB(255, 248, 237, 255),
-                              border: Border.all(width: h * 0.0024),
+                              border: Border.all(width: 2),
                               borderRadius: BorderRadius.all(
-                                Radius.circular(h * 0.018),
+                                Radius.circular(w * 0.035),
                               ),
                             ),
                             alignment: Alignment.center,
@@ -180,9 +180,9 @@ class _WinningPageState extends ConsumerState<WinningPage>
                           childWhenDragging: Container(
                             decoration: BoxDecoration(
                               color: Color.fromARGB(255, 248, 237, 255),
-                              border: Border.all(width: h * 0.0024),
+                              border: Border.all(width: 2),
                               borderRadius: BorderRadius.all(
-                                Radius.circular(h * 0.018),
+                                Radius.circular(w * 0.035),
                               ),
                             ),
                             alignment: Alignment.center,
