@@ -55,13 +55,4 @@ flutter:
           style: italic
   generate: true 
 
-flutter_native_splash:
-  ios: true
-  android: true
-  color: "#3468C0"
-  image: assets/icons/ic_launcher_foreground.png
-  android_12:
-    image: assets/icons/ic_launcher_foreground.png
-    color: "#3468C0"
-    
-    
+
