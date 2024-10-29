@@ -98,8 +98,10 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
                               border: Border.all(width: 2),
                             ),
                           ),
-                          listViewSettings: const ListViewSettings(
-                            physics: BouncingScrollPhysics(),
+                          listViewSettings: ListViewSettings(
+                            padding: EdgeInsets.only(
+                                bottom: h * 0.01, top: h * 0.03),
+                            physics: const BouncingScrollPhysics(),
                           ),
                           controller: _controller,
                           items: List.generate(
