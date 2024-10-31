@@ -1,4 +1,4 @@
-package com.example.alias
+package com.mika.alias
 
 import io.flutter.embedding.android.FlutterActivity
 
