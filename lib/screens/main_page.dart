@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:math';
 
 import 'package:alias/core/constants.dart';
+import 'package:alias/elements/cat_popup.dart';
 import 'package:alias/providers/locale_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -162,9 +163,8 @@ class _MainPageState extends ConsumerState<MainPage>
           overflow: TextOverflow.ellipsis,
           maxLines: 3,
           style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                fontSize: MediaQuery.of(context).size.width < 720
-                    ? 34.sp
-                    : 50, // fontSize of the guessing word
+                fontSize: 34.sp,
+                // fontSize of the guessing word
                 letterSpacing: -1,
               ),
         ),
@@ -219,6 +219,7 @@ class _MainPageState extends ConsumerState<MainPage>
           animation: _catAnimationController,
           builder: (context, child) {
             return LCatPopUp(
+              text: AppLocalizations.of(context)!.catPopup,
               h: h,
               w: w,
               controller: _catAnimationController,
@@ -521,65 +522,6 @@ class _MainPageState extends ConsumerState<MainPage>
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class LCatPopUp extends StatelessWidget {
-  const LCatPopUp({
-    super.key,
-    required this.h,
-    required this.w,
-    required this.controller,
-  });
-
-  final double h;
-  final double w;
-  final Animation<double> controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      top: controller.value,
-      left: w * 0.15,
-      child: Container(
-        width: w * 0.7,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(width: 2, color: Colors.black),
-          borderRadius: BorderRadius.all(
-            Radius.circular(w * 0.035),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(12),
-              child: Image.asset(
-                "assets/images/taping_cat.gif",
-                height: h * 0.04,
-              ),
-            ),
-            Center(
-              child: SizedBox(
-                width: w * 0.45,
-                child: TypeWriter.text(
-                  AppLocalizations.of(context)!.catPopup,
-                  maintainSize: false,
-                  duration: const Duration(milliseconds: 50),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(fontSize: 16.sp, height: 0.0.sp),
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );

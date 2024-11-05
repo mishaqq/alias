@@ -1,10 +1,10 @@
 name: alias
 description: A new Flutter project.
-publish_to: 'none'
-version: 0.1.0
+publish_to: "none"
+version: 0.3.1
 
 environment:
-  sdk: '>=3.4.3 <4.0.0'
+  sdk: ">=3.4.3 <4.0.0"
 
 dependencies:
   circular_countdown_timer: ^0.2.4
@@ -14,7 +14,6 @@ dependencies:
     sdk: flutter
   flutter_card_swiper: ^7.0.0
 
-  
   flutter_localizations:
     sdk: flutter
   flutter_multi_select_items: ^0.4.2
@@ -27,23 +26,18 @@ dependencies:
   typewritertext: ^3.0.9
   url_launcher: ^6.3.0
 
-
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
   flutter_launcher_icons: "^0.14.1"
 
-
 flutter:
   uses-material-design: true
 
-
-
   assets:
     - assets/images/
-  
+
   fonts:
     - family: Anonymous
       fonts:
@@ -53,6 +47,4 @@ flutter:
           weight: 700
         - asset: fonts/AnonymousPro-BoldItalic.ttf
           style: italic
-  generate: true 
-
-
+  generate: true

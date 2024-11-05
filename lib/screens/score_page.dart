@@ -180,7 +180,7 @@ class ScorePage extends ConsumerWidget {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.black,
-                            backgroundColor: Color.fromARGB(255, 255, 221, 149),
+                            backgroundColor: Color.fromARGB(255, 248, 237, 255),
                             padding: EdgeInsets.zero, // Remove any padding
                           ),
                           onPressed: () {
@@ -200,6 +200,11 @@ class ScorePage extends ConsumerWidget {
                           width: w * 0.68,
                           height: w * 0.15,
                           child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.black,
+                              backgroundColor:
+                                  Color.fromARGB(255, 255, 221, 149),
+                            ),
                             onPressed: () async {
                               await ref
                                   .read(gameProvider.notifier)

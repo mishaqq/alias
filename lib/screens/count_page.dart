@@ -213,7 +213,7 @@ class _CountPageState extends ConsumerState<CountPage> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.black,
-                            backgroundColor: Color.fromARGB(255, 255, 221, 149),
+                            backgroundColor: Color.fromARGB(255, 248, 237, 255),
                             padding: EdgeInsets.zero,
                           ),
                           onPressed: () {
@@ -233,6 +233,11 @@ class _CountPageState extends ConsumerState<CountPage> {
                           width: w * 0.68,
                           height: w * 0.15,
                           child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.black,
+                              backgroundColor:
+                                  Color.fromARGB(255, 255, 221, 149),
+                            ),
                             onPressed: () async {
                               //       calculating the score
                               int roundScore = 0;

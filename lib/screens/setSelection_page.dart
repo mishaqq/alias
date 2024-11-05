@@ -1,4 +1,5 @@
 import 'package:alias/core/constants.dart';
+import 'package:alias/elements/cat_popup.dart';
 import 'package:alias/models/set_model.dart';
 import 'package:alias/providers/locale_provider.dart';
 import 'package:flutter/material.dart';
@@ -16,15 +17,39 @@ class ChoosingPage extends ConsumerStatefulWidget {
   ConsumerState<ChoosingPage> createState() => _GuessingPageState();
 }
 
-class _GuessingPageState extends ConsumerState<ChoosingPage> {
+class _GuessingPageState extends ConsumerState<ChoosingPage>
+    with TickerProviderStateMixin {
   late List<AliasSet> localizedSetList;
+  late AnimationController _controllerCat;
+  late Animation<double> _catAnimationController;
+  late OverlayPortalController overlayPortalController;
 
   @override
   void initState() {
+    super.initState();
     //SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
     Locale curLocale = ref.read(localeProvider);
     localizedSetList = setLocalizationModel.localizedSetList[curLocale]!;
-    super.initState();
+
+    overlayPortalController = OverlayPortalController();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // Initialize AnimationController
+      _controllerCat = AnimationController(
+        duration: const Duration(milliseconds: 800),
+        vsync: this,
+      );
+
+      // Define animations for top and left positions
+      _catAnimationController = Tween<double>(
+        begin: MediaQuery.of(context).size.height * -0.08,
+        end: MediaQuery.of(context).size.height * 0.05,
+      ).animate(
+        CurvedAnimation(
+          parent: _controllerCat,
+          curve: Curves.easeIn,
+        ),
+      );
+    });
   }
 
   final MultiSelectController<AliasSet> _controller = MultiSelectController();
@@ -33,207 +58,248 @@ class _GuessingPageState extends ConsumerState<ChoosingPage> {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Container(
-        alignment: Alignment.center,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromARGB(255, 112, 150, 236),
-              Color.fromARGB(255, 52, 104, 192)
-            ],
+      body: OverlayPortal(
+        controller: overlayPortalController,
+        overlayChildBuilder: (context) => AnimatedBuilder(
+          animation: _catAnimationController,
+          builder: (context, child) => LCatPopUp(
+            text: AppLocalizations.of(context)!.nothingSelected,
+            h: h,
+            w: w,
+            controller: _catAnimationController,
           ),
         ),
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: h * 0.09,
-            left: w * 0.075,
-            right: w * 0.075,
+        child: Container(
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromARGB(255, 112, 150, 236),
+                Color.fromARGB(255, 52, 104, 192)
+              ],
+            ),
           ),
-          child: Column(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 248, 237, 255),
-                  border: Border.all(width: 2),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(w * 0.035),
-                  ),
-                ),
-                width: w * 0.85,
-                height: h * 0.72,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: h * 0.01),
-                      child: Text(
-                        AppLocalizations.of(context)!.words,
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              fontSize: 24.sp,
-                            ),
-                      ),
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: h * 0.09,
+              left: w * 0.075,
+              right: w * 0.075,
+            ),
+            child: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 248, 237, 255),
+                    border: Border.all(width: 2),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(w * 0.035),
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          left: h * 0.015,
-                          right: h * 0.015,
-                          top: h * 0.01,
-                        ),
-                        child: MultiSelectCheckList(
-                          chechboxScaleFactor: 0.8,
-                          itemPadding: EdgeInsets.all(w * 0.02),
-                          maxSelectableCount: 5,
-                          textStyles: MultiSelectTextStyles(
-                            selectedTextStyle: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black,
-                                fontFamily: "Anonymous",
-                                fontSize: 18.sp),
-                          ),
-                          itemsDecoration: MultiSelectDecorations(
-                            selectedDecoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 255, 221, 149),
-                              border: Border.all(width: 2),
-                            ),
-                          ),
-                          listViewSettings: ListViewSettings(
-                            padding: EdgeInsets.only(
-                                bottom: h * 0.01, top: h * 0.03),
-                            physics: const BouncingScrollPhysics(),
-                          ),
-                          controller: _controller,
-                          items: List.generate(
-                            localizedSetList.length,
-                            (index) => CheckListCard(
-                              contentPadding: const EdgeInsets.all(0),
-                              decorations: MultiSelectItemDecorations(
-                                decoration: BoxDecoration(
-                                  border: Border.all(width: 2),
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(w * 0.035),
+                  ),
+                  width: w * 0.85,
+                  height: h * 0.72,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: h * 0.01),
+                        child: Text(
+                          AppLocalizations.of(context)!.words,
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    fontSize: 24.sp,
                                   ),
-                                ),
-                              ),
-                              textStyles: MultiSelectItemTextStyles(
-                                textStyle: TextStyle(
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            left: h * 0.015,
+                            right: h * 0.015,
+                          ),
+                          child: MultiSelectCheckList(
+                            chechboxScaleFactor: 1,
+                            itemPadding: EdgeInsets.all(w * 0.025),
+                            maxSelectableCount: localizedSetList.length,
+                            textStyles: MultiSelectTextStyles(
+                              selectedTextStyle: TextStyle(
                                   fontWeight: FontWeight.w700,
                                   color: Colors.black,
                                   fontFamily: "Anonymous",
-                                  fontSize: 18.sp,
-                                ),
+                                  fontSize: 18.sp),
+                            ),
+                            itemsDecoration: MultiSelectDecorations(
+                              selectedDecoration: BoxDecoration(
+                                color: const Color.fromARGB(255, 255, 221, 149),
+                                border: Border.all(width: 2),
                               ),
-                              value: localizedSetList[index],
-                              title: Text(localizedSetList[index].title),
-                              subtitle: Padding(
-                                padding: EdgeInsets.only(top: w * 0.01),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(top: w * 0.001),
-                                      child: Text(
+                            ),
+                            listViewSettings: ListViewSettings(
+                              padding: EdgeInsets.only(
+                                bottom: h * 0.01,
+                                top: h * 0.04,
+                              ),
+                              physics: const BouncingScrollPhysics(),
+                              separatorBuilder: (context, index) => SizedBox(
+                                height: w * 0.025,
+                              ),
+                            ),
+                            controller: _controller,
+                            items: List.generate(
+                              localizedSetList.length,
+                              (index) => CheckListCard(
+                                contentPadding: const EdgeInsets.all(0),
+                                decorations: MultiSelectItemDecorations(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(width: 2),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(w * 0.035),
+                                    ),
+                                  ),
+                                ),
+                                textStyles: MultiSelectItemTextStyles(
+                                  textStyle: TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black,
+                                    fontFamily: "Anonymous",
+                                    fontSize: 18.sp,
+                                  ),
+                                ),
+                                value: localizedSetList[index],
+                                title: Text(
+                                  localizedSetList[index].title,
+                                  maxLines: 1,
+                                  style: const TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                subtitle: Padding(
+                                  padding: EdgeInsets.only(top: w * 0.015),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
                                         "${localizedSetList[index].contents.length} ${AppLocalizations.of(context)!.wordsAmount}", //TODO : Translate
                                         style: TextStyle(fontSize: 14.sp),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: w * 0.001),
-                                      child: Wrap(
-                                        children: [
-                                          Text(
-                                            localizedSetList[index].example,
-                                            maxLines: 1,
-                                            style: TextStyle(
-                                              fontStyle: FontStyle.italic,
-                                              fontSize: 14.sp,
-                                              overflow: TextOverflow.ellipsis,
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.only(top: w * 0.005),
+                                        child: Wrap(
+                                          children: [
+                                            Text(
+                                              localizedSetList[index].example,
+                                              maxLines: 1,
+                                              style: TextStyle(
+                                                fontStyle: FontStyle.italic,
+                                                fontSize: 14.sp,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
+                                ),
+                                selectedColor:
+                                    Color.fromARGB(255, 248, 237, 255),
+                                checkColor: Colors.black,
+                                checkBoxGap: w * 0.01,
+                                leadingCheckBox: false,
+                                checkBoxBorderSide: const BorderSide(
+                                  color: Colors.black,
+                                  width: 1.5,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(w * 0.010),
                                 ),
                               ),
-                              selectedColor: Colors.white,
-                              checkColor: Colors.black,
-                              leadingCheckBox: false,
-                              checkBoxBorderSide:
-                                  const BorderSide(color: Colors.black),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(h * 0.005),
-                              ),
                             ),
+                            onChange: (allSelectedItems, selectedItem) {},
+                            onMaximumSelected:
+                                (allSelectedItems, selectedItem) {},
                           ),
-                          onChange: (allSelectedItems, selectedItem) {},
-                          onMaximumSelected:
-                              (allSelectedItems, selectedItem) {},
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: h * 0.01,
-                ),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: w * 0.15,
-                      height: w * 0.15,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.black,
-                          backgroundColor: Color.fromARGB(255, 255, 221, 149),
-                          padding: EdgeInsets.zero, // Remove any padding
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          size: 20.sp,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: w * 0.02,
-                      ),
-                      child: SizedBox(
-                        width: w * 0.68,
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: h * 0.01,
+                  ),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: w * 0.15,
                         height: w * 0.15,
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.black,
+                            backgroundColor: Color.fromARGB(255, 248, 237, 255),
+                            padding: EdgeInsets.zero, // Remove any padding
+                          ),
                           onPressed: () {
-                            if (_controller.getSelectedItems().isNotEmpty) {
-                              ref.read(gameProvider.notifier).makeGameWordSet(
-                                  _controller.getSelectedItems());
-
-                              Navigator.pushNamed(context, "/settings");
-                            } else {
-                              //TO DO add popup no sets selected :/
-                            }
+                            Navigator.of(context).pop();
                           },
-                          child: Text(
-                              AppLocalizations.of(context)!.continueButton,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(
-                                    fontSize: 20.sp,
-                                  )),
+                          child: Icon(
+                            Icons.arrow_back_ios_new_rounded,
+                            size: 20.sp,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: w * 0.02,
+                        ),
+                        child: SizedBox(
+                          width: w * 0.68,
+                          height: w * 0.15,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.black,
+                              backgroundColor:
+                                  Color.fromARGB(255, 255, 221, 149),
+                            ),
+                            onPressed: () {
+                              if (_controller.getSelectedItems().isNotEmpty) {
+                                ref.read(gameProvider.notifier).makeGameWordSet(
+                                    _controller.getSelectedItems());
+
+                                Navigator.pushNamed(context, "/settings");
+                              } else {
+                                overlayPortalController.show();
+                                _controllerCat.forward();
+                                Future.delayed(
+                                  const Duration(milliseconds: 3000),
+                                  () => {
+                                    _controllerCat.reverse().then((_) {
+                                      overlayPortalController.hide();
+                                    }),
+                                  },
+                                );
+                              }
+                            },
+                            child: Text(
+                                AppLocalizations.of(context)!.continueButton,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      fontSize: 20.sp,
+                                    )),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

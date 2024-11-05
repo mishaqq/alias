@@ -31,3 +31,15 @@ List<String> initTeamsAvatars() {
 
   return initialTeamsAvatars.toList();
 }
+
+String initExanpleWords(List<String> allWords, {int wordsQuantity = 3}) {
+  final random = Random();
+  String initialWords = "";
+  int wordsQ = wordsQuantity;
+  while (wordsQ != 0) {
+    String word = allWords[random.nextInt(allWords.length)];
+    initialWords += initialWords == "" ? word : ", $word";
+    wordsQ--;
+  }
+  return initialWords;
+}

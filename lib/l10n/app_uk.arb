@@ -26,5 +26,6 @@
     "no": "Ні",
     "leaveGameTitle": "Вийти з цієї гри?",
     "catPopup": "Свайпни картки щоб змінити мову",
-    "wordsAmount": "Слів"
+    "wordsAmount": "Слів",
+    "nothingSelected": "Та вибери ти хоч щось..."
 }

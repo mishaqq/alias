@@ -205,7 +205,7 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                              top: h * 0.020,
+                              top: h * 0.035,
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -213,11 +213,13 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                               children: [
                                 Text(
                                   AppLocalizations.of(context)!.wordsToWinTitle,
+                                  maxLines: 1,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium!
                                       .copyWith(
                                         fontSize: 18.sp,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                 ),
                                 ItemCount(
@@ -248,18 +250,20 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                              top: h * 0.025,
+                              top: h * 0.035,
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   AppLocalizations.of(context)!.lastWordTitle,
+                                  maxLines: 1,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium!
                                       .copyWith(
                                         fontSize: 18.sp,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                 ),
                                 Padding(
@@ -319,7 +323,7 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.black,
-                          backgroundColor: Color.fromARGB(255, 255, 221, 149),
+                          backgroundColor: Color.fromARGB(255, 248, 237, 255),
 
                           padding: EdgeInsets.zero, // Remove any padding
                         ),
@@ -340,6 +344,10 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                         width: w * 0.68,
                         height: w * 0.15,
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.black,
+                            backgroundColor: Color.fromARGB(255, 255, 221, 149),
+                          ),
                           onPressed: () {
                             int durationIndex = isSelected.indexOf(true);
 
