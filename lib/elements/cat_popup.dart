@@ -24,7 +24,7 @@ class LCatPopUp extends StatelessWidget {
       child: Container(
         width: w * 0.7,
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 248, 237, 255),
+          color: Colors.white,
           border: Border.all(width: 2, color: Colors.black),
           borderRadius: BorderRadius.all(
             Radius.circular(w * 0.035),
