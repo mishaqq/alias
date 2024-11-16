@@ -180,7 +180,8 @@ class ScorePage extends ConsumerWidget {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.black,
-                            backgroundColor: Color.fromARGB(255, 248, 237, 255),
+                            backgroundColor:
+                                const Color.fromARGB(255, 248, 237, 255),
                             padding: EdgeInsets.zero, // Remove any padding
                           ),
                           onPressed: () {
