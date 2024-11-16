@@ -23,16 +23,24 @@ class _GuessingPageState extends ConsumerState<ChoosingPage>
   late AnimationController _controllerCat;
   late Animation<double> _catAnimationController;
   late OverlayPortalController overlayPortalController;
+  late ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
+
+    _scrollController = ScrollController();
     //SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
     Locale curLocale = ref.read(localeProvider);
     localizedSetList = setLocalizationModel.localizedSetList[curLocale]!;
 
     overlayPortalController = OverlayPortalController();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
       // Initialize AnimationController
       _controllerCat = AnimationController(
         duration: const Duration(milliseconds: 800),
@@ -135,6 +143,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage>
                               ),
                             ),
                             listViewSettings: ListViewSettings(
+                              controller: _scrollController,
                               padding: EdgeInsets.only(
                                 bottom: h * 0.01,
                                 top: h * 0.04,

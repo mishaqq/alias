@@ -214,9 +214,9 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                           // debugPrint('Countdown Changed $timeStamp');
                         },
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Text(
-                        "$minus/$plus",
+                        "-$minus|$plus+",
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -468,7 +468,8 @@ class Pause extends StatelessWidget {
         shadowColor: Colors.transparent,
         icon: Icon(
           Icons.play_arrow_rounded,
-          size: MediaQuery.of(context).size.width * 0.08,
+          size: MediaQuery.of(context).size.width * 0.24,
+          color: Colors.black54,
         ),
       ),
     );

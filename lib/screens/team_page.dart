@@ -121,7 +121,7 @@ class TeamPage extends ConsumerWidget {
                                               child: IconButton(
                                                 padding: EdgeInsets.zero,
                                                 icon: Icon(
-                                                  Icons.delete_outline_outlined,
+                                                  Icons.close,
                                                   size: 22.sp,
                                                 ),
                                                 onPressed: () {

@@ -23,6 +23,7 @@ class MainPage extends ConsumerStatefulWidget {
 
 bool oldSesion = false;
 bool isCat = true;
+
 late final CardSwiperController controller;
 Map<int, Locale> languageMap = {
   1: const Locale('uk'),
@@ -88,6 +89,9 @@ class _MainPageState extends ConsumerState<MainPage>
       );
       //cat popUp animation routine
       isCat = await ref.read(localeProvider.notifier).ifCatPopup();
+
+      // if languaage changed
+
       if (isCat) {
         Future.delayed(
           const Duration(milliseconds: 2000),

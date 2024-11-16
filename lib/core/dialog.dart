@@ -9,8 +9,8 @@ showAlertDialog(BuildContext context, ref) {
   Widget cancelButton = Padding(
     padding: EdgeInsets.only(left: w * 0.00),
     child: SizedBox(
-      width: w * 0.25,
-      height: w * 0.15,
+      width: w * 0.20,
+      height: w * 0.12,
       child: TextButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color.fromARGB(255, 255, 221, 149),
@@ -37,8 +37,8 @@ showAlertDialog(BuildContext context, ref) {
     ),
   );
   Widget continueButton = SizedBox(
-    width: w * 0.25,
-    height: w * 0.15,
+    width: w * 0.20,
+    height: w * 0.12,
     child: TextButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: const Color.fromARGB(255, 255, 221, 149),
