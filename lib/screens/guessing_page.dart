@@ -369,7 +369,7 @@ class CustomDialog extends StatelessWidget {
             child: Text(
               "${AppLocalizations.of(context)!.whoGuessed} - $lastWord?",
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontSize: 14.sp,
+                    fontSize: 16.sp,
                   ),
             ),
           ),
@@ -401,7 +401,7 @@ class CustomDialog extends StatelessWidget {
                             width: MediaQuery.of(context).size.height * 0.0024),
                         borderRadius: BorderRadius.all(
                           Radius.circular(
-                              MediaQuery.of(context).size.height * 0.00),
+                              MediaQuery.of(context).size.width * 0.035),
                         ),
                       ),
                       splashFactory: NoSplash.splashFactory,
@@ -434,7 +434,7 @@ class CustomDialog extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            fontSize: 10.sp,
+                            fontSize: 12.sp,
                           ),
                     ),
                   ),

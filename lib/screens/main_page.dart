@@ -245,13 +245,47 @@ class _MainPageState extends ConsumerState<MainPage>
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
+                    // Positioned(
+                    //   width: w,
+                    //   top: h * 0.35,
+                    //   left: w * 0.28,
+                    //   child: Image.asset(
+                    //     "assets/images/cloud.png",
+                    //     height: h * 0.11,
+                    //   ),
+                    // ),
                     Positioned(
                       width: w,
-                      top: h * 0.35,
-                      left: w * 0.28,
-                      child: Image.asset(
-                        "assets/images/cloud.png",
-                        height: h * 0.11,
+                      bottom: h * 0.45,
+                      left: w * 0.34,
+                      child: Transform.scale(
+                        scaleX: -1,
+                        child: Transform.rotate(
+                          angle: -260 / 360,
+                          child: IgnorePointer(
+                            child: Image.asset(
+                              "assets/images/arrow_home.png",
+                              height: h * 0.35,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      width: w,
+                      bottom: h * 0.45,
+                      right: w * 0.34,
+                      child: Transform.scale(
+                        scaleX: 1,
+                        child: Transform.rotate(
+                          angle: -260 / 360,
+                          child: IgnorePointer(
+                            child: Image.asset(
+                              "assets/images/arrow_home.png",
+                              height: h * 0.35,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                     Positioned(
@@ -263,15 +297,15 @@ class _MainPageState extends ConsumerState<MainPage>
                         child: Stack(
                           clipBehavior: Clip.none,
                           children: [
-                            Positioned(
-                              width: w,
-                              bottom: w * 0.58,
-                              right: w * 0.01,
-                              child: Image.asset(
-                                "assets/images/cloud.png",
-                                height: h * 0.11,
-                              ),
-                            ),
+                            // Positioned(
+                            //   width: w,
+                            //   bottom: w * 0.58,
+                            //   right: w * 0.01,
+                            //   child: Image.asset(
+                            //     "assets/images/cloud.png",
+                            //     height: h * 0.11,
+                            //   ),
+                            // ),
                             Positioned(
                               left: 0,
                               bottom: 0,
@@ -328,17 +362,17 @@ class _MainPageState extends ConsumerState<MainPage>
                       ),
                     ),
 
-                    Positioned(
-                      width: w,
-                      bottom: h * 0.42,
-                      right: w * 0.22,
-                      child: IgnorePointer(
-                        child: Image.asset(
-                          "assets/images/cloud.png",
-                          height: h * 0.11,
-                        ),
-                      ),
-                    ),
+                    // Positioned(
+                    //   width: w,
+                    //   bottom: h * 0.42,
+                    //   right: w * 0.22,
+                    //   child: IgnorePointer(
+                    //     child: Image.asset(
+                    //       "assets/images/cloud.png",
+                    //       height: h * 0.11,
+                    //     ),
+                    //   ),
+                    // ),
                     Positioned(
                       width: w,
                       bottom: h * 0.005,
@@ -348,40 +382,7 @@ class _MainPageState extends ConsumerState<MainPage>
                         height: h * 0.08,
                       ),
                     ),
-                    Positioned(
-                      width: w,
-                      bottom: h * 0.45,
-                      left: w * 0.35,
-                      child: Transform.scale(
-                        scaleX: -1,
-                        child: Transform.rotate(
-                          angle: -320 / 360,
-                          child: IgnorePointer(
-                            child: Image.asset(
-                              "assets/images/arrow_home.png",
-                              height: h * 0.35,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      width: w,
-                      bottom: h * 0.45,
-                      right: w * 0.36,
-                      child: Transform.scale(
-                        scaleX: 1,
-                        child: Transform.rotate(
-                          angle: -320 / 360,
-                          child: IgnorePointer(
-                            child: Image.asset(
-                              "assets/images/arrow_home.png",
-                              height: h * 0.35,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+
                     // Positioned(
                     //   left: w * 0.15,
                     //   top: h * 0.26,

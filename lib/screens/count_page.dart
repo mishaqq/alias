@@ -384,7 +384,7 @@ class CustomDialogScore extends StatelessWidget {
                                     0.0024),
                             borderRadius: BorderRadius.all(
                               Radius.circular(
-                                  MediaQuery.of(context).size.height * 0.00),
+                                  MediaQuery.of(context).size.width * 0.035),
                             ),
                           ),
                           splashFactory: NoSplash.splashFactory,
@@ -401,7 +401,7 @@ class CustomDialogScore extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style:
                               Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontSize: 10.sp,
+                                    fontSize: 12.sp,
                                   ),
                         ),
                       ),

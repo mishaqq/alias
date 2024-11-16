@@ -9,14 +9,16 @@ showAlertDialog(BuildContext context, ref) {
   Widget cancelButton = Padding(
     padding: EdgeInsets.only(left: w * 0.00),
     child: SizedBox(
-      width: w * 0.17,
-      height: w * 0.1,
+      width: w * 0.25,
+      height: w * 0.15,
       child: TextButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color.fromARGB(255, 255, 221, 149),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.zero,
-            side: BorderSide(width: MediaQuery.of(context).size.height * 0.003),
+            borderRadius: BorderRadius.all(
+              Radius.circular(MediaQuery.of(context).size.width * 0.035),
+            ),
+            side: BorderSide(width: 2),
           ),
         ),
         child: Text(
@@ -25,7 +27,7 @@ showAlertDialog(BuildContext context, ref) {
               fontWeight: FontWeight.w700,
               color: Colors.black,
               fontFamily: "Anonymous",
-              fontSize: 12.sp),
+              fontSize: 14.sp),
         ),
         onPressed: () {
           ref.read(gameProvider.notifier).oldSesionTrue();
@@ -35,14 +37,16 @@ showAlertDialog(BuildContext context, ref) {
     ),
   );
   Widget continueButton = SizedBox(
-    width: w * 0.17,
-    height: w * 0.1,
+    width: w * 0.25,
+    height: w * 0.15,
     child: TextButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: const Color.fromARGB(255, 255, 221, 149),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.zero,
-          side: BorderSide(width: MediaQuery.of(context).size.height * 0.003),
+          borderRadius: BorderRadius.all(
+            Radius.circular(MediaQuery.of(context).size.width * 0.035),
+          ),
+          side: BorderSide(width: 2),
         ),
       ),
       child: Text(
@@ -51,7 +55,7 @@ showAlertDialog(BuildContext context, ref) {
             fontWeight: FontWeight.w700,
             color: Colors.black,
             fontFamily: "Anonymous",
-            fontSize: 12.sp),
+            fontSize: 14.sp),
       ),
       onPressed: () {
         Navigator.pop(context);
