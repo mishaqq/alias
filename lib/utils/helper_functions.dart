@@ -38,6 +38,7 @@ String initExanpleWords(List<String> allWords, {int wordsQuantity = 3}) {
   int wordsQ = wordsQuantity;
   while (wordsQ != 0) {
     String word = allWords[random.nextInt(allWords.length)];
+    if (initialWords.contains(word)) continue;
     initialWords += initialWords == "" ? word : ", $word";
     wordsQ--;
   }
