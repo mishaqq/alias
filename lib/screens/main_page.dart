@@ -50,6 +50,9 @@ class _MainPageState extends ConsumerState<MainPage>
   late AnimationController _controllerCat;
   late Animation<double> _catAnimationController;
   late OverlayPortalController overlayPortalController;
+  late OverlayPortalController overlayPortalControllerLangChange;
+  late Animation<double> _catAnimationControllerLangChange;
+  late AnimationController _controllerCatLangChange;
 
   @override
   void initState() {
@@ -63,6 +66,7 @@ class _MainPageState extends ConsumerState<MainPage>
 
     //init overlay controller
     overlayPortalController = OverlayPortalController();
+    overlayPortalControllerLangChange = OverlayPortalController();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final List<Locale> systemLocales =
@@ -87,11 +91,24 @@ class _MainPageState extends ConsumerState<MainPage>
           curve: Curves.easeIn,
         ),
       );
+
       //cat popUp animation routine
       isCat = await ref.read(localeProvider.notifier).ifCatPopup();
 
       // if languaage changed
-
+      _controllerCatLangChange = AnimationController(
+        duration: const Duration(milliseconds: 800),
+        vsync: this,
+      );
+      _catAnimationControllerLangChange = Tween<double>(
+        begin: MediaQuery.of(context).size.height * 0.7,
+        end: MediaQuery.of(context).size.height * 0.6,
+      ).animate(
+        CurvedAnimation(
+          parent: _controllerCatLangChange,
+          curve: Curves.easeIn,
+        ),
+      );
       if (isCat) {
         Future.delayed(
           const Duration(milliseconds: 2000),
@@ -418,36 +435,60 @@ class _MainPageState extends ConsumerState<MainPage>
                         bottom: 0,
                         width: w,
                         child: Center(
-                          child: SizedBox(
-                            width: w * 0.7,
-                            height: h * 0.063,
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                // fetches the data from SP to Game Provider
-                                await ref
-                                    .read(gameProvider.notifier)
-                                    .readFormPrefs();
+                          child: OverlayPortal(
+                            controller: overlayPortalControllerLangChange,
+                            overlayChildBuilder: (context) => AnimatedBuilder(
+                              animation: _catAnimationControllerLangChange,
+                              builder: (context, child) => LCatPopUp(
+                                text: AppLocalizations.of(context)!.emptySets,
+                                h: h,
+                                w: w,
+                                controller: _catAnimationControllerLangChange,
+                              ),
+                            ),
+                            child: SizedBox(
+                              width: w * 0.7,
+                              height: h * 0.063,
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  // fetches the data from SP to Game Provider
+                                  await ref
+                                      .read(gameProvider.notifier)
+                                      .readFormPrefs();
 
-                                // makes a list of words for the current game
-                                Locale curLocale = ref.read(localeProvider);
-                                final localizedSetList = setLocalizationModel
-                                    .localizedSetList[curLocale]!;
-                                final usedSetsTitles =
-                                    ref.read(gameProvider).setsNames;
-                                final usedSets = localizedSetList
-                                    .where((s) => usedSetsTitles.contains(s.id))
-                                    .toList();
-                                ref
-                                    .read(gameProvider.notifier)
-                                    .makeGameWordSet(usedSets);
+                                  // makes a list of words for the current game
+                                  Locale curLocale = ref.read(localeProvider);
+                                  final localizedSetList = setLocalizationModel
+                                      .localizedSetList[curLocale]!;
+                                  final usedSetsTitles =
+                                      ref.read(gameProvider).setsNames;
+                                  final usedSets = localizedSetList
+                                      .where(
+                                          (s) => usedSetsTitles.contains(s.id))
+                                      .toList();
+                                  if (usedSets.isEmpty) {
+                                    overlayPortalControllerLangChange.show();
+                                    _controllerCatLangChange.forward();
+                                    Future.delayed(
+                                        const Duration(milliseconds: 3000), () {
+                                      overlayPortalControllerLangChange.hide();
+                                    });
 
-                                // ignore: use_build_context_synchronously
-                                Navigator.pushNamed(context, '/score');
-                              },
-                              child: Text(
-                                  AppLocalizations.of(context)!.continueButton,
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium),
+                                    return;
+                                  }
+                                  ref
+                                      .read(gameProvider.notifier)
+                                      .makeGameWordSet(usedSets);
+
+                                  // ignore: use_build_context_synchronously
+                                  Navigator.pushNamed(context, '/score');
+                                },
+                                child: Text(
+                                    AppLocalizations.of(context)!
+                                        .continueButton,
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium),
+                              ),
                             ),
                           ),
                         ),

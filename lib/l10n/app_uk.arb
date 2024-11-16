@@ -27,5 +27,6 @@
     "leaveGameTitle": "Вийти з цієї гри?",
     "catPopup": "Свайпни картки щоб змінити мову",
     "wordsAmount": "Слів",
-    "nothingSelected": "Та вибери ти хоч щось..."
+    "nothingSelected": "Та вибери ти хоч щось...",
+    "emptySets" : "Тут тільки нову гру починати..."
 }

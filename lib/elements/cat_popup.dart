@@ -48,7 +48,7 @@ class LCatPopUp extends StatelessWidget {
                   maintainSize: false,
                   duration: const Duration(milliseconds: 50),
                   overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
+                  maxLines: 3,
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium!

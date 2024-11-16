@@ -27,5 +27,6 @@
     "leaveGameTitle": "Quit this game?",
     "catPopup": "Swipe cards to change language",
     "wordsAmount": "Words",
-    "nothingSelected": "Well, go ahead and choose something..."
+    "nothingSelected": "Well, go ahead and choose something...",
+    "emptySets" : "Swipe or start the new game..."
 }
