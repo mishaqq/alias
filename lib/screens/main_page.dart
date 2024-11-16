@@ -348,40 +348,40 @@ class _MainPageState extends ConsumerState<MainPage>
                         height: h * 0.08,
                       ),
                     ),
-                    // Positioned(
-                    //   width: w,
-                    //   bottom: h * 0.45,
-                    //   left: w * 0.35,
-                    //   child: Transform.scale(
-                    //     scaleX: -1,
-                    //     child: Transform.rotate(
-                    //       angle: -320 / 360,
-                    //       child: IgnorePointer(
-                    //         child: Image.asset(
-                    //           "assets/images/arrow_home.png",
-                    //           height: h * 0.35,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    // Positioned(
-                    //   width: w,
-                    //   bottom: h * 0.45,
-                    //   right: w * 0.36,
-                    //   child: Transform.scale(
-                    //     scaleX: 1,
-                    //     child: Transform.rotate(
-                    //       angle: -320 / 360,
-                    //       child: IgnorePointer(
-                    //         child: Image.asset(
-                    //           "assets/images/arrow_home.png",
-                    //           height: h * 0.35,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
+                    Positioned(
+                      width: w,
+                      bottom: h * 0.45,
+                      left: w * 0.35,
+                      child: Transform.scale(
+                        scaleX: -1,
+                        child: Transform.rotate(
+                          angle: -320 / 360,
+                          child: IgnorePointer(
+                            child: Image.asset(
+                              "assets/images/arrow_home.png",
+                              height: h * 0.35,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      width: w,
+                      bottom: h * 0.45,
+                      right: w * 0.36,
+                      child: Transform.scale(
+                        scaleX: 1,
+                        child: Transform.rotate(
+                          angle: -320 / 360,
+                          child: IgnorePointer(
+                            child: Image.asset(
+                              "assets/images/arrow_home.png",
+                              height: h * 0.35,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                     // Positioned(
                     //   left: w * 0.15,
                     //   top: h * 0.26,
