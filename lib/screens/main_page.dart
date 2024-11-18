@@ -84,7 +84,7 @@ class _MainPageState extends ConsumerState<MainPage>
       // Define animations for top and left positions
       _catAnimationController = Tween<double>(
         begin: MediaQuery.of(context).size.height * -0.08,
-        end: MediaQuery.of(context).size.height * 0.05,
+        end: MediaQuery.of(context).size.height * 0.06,
       ).animate(
         CurvedAnimation(
           parent: _controllerCat,

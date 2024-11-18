@@ -162,6 +162,10 @@ class GameNotifier extends StateNotifier<AliasData> {
     if (state.usedWords.length == ref.read(wordsProvider).length) {
       state = state.copyWith(usedWords: {});
     }
+    for (String w in state.usedWords) {
+      dev.log(w);
+      dev.log("--------------------");
+    }
   }
 
   String selectRandomWord() {

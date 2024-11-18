@@ -180,6 +180,9 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                         },
                         onComplete: () {
                           if (ref.read(gameProvider).lastWord) {
+                            ref.read(gameProvider.notifier).addUsedWord(
+                                  guessingWord,
+                                );
                             showDialog(
                               barrierDismissible: false,
                               context: context,
