@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 import 'dart:developer' as dev;
 
@@ -12,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/game_model.dart';
 
+const String gameDataKey = 'gameData';
 // Game Provider
 final gameProvider = StateNotifierProvider<GameNotifier, AliasData>((ref) {
   return GameNotifier(
@@ -25,7 +27,6 @@ final gameProvider = StateNotifierProvider<GameNotifier, AliasData>((ref) {
       duration: 60,
       wordsToWin: 20,
       lastWord: true,
-      oldSesion: false,
     ),
     ref,
   );
@@ -135,15 +136,14 @@ class GameNotifier extends StateNotifier<AliasData> {
       duration: 60,
       wordsToWin: 20,
       lastWord: true,
-      oldSesion: pref.getBool("oldSesion"),
     );
   }
 
-  void oldSesionTrue() {
-    state = state.copyWith(
-      oldSesion: true,
-    );
-  }
+  // void oldSesionTrue() {
+  //   state = state.copyWith(
+  //     oldSesion: true,
+  //   );
+  // }
 
   void makeGameWordSet(List<AliasSet> sets) async {
     ref.read(wordsProvider.notifier).updateWords(sets);
@@ -166,6 +166,8 @@ class GameNotifier extends StateNotifier<AliasData> {
       dev.log(w);
       dev.log("--------------------");
     }
+
+    writeToPrefs();
   }
 
   String selectRandomWord() {
@@ -181,8 +183,13 @@ class GameNotifier extends StateNotifier<AliasData> {
   }
 
   void updateScore(int index, int score) {
-    state.scores[index] += score;
-    updateTurnsAndScore();
+    dev.log(state.scores[index].toString());
+    List<int> oldScores = List<int>.from(state.scores);
+    oldScores[index] += score;
+    state = state.copyWith(
+      scores: oldScores,
+    );
+    writeToPrefs();
   }
 
   void winCheck(BuildContext context) {
@@ -222,53 +229,73 @@ class GameNotifier extends StateNotifier<AliasData> {
   ///
 
 // updates the game object whether it was a old session
-  Future<void> oldGame() async {
+  /// Checks if there is existing game data stored in shared preferences.
+  /// Returns a Future<bool> indicating whether the game is an old session.
+  Future<bool> oldGame() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
-    state = state.copyWith(
-      oldSesion: pref.getBool("oldSesion") ?? false,
-    );
+    dev.log("-------------------");
+    dev.log("old game: ${pref.getString(gameDataKey)}");
+    return pref.getString(gameDataKey) != null;
   }
 
 // Writes game date to SP
   Future<void> writeToPrefs() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
 
-    await pref.setStringList('teams', state.teams);
-    await pref.setStringList('avatars', state.avatars);
-    await pref.setStringList('setsNames', state.setsNames);
-    await pref.setStringList('scores', intArrToString(state.scores));
-    await pref.setInt('turn', state.turn);
-    await pref.setInt('duration', state.duration);
-    await pref.setInt('wordsToWin', state.wordsToWin);
-    await pref.setStringList('usedWords', state.usedWords.toList());
-    await pref.setBool('lastWord', state.lastWord);
-    await pref.setBool('oldSesion', true);
+    pref.setString(gameDataKey, json.encode(state.toJson()));
+    // await pref.setStringList('teams', state.teams);
+    // await pref.setStringList('avatars', state.avatars);
+    // await pref.setStringList('setsNames', state.setsNames);
+    // await pref.setStringList('scores', intArrToString(state.scores));
+    // await pref.setInt('turn', state.turn);
+    // await pref.setInt('duration', state.duration);
+    // await pref.setInt('wordsToWin', state.wordsToWin);
+    // await pref.setStringList('usedWords', state.usedWords.toList());
+    // await pref.setBool('lastWord', state.lastWord);
+    // await pref.setBool('oldSesion', true);
   }
 
 // fetches game data from the SP (SharedPreferences) to GameObject
   Future<void> readFormPrefs() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
 
-    state = state.copyWith(
-      teams: pref.getStringList('teams') ?? initTeams(ref),
-      avatars: pref.getStringList('avatars') ?? initTeamsAvatars(),
-      scores: stringArrToInt(pref.getStringList('scores') ?? ["0 ", "0 "]),
-      turn: pref.getInt('turn'),
-      usedWords: pref.getStringList('usedWords')?.toSet() ?? {},
-      setsNames: pref.getStringList('setsNames') ?? [],
-      duration: pref.getInt('duration'),
-      wordsToWin: pref.getInt('wordsToWin'),
-      lastWord: pref.getBool('lastWord'),
-      oldSesion: pref.getBool('oldSesion'),
-    );
+    final gameString = pref.getString(gameDataKey);
+    state = gameString == null
+        ? AliasData(
+            teams: initTeams(ref),
+            scores: [0, 0],
+            turn: 0,
+            usedWords: {},
+            setsNames: [],
+            avatars: [],
+            duration: 60,
+            wordsToWin: 20,
+            lastWord: true,
+          )
+        : AliasData.fromJson(
+            json.decode(gameString),
+          );
+
+    // state = state.copyWith(
+    //   teams: pref.getStringList('teams') ?? initTeams(ref),
+    //   avatars: pref.getStringList('avatars') ?? initTeamsAvatars(),
+    //   scores: stringArrToInt(pref.getStringList('scores') ?? ["0 ", "0 "]),
+    //   turn: pref.getInt('turn'),
+    //   usedWords: pref.getStringList('usedWords')?.toSet() ?? {},
+    //   setsNames: pref.getStringList('setsNames') ?? [],
+    //   duration: pref.getInt('duration'),
+    //   wordsToWin: pref.getInt('wordsToWin'),
+    //   lastWord: pref.getBool('lastWord'),
+    //   oldSesion: pref.getBool('oldSesion'),
+    // );
   }
 
 // Updates score and turns
-  Future<void> updateTurnsAndScore() async {
-    final SharedPreferences pref = await SharedPreferences.getInstance();
-    await pref.setStringList('scores', intArrToString(state.scores));
-    await pref.setInt('turn', state.turn);
-  }
+  // Future<void> updateTurnsAndScore() async {
+  //   final SharedPreferences pref = await SharedPreferences.getInstance();
+  //   await pref.setStringList('scores', intArrToString(state.scores));
+  //   await pref.setInt('turn', state.turn);
+  // }
 
 // not in use but may be helpfull
 
@@ -286,7 +313,6 @@ class GameNotifier extends StateNotifier<AliasData> {
       await pref.remove('usedWords');
       await pref.remove('lastWord');
       await pref.remove('oldSesion');
-      state = state.copyWith(oldSesion: false);
     } catch (err) {} // TO DO
     // add err handling
   }

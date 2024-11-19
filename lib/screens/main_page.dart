@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:math';
 
 import 'package:alias/core/constants.dart';
 import 'package:alias/elements/cat_popup.dart';
@@ -34,15 +33,6 @@ Map<Locale, int> reverseLanguageMap = {
   const Locale('en'): 2,
 };
 
-class ScaleSize {
-  static double textScaleFactor(BuildContext context,
-      {double maxTextScaleFactor = 2}) {
-    final width = MediaQuery.of(context).size.width;
-    double val = (width / 720) * maxTextScaleFactor;
-    return max(1, min(val, maxTextScaleFactor));
-  }
-}
-
 class _MainPageState extends ConsumerState<MainPage>
     with TickerProviderStateMixin {
   late AnimationController _controller;
@@ -59,9 +49,6 @@ class _MainPageState extends ConsumerState<MainPage>
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
 
-    // when the page loads it reads from the SP if there was an old session and saves it to the Game Provider state
-    ref.read(gameProvider.notifier).oldGame();
-
     controller = CardSwiperController();
 
     //init overlay controller
@@ -69,6 +56,9 @@ class _MainPageState extends ConsumerState<MainPage>
     overlayPortalControllerLangChange = OverlayPortalController();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // when the page loads it reads from the SP if there was an old session and saves it to the Game Provider state
+      oldSesion = await ref.read(gameProvider.notifier).oldGame();
+
       final List<Locale> systemLocales =
           View.of(context).platformDispatcher.locales;
       await ref.read(localeProvider.notifier).initLocale(systemLocales);
@@ -163,7 +153,8 @@ class _MainPageState extends ConsumerState<MainPage>
 
   @override
   Widget build(BuildContext context) {
-    oldSesion = ref.watch(gameProvider).oldSesion;
+    log(oldSesion.toString());
+    //oldSesion = ref.watch(gameProvider).oldSesion ?? false;
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     List<Container> cards = [
