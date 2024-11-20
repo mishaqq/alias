@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:alias/providers/game_model_provider.dart';
+import 'package:alias/providers/oldSession_provider.dart';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -71,7 +72,7 @@ class _WinningPageState extends ConsumerState<WinningPage>
       onWillPop: () async {
         ref.read(gameProvider.notifier).reset();
         await ref.read(gameProvider.notifier).deleteFromPrefs(context);
-
+        ref.read(oldSessionProvider.notifier).updateOldGame(false);
         // ignore: use_build_context_synchronously
         Navigator.popUntil(context, (route) => route.isFirst);
         //TO DO handle end game
@@ -110,6 +111,9 @@ class _WinningPageState extends ConsumerState<WinningPage>
                             await ref
                                 .read(gameProvider.notifier)
                                 .deleteFromPrefs(context);
+                            ref
+                                .read(oldSessionProvider.notifier)
+                                .updateOldGame(false);
 
                             // ignore: use_build_context_synchronously
                             Navigator.popUntil(

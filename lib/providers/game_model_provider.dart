@@ -231,12 +231,12 @@ class GameNotifier extends StateNotifier<AliasData> {
 // updates the game object whether it was a old session
   /// Checks if there is existing game data stored in shared preferences.
   /// Returns a Future<bool> indicating whether the game is an old session.
-  Future<bool> oldGame() async {
-    final SharedPreferences pref = await SharedPreferences.getInstance();
-    dev.log("-------------------");
-    dev.log("old game: ${pref.getString(gameDataKey)}");
-    return pref.getString(gameDataKey) != null;
-  }
+  // Future<bool> oldGame() async {
+  //   final SharedPreferences pref = await SharedPreferences.getInstance();
+  //   dev.log("-------------------");
+  //   dev.log("old game: ${pref.getString(gameDataKey)}");
+  //   return pref.getString(gameDataKey) != null;
+  // }
 
 // Writes game date to SP
   Future<void> writeToPrefs() async {
@@ -303,16 +303,6 @@ class GameNotifier extends StateNotifier<AliasData> {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     try {
       pref.clear();
-      await pref.remove('teams');
-      await pref.remove('avatars');
-      await pref.remove('setsNames');
-      await pref.remove('scores');
-      await pref.remove('turn');
-      await pref.remove('duration');
-      await pref.remove('wordsToWin');
-      await pref.remove('usedWords');
-      await pref.remove('lastWord');
-      await pref.remove('oldSesion');
     } catch (err) {} // TO DO
     // add err handling
   }

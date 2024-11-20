@@ -1,3 +1,4 @@
+import 'package:alias/providers/oldSession_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -244,6 +245,9 @@ class TeamPage extends ConsumerWidget {
                             await ref
                                 .read(gameProvider.notifier)
                                 .writeToPrefs();
+                            ref
+                                .read(oldSessionProvider.notifier)
+                                .updateOldGame(true);
 
                             // ignore: use_build_context_synchronously
                             Navigator.pushNamed(context, '/score');
