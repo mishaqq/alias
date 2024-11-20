@@ -36,7 +36,7 @@ class LocaleNotifier extends StateNotifier<Locale> {
       final prefixSystemDefault =
           systemDefault.map((locale) => locale.languageCode).toList();
 
-      if (!prefixSystemDefault.contains('uk') ||
+      if (!prefixSystemDefault.contains('uk') &&
           !prefixSystemDefault.contains('ru')) {
         state = const Locale("en");
       }

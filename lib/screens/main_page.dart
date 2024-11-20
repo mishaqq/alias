@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:math';
 
 import 'package:alias/core/constants.dart';
 import 'package:alias/elements/cat_popup.dart';
@@ -34,15 +33,6 @@ Map<Locale, int> reverseLanguageMap = {
   const Locale('en'): 2,
 };
 
-class ScaleSize {
-  static double textScaleFactor(BuildContext context,
-      {double maxTextScaleFactor = 2}) {
-    final width = MediaQuery.of(context).size.width;
-    double val = (width / 720) * maxTextScaleFactor;
-    return max(1, min(val, maxTextScaleFactor));
-  }
-}
-
 class _MainPageState extends ConsumerState<MainPage>
     with TickerProviderStateMixin {
   late AnimationController _controller;
@@ -71,6 +61,7 @@ class _MainPageState extends ConsumerState<MainPage>
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final List<Locale> systemLocales =
           View.of(context).platformDispatcher.locales;
+      log(systemLocales.toString());
       await ref.read(localeProvider.notifier).initLocale(systemLocales);
 
       // Cat popUp animaiton
