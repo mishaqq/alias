@@ -167,6 +167,13 @@ class _MainPageState extends ConsumerState<MainPage>
           borderRadius: BorderRadius.all(
             Radius.circular(w * 0.035),
           ),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromARGB(255, 30, 62, 187),
+              offset: Offset(0.0, 5.0), //(x,y)
+              blurRadius: 15.0,
+            ),
+          ],
         ),
         width: w * 0.3,
         height: h * 0.3,
@@ -190,6 +197,13 @@ class _MainPageState extends ConsumerState<MainPage>
           borderRadius: BorderRadius.all(
             Radius.circular(w * 0.035),
           ),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromARGB(255, 30, 62, 187),
+              offset: Offset(0.0, 5.0), //(x,y)
+              blurRadius: 15.0,
+            ),
+          ],
         ),
         width: w * 0.3,
         height: h * 0.3,
@@ -210,6 +224,13 @@ class _MainPageState extends ConsumerState<MainPage>
           borderRadius: BorderRadius.all(
             Radius.circular(w * 0.035),
           ),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromARGB(255, 30, 62, 187),
+              offset: Offset(0.0, 5.0), //(x,y)
+              blurRadius: 15.0,
+            ),
+          ],
         ),
         width: w * 0.3,
         height: h * 0.3,
