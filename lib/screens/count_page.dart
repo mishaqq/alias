@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../providers/game_model_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -116,35 +117,37 @@ class _CountPageState extends ConsumerState<CountPage> {
                                         padding: EdgeInsets.only(
                                             top: h * 0.01, bottom: h * 0.025),
                                         child: ListTile(
-                                            dense: true,
-                                            minVerticalPadding: 0,
-                                            visualDensity: VisualDensity(
-                                                horizontal: 0, vertical: -4),
-                                            title: Text(
-                                              widget.raundWorlds.keys
-                                                  .toList()[index],
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .copyWith(
-                                                    fontSize: 20.sp,
-                                                    height: 1.2,
-                                                  ),
-                                            ),
-                                            trailing: widget.raundWorlds.values
-                                                        .toList()[index] ==
-                                                    1
-                                                ? Icon(
-                                                    Icons.check_circle_outline,
-                                                    color: Colors.green,
-                                                    size: 20.sp,
-                                                  )
-                                                : Icon(
-                                                    Icons
-                                                        .radio_button_unchecked_outlined,
-                                                    color: Colors.red,
-                                                    size: 20.sp,
-                                                  )),
+                                          dense: true,
+                                          minVerticalPadding: 0,
+                                          visualDensity: VisualDensity(
+                                              horizontal: 0, vertical: -4),
+                                          title: Text(
+                                            widget.raundWorlds.keys
+                                                .toList()[index],
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium!
+                                                .copyWith(
+                                                  fontSize: 20.sp,
+                                                  height: 1.2,
+                                                ),
+                                          ),
+                                          trailing: widget.raundWorlds.values
+                                                      .toList()[index] ==
+                                                  1
+                                              ? SvgPicture.asset(
+                                                  "assets/images/plus.svg",
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                  width: w * 0.07,
+                                                )
+                                              : SvgPicture.asset(
+                                                  "assets/images/minus.svg",
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                  width: w * 0.07,
+                                                ),
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -183,16 +186,17 @@ class _CountPageState extends ConsumerState<CountPage> {
                                         trailing: widget.raundWorlds.values
                                                     .toList()[index] ==
                                                 1
-                                            ? Icon(
-                                                Icons.check_circle_outline,
-                                                color: Colors.green,
-                                                size: 20.sp,
+                                            ? SvgPicture.asset(
+                                                "assets/images/plus.svg",
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                width: w * 0.07,
                                               )
-                                            : Icon(
-                                                Icons
-                                                    .radio_button_unchecked_outlined,
-                                                color: Colors.red,
-                                                size: 20.sp,
+                                            : SvgPicture.asset(
+                                                "assets/images/minus.svg",
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                width: w * 0.07,
                                               )
                                         //Text(
                                         //raundWorlds.values.toList()[index].toString(),

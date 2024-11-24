@@ -261,17 +261,21 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text(
-                                  AppLocalizations.of(context)!.lastWordTitle,
-                                  maxLines: 1,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                        fontSize: 18.sp,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                                SizedBox(
+                                  width: w * 0.7,
+                                  child: Text(
+                                    AppLocalizations.of(context)!.lastWordTitle,
+                                    maxLines: 1,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                          fontSize: 18.sp,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                  ),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
@@ -291,20 +295,20 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                                           });
                                         },
                                         shape: RoundedRectangleBorder(
+                                          side: const BorderSide(
+                                              color: Colors.black),
                                           borderRadius:
-                                              BorderRadius.circular(h * 0.005),
+                                              BorderRadius.circular(w * 0.01),
                                         ),
+                                        activeColor: const Color.fromARGB(
+                                            255, 255, 221, 149),
                                         side: const BorderSide(
                                             color: Colors.black),
-                                        fillColor: const WidgetStatePropertyAll(
-                                            Color.fromARGB(255, 255, 221, 149)),
                                         overlayColor:
                                             const WidgetStatePropertyAll(
                                           Colors.transparent,
                                         ),
                                         checkColor: Colors.black,
-                                        activeColor: const Color.fromARGB(
-                                            255, 255, 221, 149),
                                       ),
                                     ),
                                   ),
