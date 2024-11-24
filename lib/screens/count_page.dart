@@ -135,14 +135,14 @@ class _CountPageState extends ConsumerState<CountPage> {
                                           trailing: widget.raundWorlds.values
                                                       .toList()[index] ==
                                                   1
-                                              ? SvgPicture.asset(
-                                                  "assets/images/plus.svg",
+                                              ? Image.asset(
+                                                  "assets/images/plus.png",
                                                   alignment:
                                                       Alignment.centerRight,
                                                   width: w * 0.07,
                                                 )
-                                              : SvgPicture.asset(
-                                                  "assets/images/minus.svg",
+                                              : Image.asset(
+                                                  "assets/images/minus.png",
                                                   alignment:
                                                       Alignment.centerRight,
                                                   width: w * 0.07,
@@ -186,14 +186,14 @@ class _CountPageState extends ConsumerState<CountPage> {
                                         trailing: widget.raundWorlds.values
                                                     .toList()[index] ==
                                                 1
-                                            ? SvgPicture.asset(
-                                                "assets/images/plus.svg",
+                                            ? Image.asset(
+                                                "assets/images/plus.png",
                                                 alignment:
                                                     Alignment.centerRight,
                                                 width: w * 0.07,
                                               )
-                                            : SvgPicture.asset(
-                                                "assets/images/minus.svg",
+                                            : Image.asset(
+                                                "assets/images/minus.png",
                                                 alignment:
                                                     Alignment.centerRight,
                                                 width: w * 0.07,

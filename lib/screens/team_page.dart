@@ -2,6 +2,7 @@ import 'package:alias/providers/oldSession_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import '../providers/game_model_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -127,10 +128,14 @@ class TeamPage extends ConsumerWidget {
                                               width: 30.sp,
                                               height: 30.sp,
                                               child: IconButton(
+                                                splashColor: Color.fromARGB(
+                                                    255, 255, 174, 0),
                                                 padding: EdgeInsets.zero,
-                                                icon: Icon(
-                                                  Icons.close,
-                                                  size: 22.sp,
+                                                icon: Image.asset(
+                                                  "assets/images/delete.png",
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                  width: w * 0.045,
                                                 ),
                                                 onPressed: () {
                                                   if (game.teams.length > 2) {
