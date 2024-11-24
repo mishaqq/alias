@@ -54,6 +54,13 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
           borderRadius: BorderRadius.all(
             Radius.circular(MediaQuery.of(context).size.width * 0.035),
           ),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromARGB(255, 30, 62, 187),
+              offset: Offset(0.0, 5.0), //(x,y)
+              blurRadius: 15.0,
+            ),
+          ],
         ),
         width: w * 0.7,
         height: w * 0.7,
@@ -77,6 +84,13 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
           borderRadius: BorderRadius.all(
             Radius.circular(w * 0.035),
           ),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromARGB(255, 30, 62, 187),
+              offset: Offset(0.0, 5.0), //(x,y)
+              blurRadius: 15.0,
+            ),
+          ],
         ),
         width: w * 0.3,
         height: w * 0.3,
@@ -100,7 +114,7 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
         ),
         child: Padding(
           padding: EdgeInsets.only(
-            top: h * 0.05,
+            top: h * 0.06,
             left: w * 0.04,
             right: w * 0.04,
           ),
@@ -115,6 +129,13 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                   borderRadius: BorderRadius.all(
                     Radius.circular(w * 0.035),
                   ),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color.fromARGB(255, 30, 62, 187),
+                      offset: Offset(0.0, 4.0), //(x,y)
+                      blurRadius: 10.0,
+                    ),
+                  ],
                 ),
                 width: w * 0.8,
                 height: h * 0.09,

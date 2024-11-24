@@ -1,3 +1,4 @@
+import 'package:alias/providers/oldSession_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,6 +42,13 @@ class TeamPage extends ConsumerWidget {
                   borderRadius: BorderRadius.all(
                     Radius.circular(w * 0.035),
                   ),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color.fromARGB(255, 30, 62, 187),
+                      offset: Offset(0.0, 5.0), //(x,y)
+                      blurRadius: 15.0,
+                    ),
+                  ],
                 ),
                 width: w * 0.85,
                 height: h * 0.72,
@@ -244,6 +252,9 @@ class TeamPage extends ConsumerWidget {
                             await ref
                                 .read(gameProvider.notifier)
                                 .writeToPrefs();
+                            ref
+                                .read(oldSessionProvider.notifier)
+                                .updateOldGame(true);
 
                             // ignore: use_build_context_synchronously
                             Navigator.pushNamed(context, '/score');

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:alias/core/constants.dart';
 import 'package:alias/elements/cat_popup.dart';
 import 'package:alias/providers/locale_provider.dart';
+import 'package:alias/providers/oldSession_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
@@ -49,9 +50,7 @@ class _MainPageState extends ConsumerState<MainPage>
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
 
-    // when the page loads it reads from the SP if there was an old session and saves it to the Game Provider state
-    ref.read(gameProvider.notifier).oldGame();
-
+    ref.read(oldSessionProvider.notifier).oldGame();
     controller = CardSwiperController();
 
     //init overlay controller
@@ -59,6 +58,9 @@ class _MainPageState extends ConsumerState<MainPage>
     overlayPortalControllerLangChange = OverlayPortalController();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // when the page loads it reads from the SP if there was an old session and saves it to the Game Provider state
+      //oldSesion = await ref.read(gameProvider.notifier).oldGame();
+
       final List<Locale> systemLocales =
           View.of(context).platformDispatcher.locales;
       log(systemLocales.toString());
@@ -154,7 +156,8 @@ class _MainPageState extends ConsumerState<MainPage>
 
   @override
   Widget build(BuildContext context) {
-    oldSesion = ref.watch(gameProvider).oldSesion;
+    oldSesion = ref.watch(oldSessionProvider);
+    log(oldSesion.toString());
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     List<Container> cards = [
@@ -165,6 +168,13 @@ class _MainPageState extends ConsumerState<MainPage>
           borderRadius: BorderRadius.all(
             Radius.circular(w * 0.035),
           ),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromARGB(255, 30, 62, 187),
+              offset: Offset(0.0, 5.0), //(x,y)
+              blurRadius: 15.0,
+            ),
+          ],
         ),
         width: w * 0.3,
         height: h * 0.3,
@@ -188,6 +198,13 @@ class _MainPageState extends ConsumerState<MainPage>
           borderRadius: BorderRadius.all(
             Radius.circular(w * 0.035),
           ),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromARGB(255, 30, 62, 187),
+              offset: Offset(0.0, 5.0), //(x,y)
+              blurRadius: 15.0,
+            ),
+          ],
         ),
         width: w * 0.3,
         height: h * 0.3,
@@ -208,6 +225,13 @@ class _MainPageState extends ConsumerState<MainPage>
           borderRadius: BorderRadius.all(
             Radius.circular(w * 0.035),
           ),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromARGB(255, 30, 62, 187),
+              offset: Offset(0.0, 5.0), //(x,y)
+              blurRadius: 15.0,
+            ),
+          ],
         ),
         width: w * 0.3,
         height: h * 0.3,

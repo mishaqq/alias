@@ -30,7 +30,6 @@ showAlertDialog(BuildContext context, ref) {
               fontSize: 14.sp),
         ),
         onPressed: () {
-          ref.read(gameProvider.notifier).oldSesionTrue();
           Navigator.of(context).popUntil((route) => route.isFirst);
         },
       ),
