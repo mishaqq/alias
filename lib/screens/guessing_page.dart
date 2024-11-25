@@ -212,6 +212,8 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                                   teams: ref.read(gameProvider).teams,
                                   lastWord: guessingWord,
                                   roundWords: roundWords,
+                                  avatars: ref.read(gameProvider).avatars,
+                                  lastWordScore: "1", //TODO
                                 ),
                                 onWillPop: () => Future.value(false),
                               ),
@@ -364,13 +366,18 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
 
 class CustomDialog extends StatelessWidget {
   final List<String> teams;
+  final List<String> avatars;
   final String lastWord;
   final Map<String, int> roundWords;
-  const CustomDialog(
-      {super.key,
-      required this.teams,
-      required this.lastWord,
-      required this.roundWords});
+  final String lastWordScore;
+  const CustomDialog({
+    super.key,
+    required this.teams,
+    required this.lastWord,
+    required this.roundWords,
+    required this.avatars,
+    required this.lastWordScore,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -384,89 +391,148 @@ class CustomDialog extends StatelessWidget {
           Radius.circular(h * 0.018),
         ),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsets.all(h * 0.01),
-            child: Text(
-              "${AppLocalizations.of(context)!.whoGuessed} - $lastWord?",
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontSize: 16.sp,
-                  ),
-            ),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Color.fromARGB(255, 248, 237, 255),
+          border: Border.all(width: 2),
+          borderRadius: BorderRadius.all(
+            Radius.circular(w * 0.035),
           ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.5,
-            height:
-                (h * 0.058) * teams.length < MediaQuery.of(context).size.height
-                    ? ((h * 0.058) * (teams.length + 1)).toDouble()
-                    : MediaQuery.of(context).size.height * 0.8,
-            child: ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: teams.length + 1,
-              itemBuilder: (context, index) => Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: w * 0.01, vertical: h * 0.002),
-                child: SizedBox(
-                  width: w * 0.85,
-                  height: h * 0.05,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      elevation: 10,
-
-                      shadowColor: Colors.black,
-                      backgroundColor: Color.fromARGB(255, 255, 221,
-                          149), // Color.fromARGB(255, 255, 221, 149),
-                      foregroundColor: Colors.black, //TO FIX
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(
-                            width: MediaQuery.of(context).size.height * 0.0024),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(
-                              MediaQuery.of(context).size.width * 0.035),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black26,
+              offset: Offset(0.0, 5.0), //(x,y)
+              blurRadius: 15.0,
+            ),
+          ],
+        ),
+        width: w * 0.85,
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: h * 0.015,
+            right: h * 0.015,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                  padding: EdgeInsets.only(top: h * 0.015, bottom: w * 0.03),
+                  child: Text(
+                    lastWord,
+                    textAlign: TextAlign.center,
+                    maxLines: 3,
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          fontSize: 20.sp,
+                          overflow: TextOverflow.ellipsis,
                         ),
+                  )),
+              const Divider(
+                height: 0,
+                thickness: 2,
+                color: Colors.black,
+              ),
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: h * 0.5,
+                ),
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.only(bottom: w * 0.02),
+                    physics: BouncingScrollPhysics(),
+                    itemCount: teams.length,
+                    itemBuilder: (context, index) => Padding(
+                          padding: EdgeInsets.only(top: h * 0.009),
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(right: w * 0.03),
+                                child: CircleAvatar(
+                                  child: ClipOval(
+                                    child: Image.asset(avatars[index],
+                                        fit: BoxFit.cover),
+                                  ),
+                                  radius: w * 0.058,
+                                  backgroundColor: Colors.transparent,
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  teams[index],
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        fontSize: 18.sp,
+                                      ),
+                                ),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  if (index == teams.length) {
+                                    roundWords[lastWord] = 0;
+                                  } else {
+                                    roundWords[lastWord] = 1;
+                                  }
+
+                                  Navigator.popUntil(
+                                      context, ModalRoute.withName('/score'));
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CountPage(
+                                        raundWorlds: roundWords,
+                                        nameOfLastTeam: index == teams.length
+                                            ? "Nobody"
+                                            : teams[index],
+                                      ),
+                                    ),
+                                  );
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: CircleBorder(
+                                    side: BorderSide(width: 2),
+                                  ),
+                                  padding: EdgeInsets.all(w * 0.02),
+                                  shadowColor: Colors.black38,
+                                  backgroundColor:
+                                      Color.fromARGB(255, 255, 221, 149),
+                                ),
+                                child: Text(
+                                  "+${lastWordScore}",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        fontSize: 18.sp,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )),
+              ),
+              const Divider(
+                height: 0,
+                thickness: 2,
+                color: Colors.black,
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: w * 0.03, bottom: w * 0.03),
+                child: Text(
+                  "Хто вгадав?",
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        fontSize: 18.sp,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      splashFactory: NoSplash.splashFactory,
-                    ),
-                    onPressed: () {
-                      if (index == teams.length) {
-                        roundWords[lastWord] = 0;
-                      } else {
-                        roundWords[lastWord] = 1;
-                      }
-
-                      Navigator.popUntil(
-                          context, ModalRoute.withName('/score'));
-
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CountPage(
-                            raundWorlds: roundWords,
-                            nameOfLastTeam:
-                                index == teams.length ? "Nobody" : teams[index],
-                          ),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      index == teams.length
-                          ? AppLocalizations.of(context)!.nobody
-                          : teams[index],
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                            fontSize: 12.sp,
-                          ),
-                    ),
-                  ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
