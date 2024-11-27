@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:alias/screens/settings_page.dart';
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -76,133 +78,225 @@ class _CountPageState extends ConsumerState<CountPage> {
                     ),
                     child: Column(
                       children: [
+                        Padding(
+                            padding: EdgeInsets.only(
+                                top: w * 0.03, bottom: w * 0.03),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => SettingsPage(
+                                          fromGame: true,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Icon(
+                                    Icons.info_outline,
+                                    size: 26.sp,
+                                  ),
+                                ),
+                                Text(
+                                  "+${game.wordsToWin}",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium!
+                                      .copyWith(
+                                        fontSize: 20.sp,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                )
+                              ],
+                            )),
+                        const Divider(
+                          thickness: 2,
+                          color: Colors.black,
+                          height: 0,
+                        ),
                         Expanded(
                           child: ListView.builder(
-                            padding: EdgeInsets.only(top: h * 0.01),
+                            padding: EdgeInsets.only(top: w * 0.00),
                             physics: BouncingScrollPhysics(),
                             itemCount: widget.raundWorlds.length,
                             itemBuilder: (context, index) {
                               if (index == widget.raundWorlds.length - 1 &&
                                   game.lastWord) {
+                                /// Column 1
+
                                 return Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.only(top: h * 0.01),
-                                      child: Divider(
-                                        indent: w * 0.01,
-                                        endIndent: w * 0.01,
-                                        thickness: h * 0.002,
-                                        height: w * 0.03,
+                                      padding: EdgeInsets.only(top: w * 0.01),
+                                      child: const Divider(
+                                        thickness: 2,
                                         color: Colors.black,
+                                        height: 0,
                                       ),
                                     ),
-                                    GestureDetector(
-                                      onTap: () async {
-                                        widget.nameOfLastTeam =
-                                            (await openDialog())!;
+                                    Material(
+                                      color: Colors.transparent,
+                                      child: InkWell(
+                                        splashColor: Colors.grey[200],
+                                        borderRadius:
+                                            BorderRadius.circular(w * 0.035),
+                                        onTap: () async {
+                                          widget.nameOfLastTeam =
+                                              (await openDialog())!;
 
-                                        setState(() {
-                                          String key = widget.raundWorlds.keys
-                                              .toList()[index];
-                                          if (widget.nameOfLastTeam ==
-                                              "Nobody") {
-                                            widget.raundWorlds[key] = 0;
-                                          } else {
-                                            widget.raundWorlds[key] = 1;
-                                          }
-                                        });
-                                      },
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            top: h * 0.01, bottom: h * 0.025),
-                                        child: ListTile(
-                                          dense: true,
-                                          minVerticalPadding: 0,
-                                          visualDensity: VisualDensity(
-                                              horizontal: 0, vertical: -4),
-                                          title: Text(
-                                            widget.raundWorlds.keys
-                                                .toList()[index],
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium!
-                                                .copyWith(
-                                                  fontSize: 20.sp,
-                                                  height: 1.2,
+                                          setState(() {
+                                            String key = widget.raundWorlds.keys
+                                                .toList()[index];
+                                            if (widget.nameOfLastTeam ==
+                                                "Nobody") {
+                                              widget.raundWorlds[key] = 0;
+                                            } else {
+                                              widget.raundWorlds[key] = 1;
+                                            }
+                                          });
+                                        },
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              top: h * 0.014, bottom: h * 0.03),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SizedBox(
+                                                width: w * 0.65,
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: w * 0.01),
+                                                  child: Text(
+                                                    widget.raundWorlds.keys
+                                                        .toList()[index],
+                                                    maxLines: 4,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .copyWith(
+                                                            fontSize: 20.sp,
+                                                            height: 1.2,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis),
+                                                  ),
                                                 ),
+                                              ),
+                                              widget.raundWorlds.values
+                                                          .toList()[index] ==
+                                                      1
+                                                  ? Image.asset(
+                                                      "assets/images/plus.png",
+                                                      alignment:
+                                                          Alignment.centerRight,
+                                                      width: w * 0.07,
+                                                    )
+                                                  : Image.asset(
+                                                      "assets/images/minus.png",
+                                                      alignment:
+                                                          Alignment.centerRight,
+                                                      width: w * 0.07,
+                                                    )
+                                            ],
+                                            //Text(
+                                            //raundWorlds.values.toList()[index].toString(),
+                                            // ),
                                           ),
-                                          trailing: widget.raundWorlds.values
-                                                      .toList()[index] ==
-                                                  1
-                                              ? Image.asset(
-                                                  "assets/images/plus.png",
-                                                  alignment:
-                                                      Alignment.centerRight,
-                                                  width: w * 0.07,
-                                                )
-                                              : Image.asset(
-                                                  "assets/images/minus.png",
-                                                  alignment:
-                                                      Alignment.centerRight,
-                                                  width: w * 0.07,
-                                                ),
                                         ),
                                       ),
                                     ),
                                   ],
                                 );
                               } else {
-                                return GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      String key = widget.raundWorlds.keys
-                                          .toList()[index];
-                                      if (widget.raundWorlds[key] == 1) {
-                                        widget.raundWorlds[key] = 0;
-                                      } else {
-                                        widget.raundWorlds[key] = 1;
-                                      }
-                                    });
-                                  },
-                                  child: Padding(
-                                    padding: EdgeInsets.only(top: h * 0.01),
-                                    child: ListTile(
-                                        dense: true,
-                                        minVerticalPadding: 0,
-                                        visualDensity: VisualDensity(
-                                            horizontal: 0, vertical: -4),
-                                        title: Text(
-                                          widget.raundWorlds.keys
-                                              .toList()[index],
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium!
-                                              .copyWith(
-                                                fontSize: 20.sp,
-                                                height: 1.2,
+                                // Last Element
+                                return Column(
+                                  children: [
+                                    index != 0
+                                        ? const DottedLine(
+                                            direction: Axis.horizontal,
+                                            alignment: WrapAlignment.center,
+                                            lineThickness: 2.0,
+                                            dashLength: 8.0,
+                                            dashColor: Colors.black,
+                                            dashGapLength: 10,
+                                            dashGapColor: Colors.transparent,
+                                          )
+                                        : const SizedBox(),
+                                    Material(
+                                      color: Colors.transparent,
+                                      child: InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            String key = widget.raundWorlds.keys
+                                                .toList()[index];
+                                            if (widget.raundWorlds[key] == 1) {
+                                              widget.raundWorlds[key] = 0;
+                                            } else {
+                                              widget.raundWorlds[key] = 1;
+                                            }
+                                          });
+                                        },
+                                        splashColor: Colors.grey[200],
+                                        borderRadius:
+                                            BorderRadius.circular(w * 0.035),
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              top: h * 0.014,
+                                              bottom: h * 0.014),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SizedBox(
+                                                width: w * 0.65,
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: w * 0.01),
+                                                  child: Text(
+                                                    widget.raundWorlds.keys
+                                                        .toList()[index],
+                                                    maxLines: 4,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .copyWith(
+                                                            fontSize: 20.sp,
+                                                            height: 1.2,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis),
+                                                  ),
+                                                ),
                                               ),
+                                              widget.raundWorlds.values
+                                                          .toList()[index] ==
+                                                      1
+                                                  ? Image.asset(
+                                                      "assets/images/plus.png",
+                                                      alignment:
+                                                          Alignment.centerRight,
+                                                      width: w * 0.07,
+                                                    )
+                                                  : Image.asset(
+                                                      "assets/images/minus.png",
+                                                      alignment:
+                                                          Alignment.centerRight,
+                                                      width: w * 0.07,
+                                                    )
+                                            ],
+                                            //Text(
+                                            //raundWorlds.values.toList()[index].toString(),
+                                            // ),
+                                          ),
                                         ),
-                                        trailing: widget.raundWorlds.values
-                                                    .toList()[index] ==
-                                                1
-                                            ? Image.asset(
-                                                "assets/images/plus.png",
-                                                alignment:
-                                                    Alignment.centerRight,
-                                                width: w * 0.07,
-                                              )
-                                            : Image.asset(
-                                                "assets/images/minus.png",
-                                                alignment:
-                                                    Alignment.centerRight,
-                                                width: w * 0.07,
-                                              )
-                                        //Text(
-                                        //raundWorlds.values.toList()[index].toString(),
-                                        // ),
-                                        ),
-                                  ),
+                                      ),
+                                    ),
+                                  ],
                                 );
                               }
                             },

@@ -1,4 +1,5 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
@@ -422,8 +423,10 @@ class CustomDialog extends StatelessWidget {
                     textAlign: TextAlign.center,
                     maxLines: 3,
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          fontSize: 20.sp,
+                          fontSize: 24.sp,
                           overflow: TextOverflow.ellipsis,
+                          fontWeight: FontWeight.w700,
+                          height: 1.2,
                         ),
                   )),
               const Divider(
@@ -436,84 +439,241 @@ class CustomDialog extends StatelessWidget {
                   maxHeight: h * 0.5,
                 ),
                 child: ListView.builder(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.only(bottom: w * 0.02),
-                    physics: BouncingScrollPhysics(),
-                    itemCount: teams.length,
-                    itemBuilder: (context, index) => Padding(
-                          padding: EdgeInsets.only(top: h * 0.009),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(right: w * 0.03),
-                                child: CircleAvatar(
-                                  child: ClipOval(
-                                    child: Image.asset(avatars[index],
-                                        fit: BoxFit.cover),
-                                  ),
-                                  radius: w * 0.058,
-                                  backgroundColor: Colors.transparent,
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  teams[index],
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                        fontSize: 18.sp,
-                                      ),
-                                ),
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  if (index == teams.length) {
-                                    roundWords[lastWord] = 0;
-                                  } else {
-                                    roundWords[lastWord] = 1;
-                                  }
+                  shrinkWrap: true,
+                  padding: EdgeInsets.only(bottom: w * 0.02),
+                  physics: BouncingScrollPhysics(),
+                  itemCount: teams.length + 1,
+                  itemBuilder: (context, index) => index != teams.length
+                      ? Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            splashColor: Colors.grey[300],
+                            onTap: () {
+                              roundWords[lastWord] = 1;
+                              // TODO int.parse(lastWordScore);
 
-                                  Navigator.popUntil(
-                                      context, ModalRoute.withName('/score'));
+                              Navigator.popUntil(
+                                  context, ModalRoute.withName('/score'));
 
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => CountPage(
-                                        raundWorlds: roundWords,
-                                        nameOfLastTeam: index == teams.length
-                                            ? "Nobody"
-                                            : teams[index],
-                                      ),
-                                    ),
-                                  );
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  shape: CircleBorder(
-                                    side: BorderSide(width: 2),
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CountPage(
+                                    raundWorlds: roundWords,
+                                    nameOfLastTeam: teams[index],
                                   ),
-                                  padding: EdgeInsets.all(w * 0.02),
-                                  shadowColor: Colors.black38,
-                                  backgroundColor:
-                                      Color.fromARGB(255, 255, 221, 149),
                                 ),
-                                child: Text(
-                                  "+${lastWordScore}",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(
-                                        fontSize: 18.sp,
-                                        overflow: TextOverflow.ellipsis,
+                              );
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.only(top: h * 0.009),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.only(right: w * 0.03),
+                                        child: CircleAvatar(
+                                          child: ClipOval(
+                                            child: Image.asset(avatars[index],
+                                                fit: BoxFit.cover),
+                                          ),
+                                          radius: w * 0.058,
+                                          backgroundColor: Colors.transparent,
+                                        ),
                                       ),
-                                ),
+                                      Expanded(
+                                        child: Text(
+                                          teams[index],
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                fontSize: 18.sp,
+                                              ),
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          roundWords[lastWord] = 1;
+                                          // TODO int.parse(lastWordScore);
+
+                                          Navigator.popUntil(context,
+                                              ModalRoute.withName('/score'));
+
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => CountPage(
+                                                raundWorlds: roundWords,
+                                                nameOfLastTeam: teams[index],
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          shape: CircleBorder(
+                                            side: BorderSide(width: 2),
+                                          ),
+                                          padding: EdgeInsets.all(w * 0.02),
+                                          shadowColor: Colors.black54,
+                                          backgroundColor: Color.fromARGB(
+                                              255, 255, 221, 149),
+                                          overlayColor: const Color.fromARGB(
+                                              255, 255, 174, 0),
+                                        ),
+                                        child: Text(
+                                          "+${lastWordScore}",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                fontSize: 18.sp,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  index != teams.length
+                                      ? Padding(
+                                          padding:
+                                              EdgeInsets.only(top: h * 0.009),
+                                          child: const DottedLine(
+                                            direction: Axis.horizontal,
+                                            alignment: WrapAlignment.center,
+                                            lineThickness: 2.0,
+                                            dashLength: 8.0,
+                                            dashColor: Colors.black,
+                                            dashGapLength: 10,
+                                            dashGapColor: Colors.transparent,
+                                          ),
+                                        )
+                                      : const SizedBox(),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
-                        )),
+                        )
+                      : Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            splashColor: Colors.grey[300],
+                            onTap: () {
+                              roundWords[lastWord] = 0;
+
+                              Navigator.popUntil(
+                                  context, ModalRoute.withName('/score'));
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => CountPage(
+                                    raundWorlds: roundWords,
+                                    nameOfLastTeam: "Nobody",
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.only(top: h * 0.009),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            EdgeInsets.only(right: w * 0.03),
+                                        child: CircleAvatar(
+                                          radius: w * 0.058,
+                                          backgroundColor: const Color.fromRGBO(
+                                              194, 193, 193, 1),
+                                          child: ClipOval(
+                                            child: Image.asset(
+                                              "assets/images/fish_dead.png",
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          "Ніхто",
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                fontSize: 18.sp,
+                                              ),
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          roundWords[lastWord] = 0;
+
+                                          Navigator.popUntil(context,
+                                              ModalRoute.withName('/score'));
+
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => CountPage(
+                                                raundWorlds: roundWords,
+                                                nameOfLastTeam: "Nobody",
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          shape: CircleBorder(
+                                            side: BorderSide(width: 2),
+                                          ),
+                                          padding: EdgeInsets.all(w * 0.02),
+                                          shadowColor: Colors.black54,
+                                          backgroundColor: Color.fromARGB(
+                                              255, 255, 221, 149),
+                                          overlayColor: const Color.fromARGB(
+                                              255, 255, 174, 0),
+                                        ),
+                                        child: Text(
+                                          "0",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium!
+                                              .copyWith(
+                                                fontSize: 18.sp,
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  index != teams.length
+                                      ? Padding(
+                                          padding:
+                                              EdgeInsets.only(top: h * 0.009),
+                                          child: const DottedLine(
+                                            direction: Axis.horizontal,
+                                            alignment: WrapAlignment.center,
+                                            lineThickness: 2.0,
+                                            dashLength: 8.0,
+                                            dashColor: Colors.black,
+                                            dashGapLength: 10,
+                                            dashGapColor: Colors.transparent,
+                                          ),
+                                        )
+                                      : const SizedBox(),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                ),
               ),
               const Divider(
                 height: 0,

@@ -50,7 +50,8 @@ class MyApp extends ConsumerWidget {
                   shadowColor: const Color.fromARGB(255, 30, 62, 187),
                   backgroundColor: const Color.fromARGB(255, 248, 237,
                       255), // Color.fromARGB(255, 255, 221, 149),
-                  foregroundColor: Color.fromARGB(255, 255, 174, 0), //TO FIX
+                  foregroundColor: Color.fromARGB(255, 255, 174, 0),
+                  overlayColor: Color.fromARGB(255, 255, 174, 0), //TO FIX
                   shape: RoundedRectangleBorder(
                     side: BorderSide(width: 2),
                     borderRadius: BorderRadius.all(
