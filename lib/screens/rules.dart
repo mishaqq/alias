@@ -14,10 +14,49 @@ class RulesPage extends ConsumerStatefulWidget {
 
 class _RulesPageState extends ConsumerState<RulesPage> {
   bool isSecondContainerVisible = false;
+  bool isContentVisible = false;
+  List<bool> isSelected = [true, false];
+
+  void _togleMenue() {
+    setState(() {
+      isSecondContainerVisible = !isSecondContainerVisible;
+      if (isSecondContainerVisible) {
+        Future.delayed(const Duration(milliseconds: 50), () {
+          setState(() {
+            isContentVisible = true;
+          });
+        });
+        return;
+      }
+      Future.delayed(const Duration(milliseconds: 150), () {
+        setState(() {
+          isContentVisible = false;
+        });
+      });
+    });
+  }
+
+  Widget _getRulesContent() {
+    List<Widget> rules = [
+      Text(
+        AppLocalizations.of(context)!.gameRules,
+        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              fontSize: 20.sp,
+            ),
+      ),
+      Text(
+        "Туди, сюди",
+        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              fontSize: 20.sp,
+            ),
+      ),
+    ];
+
+    return rules[isSelected.indexOf(true)];
+  }
 
   @override
   Widget build(BuildContext context) {
-    List<bool> isSelected = [true, false];
     //final game = ref.watch(gameProvider);
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
@@ -74,53 +113,33 @@ class _RulesPageState extends ConsumerState<RulesPage> {
                           physics: const BouncingScrollPhysics(),
                           child: Column(
                             children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: IconButton(
-                                    onPressed: () => {
-                                          setState(() {
-                                            isSecondContainerVisible =
-                                                !isSecondContainerVisible;
-                                          })
-                                        },
-                                    icon:
-                                        Icon(Icons.arrow_forward_ios_rounded)),
-                              ),
-                              Text(
-                                AppLocalizations.of(context)!.gameRules,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(
-                                      fontSize: 20.sp,
-                                    ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 20),
-                                child: RichText(
-                                  textAlign: TextAlign.center,
-                                  text: TextSpan(
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .copyWith(
-                                            fontSize: h * 0.025,
-                                            decoration:
-                                                TextDecoration.underline,
-                                            fontStyle: FontStyle.italic),
-                                    children: [
-                                      // TextSpan(
-                                      //   text: "Privacy Policy",
-                                      //   recognizer: tapGestureRecognizer(
-                                      //     onTap: () => launch(
-                                      //         'https://github.com/mishaqq/alias-privacy/blob/main/privacy-policy.md',
-                                      //         isNewTab: true),
-                                      //   ),
-                                      // ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                              _getRulesContent(),
+                              // Padding(
+                              //   padding: const EdgeInsets.only(bottom: 20),
+                              //   child: RichText(
+                              //     textAlign: TextAlign.center,
+                              //     text: TextSpan(
+                              //       style: Theme.of(context)
+                              //           .textTheme
+                              //           .bodyMedium!
+                              //           .copyWith(
+                              //               fontSize: h * 0.025,
+                              //               decoration:
+                              //                   TextDecoration.underline,
+                              //               fontStyle: FontStyle.italic),
+                              //       children: [
+                              //         // TextSpan(
+                              //         //   text: "Privacy Policy",
+                              //         //   recognizer: tapGestureRecognizer(
+                              //         //     onTap: () => launch(
+                              //         //         'https://github.com/mishaqq/alias-privacy/blob/main/privacy-policy.md',
+                              //         //         isNewTab: true),
+                              //         //   ),
+                              //         // ),
+                              //       ],
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),
@@ -129,9 +148,10 @@ class _RulesPageState extends ConsumerState<RulesPage> {
                   ),
                   ////////////////////////// Second Container
                   AnimatedContainer(
-                    duration: Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 150),
+                    curve: Curves.easeIn,
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 248, 237, 255),
+                      color: const Color.fromARGB(255, 248, 237, 255),
                       border: Border.all(width: 2),
                       borderRadius: BorderRadius.all(
                         Radius.circular(w * 0.035),
@@ -144,7 +164,7 @@ class _RulesPageState extends ConsumerState<RulesPage> {
                         ),
                       ],
                     ),
-                    width: isSecondContainerVisible ? w * 0.7 : 0,
+                    width: isSecondContainerVisible ? w * 0.75 : 0,
                     height: h * 0.72,
                     child: Padding(
                       padding: EdgeInsets.only(
@@ -155,22 +175,22 @@ class _RulesPageState extends ConsumerState<RulesPage> {
                         padding: EdgeInsets.only(
                           top: h * 0.015,
                         ),
-                        child: isSecondContainerVisible
+                        child: isContentVisible
                             ? SingleChildScrollView(
                                 physics: const BouncingScrollPhysics(),
                                 child: Column(
                                   children: [
                                     ToggleButtons(
-                                        borderWidth: 2,
+                                        borderWidth: 2.5,
                                         splashColor: Colors.transparent,
                                         borderColor: Colors.black,
                                         fillColor: const Color.fromARGB(
                                             255, 255, 221, 149),
                                         selectedBorderColor: Colors.black,
                                         constraints: BoxConstraints(
-                                            minWidth: w * 0.7,
-                                            minHeight: h * 0.07,
-                                            maxHeight: h * 0.07),
+                                          minWidth: w * 0.7,
+                                          minHeight: h * 0.065,
+                                        ),
                                         direction: Axis.vertical,
                                         isSelected: isSelected,
                                         onPressed: (index) {
@@ -180,6 +200,8 @@ class _RulesPageState extends ConsumerState<RulesPage> {
                                                 i++) {
                                               isSelected[i] = i == index;
                                             }
+
+                                            _togleMenue();
                                           });
                                         },
                                         children: [
@@ -189,11 +211,12 @@ class _RulesPageState extends ConsumerState<RulesPage> {
                                               alignment: Alignment.centerLeft,
                                               child: Text(
                                                 "Базові правила",
+                                                maxLines: 1,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .bodyMedium!
                                                     .copyWith(
-                                                      fontSize: 20.sp,
+                                                      fontSize: 18.sp,
                                                     ),
                                               ),
                                             ),
@@ -202,12 +225,12 @@ class _RulesPageState extends ConsumerState<RulesPage> {
                                             padding: const EdgeInsets.all(10.0),
                                             child: Text(
                                               "Останнє слово для всіх",
-                                              maxLines: 2,
+                                              maxLines: 1,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodyMedium!
                                                   .copyWith(
-                                                      fontSize: 20.sp,
+                                                      fontSize: 18.sp,
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       height: 1.2),
@@ -230,12 +253,14 @@ class _RulesPageState extends ConsumerState<RulesPage> {
                 child: Row(
                   children: [
                     SizedBox(
-                      width: w * 0.85,
+                      width: w * 0.15,
                       height: w * 0.15,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.black,
-                          backgroundColor: Color.fromARGB(255, 255, 221, 149),
+                          backgroundColor: Color.fromARGB(255, 248, 237, 255),
+
+                          padding: EdgeInsets.zero, // Remove any padding
                         ),
                         onPressed: () {
                           Navigator.of(context).pop();
@@ -243,6 +268,28 @@ class _RulesPageState extends ConsumerState<RulesPage> {
                         child: Icon(
                           Icons.arrow_back_ios_new_rounded,
                           size: 20.sp,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: w * 0.02,
+                      ),
+                      child: SizedBox(
+                        width: w * 0.68,
+                        height: w * 0.15,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.black,
+                            backgroundColor: Color.fromARGB(255, 255, 221, 149),
+                          ),
+                          onPressed: () {
+                            _togleMenue();
+                          },
+                          child: Icon(
+                            Icons.menu_outlined,
+                            size: 20.sp,
+                          ),
                         ),
                       ),
                     ),
