@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,8 +7,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+// ignore: must_be_immutable
 class RulesPage extends ConsumerStatefulWidget {
-  const RulesPage({super.key});
+  int selected;
+  RulesPage({
+    super.key,
+    this.selected = 0,
+  });
 
   @override
   ConsumerState<RulesPage> createState() => _RulesPageState();
@@ -15,7 +22,20 @@ class RulesPage extends ConsumerStatefulWidget {
 class _RulesPageState extends ConsumerState<RulesPage> {
   bool isSecondContainerVisible = false;
   bool isContentVisible = false;
-  List<bool> isSelected = [true, false];
+  List<bool> isSelected = [false, false];
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      for (int i = 0; i < isSelected.length; i++) {
+        if (i == widget.selected) {
+          isSelected[widget.selected] = true;
+          return;
+        }
+      }
+    });
+  }
 
   void _togleMenue() {
     setState(() {
@@ -210,7 +230,8 @@ class _RulesPageState extends ConsumerState<RulesPage> {
                                             child: Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text(
-                                                "Базові правила",
+                                                AppLocalizations.of(context)!
+                                                    .basicRules,
                                                 maxLines: 1,
                                                 style: Theme.of(context)
                                                     .textTheme
@@ -223,17 +244,21 @@ class _RulesPageState extends ConsumerState<RulesPage> {
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.all(10.0),
-                                            child: Text(
-                                              "Останнє слово для всіх",
-                                              maxLines: 1,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .copyWith(
-                                                      fontSize: 18.sp,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      height: 1.2),
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                AppLocalizations.of(context)!
+                                                    .lastWordForAll,
+                                                maxLines: 1,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium!
+                                                    .copyWith(
+                                                        fontSize: 18.sp,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        height: 1.2),
+                                              ),
                                             ),
                                           )
                                         ]),

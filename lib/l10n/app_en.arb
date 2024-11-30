@@ -28,5 +28,8 @@
     "catPopup": "Swipe cards to change language",
     "wordsAmount": "Words",
     "nothingSelected": "Well, go ahead and choose something...",
-    "emptySets" : "Swipe or start the new game..."
+    "emptySets" : "Swipe or start the new game...",
+    "wordForAll" : "Word for all",
+    "basicRules" : "Basic rules",
+    "lastWordForAll" : "Last word for all"
 }

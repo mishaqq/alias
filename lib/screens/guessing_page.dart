@@ -601,7 +601,7 @@ class CustomDialog extends StatelessWidget {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          "Ніхто",
+                                          AppLocalizations.of(context)!.nobody,
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 2,
                                           style: Theme.of(context)
@@ -683,7 +683,7 @@ class CustomDialog extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(top: w * 0.03, bottom: w * 0.03),
                 child: Text(
-                  "Хто вгадав?",
+                  AppLocalizations.of(context)!.wordForAll,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         fontSize: 18.sp,
                         overflow: TextOverflow.ellipsis,

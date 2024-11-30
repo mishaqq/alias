@@ -84,7 +84,7 @@ class MyApp extends ConsumerWidget {
               '/set_choosing': (context) => const ChoosingPage(),
               '/settings': (context) => const SettingsPage(fromGame: false),
               '/team': (context) => const TeamPage(),
-              '/rules': (context) => const RulesPage(),
+              '/rules': (context) => RulesPage(),
             },
           );
         });
