@@ -193,7 +193,7 @@ class _MainPageState extends ConsumerState<MainPage>
       ),
       Container(
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 248, 237, 255),
+          color: const Color.fromARGB(255, 248, 237, 255),
           border: Border.all(width: 2),
           borderRadius: BorderRadius.all(
             Radius.circular(w * 0.035),

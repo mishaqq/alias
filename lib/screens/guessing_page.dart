@@ -25,24 +25,16 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
   int minus = 0;
   @override
   void initState() {
-    // hide status bar
     _countDownController = CountDownController();
     controller = CardSwiperController();
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   super.dispose();
-
-  //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-  //       overlays: SystemUiOverlay.values); // to re-show bars
-  // }
-
   Map<String, int> roundWords = {};
 
   @override
   Widget build(BuildContext context) {
+    final game = ref.watch(gameProvider);
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
 
@@ -214,7 +206,7 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                                   lastWord: guessingWord,
                                   roundWords: roundWords,
                                   avatars: ref.read(gameProvider).avatars,
-                                  lastWordScore: "1", //TODO
+                                  //TODO
                                 ),
                                 onWillPop: () => Future.value(false),
                               ),
@@ -242,13 +234,21 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                         },
                       ),
                       const Spacer(),
-                      Text(
-                        "-$minus|$plus+",
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              fontSize: 18.sp,
-                            ),
+                      Padding(
+                        padding: game.isNoMinusPoints
+                            ? EdgeInsets.only(
+                                right: w * 0.03,
+                              )
+                            : EdgeInsets.zero, //(8.0),
+                        child: Text(
+                          !game.isNoMinusPoints ? "-$minus|$plus+" : "+$plus",
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    fontSize: 20.sp,
+                                  ),
+                        ),
                       ),
                       // Divider(
                       //   indent: w * 0.01,
@@ -370,15 +370,38 @@ class CustomDialog extends StatelessWidget {
   final List<String> avatars;
   final String lastWord;
   final Map<String, int> roundWords;
-  final String lastWordScore;
+  final int lastWordScore;
+  final bool isFromScore;
   const CustomDialog({
     super.key,
     required this.teams,
     required this.lastWord,
     required this.roundWords,
     required this.avatars,
-    required this.lastWordScore,
+    this.lastWordScore = 1,
+    this.isFromScore = false,
   });
+
+  void _handleTheLastWord(BuildContext context, int index, bool isNobodyWon) {
+    roundWords[lastWord] = isNobodyWon ? 0 : lastWordScore;
+    // TODO int.parse(lastWordScore);
+
+    Navigator.popUntil(context, ModalRoute.withName('/score'));
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CountPage(
+          raundWorlds: roundWords,
+          nameOfLastTeam: isNobodyWon ? 'Nobody' : teams[index],
+        ),
+      ),
+    );
+  }
+
+  void _handleTheLastWordFromScore(BuildContext context, int index) {
+    Navigator.of(context).pop(index == teams.length ? "Nobody" : teams[index]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -449,21 +472,11 @@ class CustomDialog extends StatelessWidget {
                           child: InkWell(
                             splashColor: Colors.grey[300],
                             onTap: () {
-                              roundWords[lastWord] = 1;
-                              // TODO int.parse(lastWordScore);
-
-                              Navigator.popUntil(
-                                  context, ModalRoute.withName('/score'));
-
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => CountPage(
-                                    raundWorlds: roundWords,
-                                    nameOfLastTeam: teams[index],
-                                  ),
-                                ),
-                              );
+                              if (!isFromScore) {
+                                _handleTheLastWord(context, index, false);
+                              } else {
+                                _handleTheLastWordFromScore(context, index);
+                              }
                             },
                             child: Padding(
                               padding: EdgeInsets.only(top: h * 0.009),
@@ -498,21 +511,13 @@ class CustomDialog extends StatelessWidget {
                                       ),
                                       ElevatedButton(
                                         onPressed: () {
-                                          roundWords[lastWord] = 1;
-                                          // TODO int.parse(lastWordScore);
-
-                                          Navigator.popUntil(context,
-                                              ModalRoute.withName('/score'));
-
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => CountPage(
-                                                raundWorlds: roundWords,
-                                                nameOfLastTeam: teams[index],
-                                              ),
-                                            ),
-                                          );
+                                          if (!isFromScore) {
+                                            _handleTheLastWord(
+                                                context, index, false);
+                                          } else {
+                                            _handleTheLastWordFromScore(
+                                                context, index);
+                                          }
                                         },
                                         style: ElevatedButton.styleFrom(
                                           shape: CircleBorder(
@@ -563,20 +568,11 @@ class CustomDialog extends StatelessWidget {
                           child: InkWell(
                             splashColor: Colors.grey[300],
                             onTap: () {
-                              roundWords[lastWord] = 0;
-
-                              Navigator.popUntil(
-                                  context, ModalRoute.withName('/score'));
-
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => CountPage(
-                                    raundWorlds: roundWords,
-                                    nameOfLastTeam: "Nobody",
-                                  ),
-                                ),
-                              );
+                              if (!isFromScore) {
+                                _handleTheLastWord(context, index, true);
+                              } else {
+                                _handleTheLastWordFromScore(context, index);
+                              }
                             },
                             child: Padding(
                               padding: EdgeInsets.only(top: h * 0.009),
@@ -614,20 +610,13 @@ class CustomDialog extends StatelessWidget {
                                       ),
                                       ElevatedButton(
                                         onPressed: () {
-                                          roundWords[lastWord] = 0;
-
-                                          Navigator.popUntil(context,
-                                              ModalRoute.withName('/score'));
-
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => CountPage(
-                                                raundWorlds: roundWords,
-                                                nameOfLastTeam: "Nobody",
-                                              ),
-                                            ),
-                                          );
+                                          if (!isFromScore) {
+                                            _handleTheLastWord(
+                                                context, index, true);
+                                          } else {
+                                            _handleTheLastWordFromScore(
+                                                context, index);
+                                          }
                                         },
                                         style: ElevatedButton.styleFrom(
                                           shape: CircleBorder(

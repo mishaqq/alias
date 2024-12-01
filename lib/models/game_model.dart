@@ -17,6 +17,7 @@ class AliasData with _$AliasData {
     required int duration,
     required int wordsToWin,
     required bool lastWord,
+    required bool isNoMinusPoints,
   }) = _AliasData;
 
   factory AliasData.fromJson(Map<String, dynamic> json) =>

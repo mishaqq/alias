@@ -1,4 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
+import 'package:alias/models/game_model.dart';
+import 'package:alias/screens/guessing_page.dart';
+import 'package:alias/screens/rules.dart';
 import 'package:alias/screens/settings_page.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +12,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../providers/game_model_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+enum GameMod { normal, lastWord, noMinusPoints }
 
 // ignore: must_be_immutable
 class CountPage extends ConsumerStatefulWidget {
@@ -24,9 +31,36 @@ class CountPage extends ConsumerStatefulWidget {
 }
 
 class _CountPageState extends ConsumerState<CountPage> {
+  int roundScore = 0;
+
+  void _setRoundScore({GameMod? lastWord, GameMod? points}) {
+    log("rebuild");
+    roundScore = 0;
+    for (int i = 0;
+        i <
+            (lastWord == GameMod.lastWord
+                ? widget.raundWorlds.values.toList().length - 1
+                : widget.raundWorlds.values.toList().length);
+        i++) {
+      // ignore: unrelated_type_equality_checks
+      if (widget.raundWorlds.values.toList()[i] == 0 &&
+          points != GameMod.noMinusPoints) {
+        roundScore--;
+      } else {
+        roundScore += widget.raundWorlds.values.toList()[i];
+      }
+    }
+    setState(() {
+      roundScore;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final game = ref.watch(gameProvider);
+    _setRoundScore(
+        lastWord: game.lastWord ? GameMod.lastWord : GameMod.normal,
+        points: game.isNoMinusPoints ? GameMod.noMinusPoints : GameMod.normal);
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     return WillPopScope(
@@ -36,7 +70,7 @@ class _CountPageState extends ConsumerState<CountPage> {
       child: Scaffold(
         body: Container(
           alignment: Alignment.center,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -82,15 +116,32 @@ class _CountPageState extends ConsumerState<CountPage> {
                             padding: EdgeInsets.only(
                                 top: w * 0.03, bottom: w * 0.03),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 GestureDetector(
                                   onTap: () {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => SettingsPage(
+                                        builder: (context) =>
+                                            const SettingsPage(
                                           fromGame: true,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Icon(
+                                    Icons.settings_outlined,
+                                    size: 26.sp,
+                                  ),
+                                ),
+                                SizedBox(width: w * 0.01),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => RulesPage(
+                                          selected: 1,
                                         ),
                                       ),
                                     );
@@ -100,8 +151,9 @@ class _CountPageState extends ConsumerState<CountPage> {
                                     size: 26.sp,
                                   ),
                                 ),
+                                Spacer(),
                                 Text(
-                                  "+${game.wordsToWin}",
+                                  roundScore > 0 ? "+$roundScore" : "+0",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium!
@@ -190,18 +242,31 @@ class _CountPageState extends ConsumerState<CountPage> {
                                               widget.raundWorlds.values
                                                           .toList()[index] ==
                                                       1
-                                                  ? Image.asset(
-                                                      "assets/images/plus.png",
-                                                      alignment:
-                                                          Alignment.centerRight,
-                                                      width: w * 0.07,
+                                                  ? CircleAvatar(
+                                                      maxRadius: w * 0.058,
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      child: ClipOval(
+                                                        child: Image.asset(
+                                                          game.avatars[game
+                                                              .teams
+                                                              .indexOf(widget
+                                                                  .nameOfLastTeam)],
+                                                        ),
+                                                      ),
                                                     )
-                                                  : Image.asset(
-                                                      "assets/images/minus.png",
-                                                      alignment:
-                                                          Alignment.centerRight,
-                                                      width: w * 0.07,
-                                                    )
+                                                  : CircleAvatar(
+                                                      radius: w * 0.058,
+                                                      backgroundColor:
+                                                          const Color.fromRGBO(
+                                                              194, 193, 193, 1),
+                                                      child: ClipOval(
+                                                        child: Image.asset(
+                                                          "assets/images/fish_dead.png",
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ),
                                             ],
                                             //Text(
                                             //raundWorlds.values.toList()[index].toString(),
@@ -345,27 +410,8 @@ class _CountPageState extends ConsumerState<CountPage> {
                             ),
                             onPressed: () async {
                               //       calculating the score
-                              int roundScore = 0;
+                              //int roundScore = _getRoundScore(game);
                               //print(widget.raundWorlds);
-                              for (int i = 0;
-                                  i <
-                                      (game.lastWord
-                                          ? widget.raundWorlds.values
-                                                  .toList()
-                                                  .length -
-                                              1
-                                          : widget.raundWorlds.values
-                                              .toList()
-                                              .length);
-                                  i++) {
-                                // ignore: unrelated_type_equality_checks
-                                if (widget.raundWorlds.values.toList()[i] ==
-                                    0) {
-                                  roundScore--;
-                                } else {
-                                  roundScore++;
-                                }
-                              }
 
                               // for (int value in widget.raundWorlds.values) {
                               //   if (value == 0) {
@@ -426,98 +472,12 @@ class _CountPageState extends ConsumerState<CountPage> {
 
   Future<String?> openDialog() => showDialog<String>(
         context: context,
-        builder: (context) => CustomDialogScore(
+        builder: (context) => CustomDialog(
           teams: ref.read(gameProvider).teams,
+          roundWords: widget.raundWorlds,
+          avatars: ref.read(gameProvider).avatars,
+          lastWord: AppLocalizations.of(context)!.whoGuessed,
+          isFromScore: true,
         ),
       );
-}
-
-class CustomDialogScore extends StatelessWidget {
-  final List<String> teams;
-
-  const CustomDialogScore({
-    super.key,
-    required this.teams,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    double h = MediaQuery.of(context).size.height;
-    double w = MediaQuery.of(context).size.width;
-    return Dialog(
-      backgroundColor: Color.fromARGB(255, 248, 237, 255),
-      shape: RoundedRectangleBorder(
-        side: BorderSide(width: 2),
-        borderRadius: BorderRadius.all(
-          Radius.circular(w * 0.035),
-        ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.only(top: h * 0.006),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.5,
-              height: (h * 0.058) * teams.length <
-                      MediaQuery.of(context).size.height
-                  ? ((h * 0.058) * (teams.length + 1)).toDouble()
-                  : MediaQuery.of(context).size.height * 0.8,
-              child: Padding(
-                padding: EdgeInsets.only(top: h * 0.002),
-                child: ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: teams.length + 1,
-                  itemBuilder: (context, index) => Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: w * 0.01, vertical: h * 0.002),
-                    child: SizedBox(
-                      width: w * 0.85,
-                      height: h * 0.05,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 10,
-
-                          shadowColor: Colors.black,
-                          backgroundColor: Color.fromARGB(255, 255, 221,
-                              149), // Color.fromARGB(255, 255, 221, 149),
-                          foregroundColor: Colors.black, //TO FIX
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                                width: MediaQuery.of(context).size.height *
-                                    0.0024),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(
-                                  MediaQuery.of(context).size.width * 0.035),
-                            ),
-                          ),
-                          splashFactory: NoSplash.splashFactory,
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop(
-                              index == teams.length ? "Nobody" : teams[index]);
-                        },
-                        child: Text(
-                          index == teams.length
-                              ? AppLocalizations.of(context)!.nobody
-                              : teams[index],
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontSize: 12.sp,
-                                  ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

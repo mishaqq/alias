@@ -22,6 +22,7 @@ _$AliasDataImpl _$$AliasDataImplFromJson(Map<String, dynamic> json) =>
       duration: (json['duration'] as num).toInt(),
       wordsToWin: (json['wordsToWin'] as num).toInt(),
       lastWord: json['lastWord'] as bool,
+      isNoMinusPoints: json['isNoMinusPoints'] as bool,
     );
 
 Map<String, dynamic> _$$AliasDataImplToJson(_$AliasDataImpl instance) =>
@@ -35,4 +36,5 @@ Map<String, dynamic> _$$AliasDataImplToJson(_$AliasDataImpl instance) =>
       'duration': instance.duration,
       'wordsToWin': instance.wordsToWin,
       'lastWord': instance.lastWord,
+      'isNoMinusPoints': instance.isNoMinusPoints,
     };

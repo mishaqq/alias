@@ -31,6 +31,8 @@
     "emptySets" : "Тут тільки нову гру починати...",
     "wordForAll" : "Слово для всіх",
     "basicRules" : "Базові правила",
-    "lastWordForAll" : "Останнє слово для всіх"
+    "lastWordForAll" : "Останнє слово для всіх",
+    "isNoMinusPoints" : "Мінус за скіп слів: ",
+    "whoGuessed" : "Хто такий розумний?"
 
 }

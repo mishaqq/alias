@@ -31,5 +31,7 @@
     "emptySets" : "Swipe or start the new game...",
     "wordForAll" : "Word for all",
     "basicRules" : "Basic rules",
-    "lastWordForAll" : "Last word for all"
+    "lastWordForAll" : "Last word for all",
+    "isNoMinusPoints": "Minus for skipping: ",
+    "whoGuessed" : "Who is so smart?"
 }

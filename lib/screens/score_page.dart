@@ -81,7 +81,7 @@ class ScorePage extends ConsumerWidget {
                                   },
                                   child: Icon(
                                     Icons.settings_outlined,
-                                    size: 22.sp,
+                                    size: 26.sp,
                                   ),
                                 ),
                                 Spacer(),
@@ -116,13 +116,21 @@ class ScorePage extends ConsumerWidget {
                                             padding: EdgeInsets.only(
                                                 right: w * 0.03),
                                             child: CircleAvatar(
-                                              child: ClipOval(
-                                                child: Image.asset(
-                                                    game.avatars[index]),
+                                              radius: w * 0.05,
+                                              backgroundColor: Colors.black,
+                                              child: CircleAvatar(
+                                                maxRadius:
+                                                    game.teams[game.turn] ==
+                                                            game.teams[index]
+                                                        ? w * 0.047
+                                                        : w * 0.05,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                child: ClipOval(
+                                                  child: Image.asset(
+                                                      game.avatars[index]),
+                                                ),
                                               ),
-                                              maxRadius: w * 0.05,
-                                              backgroundColor:
-                                                  Colors.transparent,
                                             ),
                                           ),
                                           Expanded(

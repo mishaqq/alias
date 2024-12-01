@@ -316,6 +316,70 @@ class _SettingPageState extends ConsumerState<SettingsPage> {
                               ],
                             ),
                           ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: h * 0.035,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: w * 0.7,
+                                  child: Text(
+                                    AppLocalizations.of(context)!
+                                        .isNoMinusPoints,
+                                    maxLines: 2,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                          fontSize: 18.sp,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      top: h * 0.004, right: w * 0.015),
+                                  child: SizedBox(
+                                    width: 20.sp,
+                                    height: 20.sp,
+                                    child: Transform.scale(
+                                      scale: 1.1.sp,
+                                      child: Checkbox(
+                                        value: !ref
+                                            .read(gameProvider)
+                                            .isNoMinusPoints,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            ref
+                                                .read(gameProvider.notifier)
+                                                .togglesNoMinusPoints();
+                                          });
+                                        },
+                                        shape: RoundedRectangleBorder(
+                                          side: const BorderSide(
+                                              color: Colors.black),
+                                          borderRadius:
+                                              BorderRadius.circular(w * 0.01),
+                                        ),
+                                        activeColor: const Color.fromARGB(
+                                            255, 255, 221, 149),
+                                        side: const BorderSide(
+                                            color: Colors.black),
+                                        overlayColor:
+                                            const WidgetStatePropertyAll(
+                                          Colors.transparent,
+                                        ),
+                                        checkColor: Colors.black,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ],

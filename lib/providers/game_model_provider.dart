@@ -27,6 +27,7 @@ final gameProvider = StateNotifierProvider<GameNotifier, AliasData>((ref) {
       duration: 60,
       wordsToWin: 20,
       lastWord: true,
+      isNoMinusPoints: false,
     ),
     ref,
   );
@@ -110,6 +111,10 @@ class GameNotifier extends StateNotifier<AliasData> {
 
   void toggleLastWord() {
     state = state.copyWith(lastWord: !state.lastWord);
+  }
+
+  void togglesNoMinusPoints() {
+    state = state.copyWith(isNoMinusPoints: !state.isNoMinusPoints);
   }
 
   void setDuration(int dur) {
@@ -271,6 +276,7 @@ class GameNotifier extends StateNotifier<AliasData> {
             duration: 60,
             wordsToWin: 20,
             lastWord: true,
+            isNoMinusPoints: false,
           )
         : AliasData.fromJson(
             json.decode(gameString),

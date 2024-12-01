@@ -29,6 +29,7 @@ mixin _$AliasData {
   int get duration => throw _privateConstructorUsedError;
   int get wordsToWin => throw _privateConstructorUsedError;
   bool get lastWord => throw _privateConstructorUsedError;
+  bool get isNoMinusPoints => throw _privateConstructorUsedError;
 
   /// Serializes this AliasData to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -54,7 +55,8 @@ abstract class $AliasDataCopyWith<$Res> {
       List<String> setsNames,
       int duration,
       int wordsToWin,
-      bool lastWord});
+      bool lastWord,
+      bool isNoMinusPoints});
 }
 
 /// @nodoc
@@ -81,6 +83,7 @@ class _$AliasDataCopyWithImpl<$Res, $Val extends AliasData>
     Object? duration = null,
     Object? wordsToWin = null,
     Object? lastWord = null,
+    Object? isNoMinusPoints = null,
   }) {
     return _then(_value.copyWith(
       teams: null == teams
@@ -119,6 +122,10 @@ class _$AliasDataCopyWithImpl<$Res, $Val extends AliasData>
           ? _value.lastWord
           : lastWord // ignore: cast_nullable_to_non_nullable
               as bool,
+      isNoMinusPoints: null == isNoMinusPoints
+          ? _value.isNoMinusPoints
+          : isNoMinusPoints // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -140,7 +147,8 @@ abstract class _$$AliasDataImplCopyWith<$Res>
       List<String> setsNames,
       int duration,
       int wordsToWin,
-      bool lastWord});
+      bool lastWord,
+      bool isNoMinusPoints});
 }
 
 /// @nodoc
@@ -165,6 +173,7 @@ class __$$AliasDataImplCopyWithImpl<$Res>
     Object? duration = null,
     Object? wordsToWin = null,
     Object? lastWord = null,
+    Object? isNoMinusPoints = null,
   }) {
     return _then(_$AliasDataImpl(
       teams: null == teams
@@ -203,6 +212,10 @@ class __$$AliasDataImplCopyWithImpl<$Res>
           ? _value.lastWord
           : lastWord // ignore: cast_nullable_to_non_nullable
               as bool,
+      isNoMinusPoints: null == isNoMinusPoints
+          ? _value.isNoMinusPoints
+          : isNoMinusPoints // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -219,7 +232,8 @@ class _$AliasDataImpl implements _AliasData {
       required final List<String> setsNames,
       required this.duration,
       required this.wordsToWin,
-      required this.lastWord})
+      required this.lastWord,
+      required this.isNoMinusPoints})
       : _teams = teams,
         _avatars = avatars,
         _scores = scores,
@@ -277,10 +291,12 @@ class _$AliasDataImpl implements _AliasData {
   final int wordsToWin;
   @override
   final bool lastWord;
+  @override
+  final bool isNoMinusPoints;
 
   @override
   String toString() {
-    return 'AliasData(teams: $teams, avatars: $avatars, scores: $scores, turn: $turn, usedWords: $usedWords, setsNames: $setsNames, duration: $duration, wordsToWin: $wordsToWin, lastWord: $lastWord)';
+    return 'AliasData(teams: $teams, avatars: $avatars, scores: $scores, turn: $turn, usedWords: $usedWords, setsNames: $setsNames, duration: $duration, wordsToWin: $wordsToWin, lastWord: $lastWord, isNoMinusPoints: $isNoMinusPoints)';
   }
 
   @override
@@ -301,7 +317,9 @@ class _$AliasDataImpl implements _AliasData {
             (identical(other.wordsToWin, wordsToWin) ||
                 other.wordsToWin == wordsToWin) &&
             (identical(other.lastWord, lastWord) ||
-                other.lastWord == lastWord));
+                other.lastWord == lastWord) &&
+            (identical(other.isNoMinusPoints, isNoMinusPoints) ||
+                other.isNoMinusPoints == isNoMinusPoints));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -316,7 +334,8 @@ class _$AliasDataImpl implements _AliasData {
       const DeepCollectionEquality().hash(_setsNames),
       duration,
       wordsToWin,
-      lastWord);
+      lastWord,
+      isNoMinusPoints);
 
   /// Create a copy of AliasData
   /// with the given fields replaced by the non-null parameter values.
@@ -344,7 +363,8 @@ abstract class _AliasData implements AliasData {
       required final List<String> setsNames,
       required final int duration,
       required final int wordsToWin,
-      required final bool lastWord}) = _$AliasDataImpl;
+      required final bool lastWord,
+      required final bool isNoMinusPoints}) = _$AliasDataImpl;
 
   factory _AliasData.fromJson(Map<String, dynamic> json) =
       _$AliasDataImpl.fromJson;
@@ -367,6 +387,8 @@ abstract class _AliasData implements AliasData {
   int get wordsToWin;
   @override
   bool get lastWord;
+  @override
+  bool get isNoMinusPoints;
 
   /// Create a copy of AliasData
   /// with the given fields replaced by the non-null parameter values.
