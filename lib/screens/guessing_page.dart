@@ -1,3 +1,4 @@
+import 'package:alias/screens/rules.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
@@ -506,6 +507,7 @@ class CustomDialog extends StatelessWidget {
                                               .bodyMedium!
                                               .copyWith(
                                                 fontSize: 18.sp,
+                                                height: 1.1,
                                               ),
                                         ),
                                       ),
@@ -671,12 +673,36 @@ class CustomDialog extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(top: w * 0.03, bottom: w * 0.03),
-                child: Text(
-                  AppLocalizations.of(context)!.wordForAll,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        fontSize: 18.sp,
-                        overflow: TextOverflow.ellipsis,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.wordForAll,
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            fontSize: 18.sp,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                    ),
+                    SizedBox(
+                      width: w * 0.01,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RulesPage(
+                              selected: 1,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Icon(
+                        Icons.info_outline,
+                        size: 26.sp,
                       ),
+                    ),
+                  ],
                 ),
               ),
             ],

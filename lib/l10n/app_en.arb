@@ -33,5 +33,6 @@
     "basicRules" : "Basic rules",
     "lastWordForAll" : "Last word for all",
     "isNoMinusPoints": "Minus for skipping: ",
-    "whoGuessed" : "Who is so smart?"
+    "whoGuessed" : "Who is so smart?",
+     "lastWordRools": "in progress"
 }

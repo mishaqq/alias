@@ -116,14 +116,14 @@ class ScorePage extends ConsumerWidget {
                                             padding: EdgeInsets.only(
                                                 right: w * 0.03),
                                             child: CircleAvatar(
-                                              radius: w * 0.05,
+                                              radius: w * 0.058,
                                               backgroundColor: Colors.black,
                                               child: CircleAvatar(
                                                 maxRadius:
                                                     game.teams[game.turn] ==
                                                             game.teams[index]
-                                                        ? w * 0.047
-                                                        : w * 0.05,
+                                                        ? w * 0.055
+                                                        : w * 0.058,
                                                 backgroundColor:
                                                     Colors.transparent,
                                                 child: ClipOval(
@@ -143,6 +143,7 @@ class ScorePage extends ConsumerWidget {
                                                   .bodyMedium!
                                                   .copyWith(
                                                     fontSize: 18.sp,
+                                                    height: 1.1,
                                                   ),
                                             ),
                                           ),

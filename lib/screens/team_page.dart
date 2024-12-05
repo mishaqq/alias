@@ -102,7 +102,7 @@ class TeamPage extends ConsumerWidget {
                                                 child: Image.asset(
                                                     game.avatars[index]),
                                               ),
-                                              maxRadius: w * 0.05,
+                                              maxRadius: w * 0.058,
                                               backgroundColor:
                                                   Colors.transparent,
                                             ),
@@ -180,7 +180,7 @@ class TeamPage extends ConsumerWidget {
                                                 padding: EdgeInsets.only(
                                                     right: w * 0.03),
                                                 child: CircleAvatar(
-                                                  maxRadius: w * 0.05,
+                                                  maxRadius: w * 0.058,
                                                   backgroundColor:
                                                       Color.fromARGB(
                                                           255, 255, 221, 149),
@@ -201,6 +201,7 @@ class TeamPage extends ConsumerWidget {
                                                       fontSize: 18.sp,
                                                       fontStyle:
                                                           FontStyle.italic,
+                                                      height: 1.1,
                                                     ),
                                               ),
                                             ],

@@ -65,7 +65,7 @@ class _RulesPageState extends ConsumerState<RulesPage> {
             ),
       ),
       Text(
-        "Туди, сюди",
+        AppLocalizations.of(context)!.lastWordRools,
         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               fontSize: 20.sp,
             ),
