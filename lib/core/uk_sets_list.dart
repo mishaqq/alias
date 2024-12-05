@@ -8,7 +8,7 @@ List<AliasSet> ukSetsList = [
   AliasSet(
       id: "basic",
       title: "Базові слова",
-      contents: basic,
+      contents: removeRepetitionsFromSet(basic),
       example: initExanpleWords(
         basic,
         wordsQuantity: 4,
@@ -16,12 +16,12 @@ List<AliasSet> ukSetsList = [
   AliasSet(
       id: "expert",
       title: "Експерт",
-      contents: expert,
+      contents: removeRepetitionsFromSet(expert),
       example: initExanpleWords(expert)),
   AliasSet(
     id: "slang",
     title: "Молодіжний сленг",
-    contents: slang,
+    contents: removeRepetitionsFromSet(slang),
     example: initExanpleWords(
       slang,
       wordsQuantity: 4,
@@ -30,7 +30,7 @@ List<AliasSet> ukSetsList = [
   AliasSet(
     id: "test",
     title: "Меми",
-    contents: memes,
+    contents: removeRepetitionsFromSet(memes),
     example: initExanpleWords(
       memes,
       wordsQuantity: 2,
@@ -38,12 +38,19 @@ List<AliasSet> ukSetsList = [
   ),
   AliasSet(
       id: "ukr",
-      title: "Файні українські слова",
-      contents: ukr,
+      title: "Забуті українські слова",
+      contents: removeRepetitionsFromSet(ukr),
       example: initExanpleWords(ukr)),
   AliasSet(
-      id: "tworoots",
-      title: "Складні слова",
-      contents: tworoots,
-      example: initExanpleWords(tworoots)),
+    id: "tworoots",
+    title: "Складні слова",
+    contents: removeRepetitionsFromSet(tworoots),
+    example: initExanpleWords(tworoots),
+  ),
+  AliasSet(
+    id: "space",
+    title: "Космос",
+    contents: removeRepetitionsFromSet(space),
+    example: initExanpleWords(space),
+  ),
 ];

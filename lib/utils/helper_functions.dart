@@ -44,3 +44,11 @@ String initExanpleWords(List<String> allWords, {int wordsQuantity = 3}) {
   }
   return initialWords;
 }
+
+List<String> removeRepetitionsFromSet(List<String> setContent) {
+  Set<String> noRepList = {};
+  for (String word in setContent) {
+    noRepList.add(word);
+  }
+  return noRepList.toList();
+}

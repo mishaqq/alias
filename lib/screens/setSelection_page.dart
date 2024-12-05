@@ -37,7 +37,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage>
     overlayPortalController = OverlayPortalController();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
+        MediaQuery.of(context).size.width * 0.065,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
       );
@@ -50,7 +50,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage>
       // Define animations for top and left positions
       _catAnimationController = Tween<double>(
         begin: MediaQuery.of(context).size.height * -0.08,
-        end: MediaQuery.of(context).size.height * 0.05,
+        end: MediaQuery.of(context).size.height * 0.06,
       ).animate(
         CurvedAnimation(
           parent: _controllerCat,
@@ -226,12 +226,11 @@ class _GuessingPageState extends ConsumerState<ChoosingPage>
                                 checkBoxGap: w * 0.01,
                                 leadingCheckBox: false,
                                 checkBoxBorderSide: const BorderSide(
-                                  color: Colors.black,
-                                  width: 1.5,
+                                  color: Colors.white,
+                                  width: 0,
                                 ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(w * 0.010),
+                                  borderRadius: BorderRadius.circular(0),
                                 ),
                               ),
                             ),
