@@ -58,6 +58,7 @@ class _CountPageState extends ConsumerState<CountPage> {
   @override
   Widget build(BuildContext context) {
     final game = ref.watch(gameProvider);
+
     _setRoundScore(
         lastWord: game.lastWord ? GameMod.lastWord : GameMod.normal,
         points: game.isNoMinusPoints ? GameMod.noMinusPoints : GameMod.normal);
@@ -117,23 +118,6 @@ class _CountPageState extends ConsumerState<CountPage> {
                                 top: w * 0.03, bottom: w * 0.03),
                             child: Row(
                               children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SettingsPage(
-                                          fromGame: true,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: Icon(
-                                    Icons.settings_outlined,
-                                    size: 26.sp,
-                                  ),
-                                ),
                                 SizedBox(width: w * 0.01),
                                 GestureDetector(
                                   onTap: () {
@@ -141,7 +125,7 @@ class _CountPageState extends ConsumerState<CountPage> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => RulesPage(
-                                          selected: 1,
+                                          selected: 2,
                                         ),
                                       ),
                                     );

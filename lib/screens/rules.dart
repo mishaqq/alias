@@ -19,14 +19,18 @@ class RulesPage extends ConsumerStatefulWidget {
   ConsumerState<RulesPage> createState() => _RulesPageState();
 }
 
-class _RulesPageState extends ConsumerState<RulesPage> {
+class _RulesPageState extends ConsumerState<RulesPage>
+    with SingleTickerProviderStateMixin {
+  late ScrollController _scrollController;
   bool isSecondContainerVisible = false;
   bool isContentVisible = false;
-  List<bool> isSelected = [false, false];
+  List<bool> isSelected = [false, false, false, false];
 
   @override
   void initState() {
     super.initState();
+
+    _scrollController = ScrollController();
     setState(() {
       for (int i = 0; i < isSelected.length; i++) {
         if (i == widget.selected) {
@@ -58,17 +62,117 @@ class _RulesPageState extends ConsumerState<RulesPage> {
 
   Widget _getRulesContent() {
     List<Widget> rules = [
-      Text(
-        AppLocalizations.of(context)!.gameRules,
-        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              fontSize: 20.sp,
+      //Basic Rules
+      Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 12),
+            child: Text(
+              AppLocalizations.of(context)!.basicRules,
+              maxLines: 2,
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontSize: 24.sp,
+                    overflow: TextOverflow.ellipsis,
+                    height: 1.2,
+                  ),
             ),
+          ),
+          const Divider(
+            thickness: 2,
+            color: Colors.black,
+            height: 20,
+          ),
+          Text(
+            AppLocalizations.of(context)!.gameRules,
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontSize: 20.sp,
+                ),
+          ),
+        ],
       ),
-      Text(
-        AppLocalizations.of(context)!.lastWordRools,
-        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              fontSize: 20.sp,
+      //Last word for all
+      Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 12),
+            child: Text(
+              AppLocalizations.of(context)!.lastWordForAll,
+              maxLines: 2,
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontSize: 24.sp,
+                    overflow: TextOverflow.ellipsis,
+                    height: 1.2,
+                  ),
             ),
+          ),
+          const Divider(
+            thickness: 2,
+            color: Colors.black,
+            height: 20,
+          ),
+          Text(
+            AppLocalizations.of(context)!.lastWordRools,
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontSize: 20.sp,
+                ),
+          ),
+        ],
+      ),
+      // Score counting
+      Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 12),
+            child: Text(
+              AppLocalizations.of(context)!.scoreCountingTittle,
+              maxLines: 2,
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontSize: 24.sp,
+                    overflow: TextOverflow.ellipsis,
+                    height: 1.2,
+                  ),
+            ),
+          ),
+          const Divider(
+            thickness: 2,
+            color: Colors.black,
+            height: 20,
+          ),
+          Text(
+            AppLocalizations.of(context)!.scoreCountingBody,
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontSize: 20.sp,
+                ),
+          ),
+        ],
+      ),
+      // Game flow
+      Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 12),
+            child: Text(
+              AppLocalizations.of(context)!.gameFlowTittle,
+              maxLines: 2,
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    fontSize: 24.sp,
+                    overflow: TextOverflow.ellipsis,
+                    height: 1.2,
+                  ),
+            ),
+          ),
+          const Divider(
+            thickness: 2,
+            color: Colors.black,
+            height: 20,
+          ),
+          Text(
+            AppLocalizations.of(context)!.gameFlowBody,
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontSize: 20.sp,
+                ),
+          ),
+        ],
       ),
     ];
 
@@ -127,39 +231,14 @@ class _RulesPageState extends ConsumerState<RulesPage> {
                       ),
                       child: Padding(
                         padding: EdgeInsets.only(
-                          top: h * 0.015,
+                          top: h * 0.0,
                         ),
                         child: SingleChildScrollView(
+                          controller: _scrollController,
                           physics: const BouncingScrollPhysics(),
                           child: Column(
                             children: [
                               _getRulesContent(),
-                              // Padding(
-                              //   padding: const EdgeInsets.only(bottom: 20),
-                              //   child: RichText(
-                              //     textAlign: TextAlign.center,
-                              //     text: TextSpan(
-                              //       style: Theme.of(context)
-                              //           .textTheme
-                              //           .bodyMedium!
-                              //           .copyWith(
-                              //               fontSize: h * 0.025,
-                              //               decoration:
-                              //                   TextDecoration.underline,
-                              //               fontStyle: FontStyle.italic),
-                              //       children: [
-                              //         // TextSpan(
-                              //         //   text: "Privacy Policy",
-                              //         //   recognizer: tapGestureRecognizer(
-                              //         //     onTap: () => launch(
-                              //         //         'https://github.com/mishaqq/alias-privacy/blob/main/privacy-policy.md',
-                              //         //         isNewTab: true),
-                              //         //   ),
-                              //         // ),
-                              //       ],
-                              //     ),
-                              //   ),
-                              // ),
                             ],
                           ),
                         ),
@@ -201,67 +280,117 @@ class _RulesPageState extends ConsumerState<RulesPage> {
                                 child: Column(
                                   children: [
                                     ToggleButtons(
-                                        borderWidth: 2.5,
-                                        splashColor: Colors.transparent,
-                                        borderColor: Colors.black,
-                                        fillColor: const Color.fromARGB(
-                                            255, 255, 221, 149),
-                                        selectedBorderColor: Colors.black,
-                                        constraints: BoxConstraints(
-                                          minWidth: w * 0.7,
-                                          minHeight: h * 0.065,
-                                        ),
-                                        direction: Axis.vertical,
-                                        isSelected: isSelected,
-                                        onPressed: (index) {
-                                          setState(() {
-                                            for (int i = 0;
-                                                i < isSelected.length;
-                                                i++) {
-                                              isSelected[i] = i == index;
-                                            }
+                                      borderWidth: 2.5,
+                                      splashColor: Colors.transparent,
+                                      borderColor: Colors.black,
+                                      fillColor: const Color.fromARGB(
+                                          255, 255, 221, 149),
+                                      selectedBorderColor: Colors.black,
+                                      constraints: BoxConstraints(
+                                        minWidth: w * 0.7,
+                                        minHeight: h * 0.065,
+                                      ),
+                                      direction: Axis.vertical,
+                                      isSelected: isSelected,
+                                      onPressed: (index) {
+                                        setState(() {
+                                          for (int i = 0;
+                                              i < isSelected.length;
+                                              i++) {
+                                            isSelected[i] = i == index;
+                                          }
 
-                                            _togleMenue();
-                                          });
-                                        },
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .basicRules,
-                                                maxLines: 1,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium!
-                                                    .copyWith(
-                                                      fontSize: 18.sp,
-                                                    ),
-                                              ),
+                                          _togleMenue();
+
+                                          _scrollController.animateTo(
+                                              _scrollController
+                                                  .position.minScrollExtent,
+                                              duration: const Duration(
+                                                  milliseconds: 150),
+                                              curve: Curves.easeOut);
+                                        });
+                                      },
+                                      children: [
+                                        // Basic Rules
+                                        Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .basicRules,
+                                              maxLines: 1,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(
+                                                    fontSize: 18.sp,
+                                                  ),
                                             ),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .lastWordForAll,
-                                                maxLines: 1,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium!
-                                                    .copyWith(
-                                                        fontSize: 18.sp,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        height: 1.2),
-                                              ),
+                                        ),
+                                        //Last Word
+                                        Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .lastWordForAll,
+                                              maxLines: 1,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(
+                                                      fontSize: 18.sp,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      height: 1.2),
                                             ),
-                                          )
-                                        ]),
+                                          ),
+                                        ),
+                                        //Score count
+                                        Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .scoreCountingTittle,
+                                              maxLines: 1,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(
+                                                      fontSize: 18.sp,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      height: 1.2),
+                                            ),
+                                          ),
+                                        ),
+                                        //Game Flow
+                                        Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .gameFlowTittle,
+                                              maxLines: 1,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium!
+                                                  .copyWith(
+                                                      fontSize: 18.sp,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      height: 1.2),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ],
                                 ),
                               )
@@ -325,21 +454,6 @@ class _RulesPageState extends ConsumerState<RulesPage> {
           ),
         ),
       ),
-    );
-  }
-}
-
-TapGestureRecognizer tapGestureRecognizer({
-  required VoidCallback onTap,
-}) {
-  return TapGestureRecognizer()..onTap = onTap;
-}
-
-Future<void> launch(String url, {bool isNewTab = true}) async {
-  if (await launchUrl(Uri.parse(url))) {
-    await launchUrl(
-      Uri.parse(url),
-      webOnlyWindowName: isNewTab ? '_blank' : '_self',
     );
   }
 }

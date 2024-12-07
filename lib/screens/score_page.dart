@@ -1,3 +1,4 @@
+import 'package:alias/screens/rules.dart';
 import 'package:alias/screens/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -122,7 +123,7 @@ class ScorePage extends ConsumerWidget {
                                                 maxRadius:
                                                     game.teams[game.turn] ==
                                                             game.teams[index]
-                                                        ? w * 0.055
+                                                        ? w * 0.053
                                                         : w * 0.058,
                                                 backgroundColor:
                                                     Colors.transparent,
@@ -169,15 +170,45 @@ class ScorePage extends ConsumerWidget {
                         Padding(
                           padding:
                               EdgeInsets.only(top: w * 0.03, bottom: w * 0.03),
-                          child: Text(
-                            "${AppLocalizations.of(context)!.currentTurn} ${game.teams[game.turn]}",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium!
-                                .copyWith(
-                                  fontSize: 18.sp,
-                                  overflow: TextOverflow.ellipsis,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => RulesPage(
+                                        selected: 2,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Icon(
+                                  Icons.info_outline,
+                                  size: 22.sp,
                                 ),
+                              ),
+                              SizedBox(
+                                width: w * 0.01,
+                              ),
+                              SizedBox(
+                                width: w * 0.7,
+                                child: Center(
+                                  child: Text(
+                                    "${AppLocalizations.of(context)!.currentTurn} ${game.teams[game.turn]}",
+                                    maxLines: 1,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(
+                                          fontSize: 18.sp,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
