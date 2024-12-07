@@ -6,13 +6,14 @@ import 'package:alias/utils/helper_functions.dart';
 
 List<AliasSet> ukSetsList = [
   AliasSet(
-      id: "basic",
-      title: "Базові слова",
-      contents: removeRepetitionsFromSet(basic),
-      example: initExanpleWords(
-        basic,
-        wordsQuantity: 4,
-      )),
+    id: "basic",
+    title: "Базові слова",
+    contents: removeRepetitionsFromSet(basic),
+    example: initExanpleWords(
+      basic,
+      wordsQuantity: 4,
+    ),
+  ),
   AliasSet(
       id: "expert",
       title: "Експерт",

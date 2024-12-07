@@ -201,7 +201,6 @@ class TeamPage extends ConsumerWidget {
                                                       fontSize: 18.sp,
                                                       fontStyle:
                                                           FontStyle.italic,
-                                                      height: 1.1,
                                                     ),
                                               ),
                                             ],

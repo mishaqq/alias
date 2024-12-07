@@ -209,6 +209,8 @@ class _GuessingPageState extends ConsumerState<ChoosingPage>
                                               localizedSetList[index].example,
                                               maxLines: 1,
                                               style: TextStyle(
+                                                color: const Color.fromARGB(
+                                                    162, 0, 0, 0),
                                                 fontStyle: FontStyle.italic,
                                                 fontSize: 14.sp,
                                                 overflow: TextOverflow.ellipsis,
