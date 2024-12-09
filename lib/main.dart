@@ -74,6 +74,7 @@ class MyApp extends ConsumerWidget {
                       255), // Color.fromARGB(255, 255, 221, 149),
                   foregroundColor: Color.fromARGB(255, 255, 174, 0),
                   overlayColor: Color.fromARGB(255, 255, 174, 0), //TO FIX
+
                   shape: RoundedRectangleBorder(
                     side: BorderSide(width: 2),
                     borderRadius: BorderRadius.all(

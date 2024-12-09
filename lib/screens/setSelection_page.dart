@@ -197,7 +197,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage>
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Text(
-                                        "${localizedSetList[index].contents.length} ${AppLocalizations.of(context)!.wordsAmount}", //TODO : Translate
+                                        "${localizedSetList[index].contents.length} ${AppLocalizations.of(context)!.wordsAmount}",
                                         style: TextStyle(
                                           fontSize: 14.sp,
                                         ),
@@ -212,7 +212,7 @@ class _GuessingPageState extends ConsumerState<ChoosingPage>
                                               maxLines: 1,
                                               style: TextStyle(
                                                 color: const Color.fromARGB(
-                                                    162, 0, 0, 0),
+                                                    195, 0, 0, 0),
                                                 fontStyle: FontStyle.italic,
                                                 fontSize: 14.sp,
                                                 overflow: TextOverflow.ellipsis,

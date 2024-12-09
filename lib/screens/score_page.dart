@@ -22,7 +22,7 @@ class ScorePage extends ConsumerWidget {
       child: Scaffold(
         body: Container(
           alignment: Alignment.center,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -106,7 +106,7 @@ class ScorePage extends ConsumerWidget {
                         Expanded(
                           child: ListView.builder(
                               padding: EdgeInsets.zero,
-                              physics: BouncingScrollPhysics(),
+                              physics: const BouncingScrollPhysics(),
                               itemCount: game.teams.length,
                               itemBuilder: (context, index) => Padding(
                                     padding: EdgeInsets.only(top: h * 0.009),
@@ -116,15 +116,17 @@ class ScorePage extends ConsumerWidget {
                                           Padding(
                                             padding: EdgeInsets.only(
                                                 right: w * 0.03),
-                                            child: CircleAvatar(
-                                              radius: w * 0.058,
-                                              backgroundColor: Colors.black,
+                                            child: Container(
+                                              padding: const EdgeInsets.all(2),
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: game.teams[game.turn] ==
+                                                        game.teams[index]
+                                                    ? Colors.black
+                                                    : Colors.transparent,
+                                              ),
                                               child: CircleAvatar(
-                                                maxRadius:
-                                                    game.teams[game.turn] ==
-                                                            game.teams[index]
-                                                        ? w * 0.053
-                                                        : w * 0.058,
+                                                radius: w * 0.058,
                                                 backgroundColor:
                                                     Colors.transparent,
                                                 child: ClipOval(
