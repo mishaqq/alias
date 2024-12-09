@@ -26,6 +26,7 @@ dependencies:
   flutter_svg: ^2.0.9
 
   intl: any
+  just_audio: ^0.9.41
   shared_preferences: ^2.2.2
   typewritertext: ^3.0.9
   url_launcher: ^6.3.0
@@ -45,6 +46,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/audio/
 
   fonts:
     - family: Anonymous

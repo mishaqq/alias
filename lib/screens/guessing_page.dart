@@ -1,3 +1,4 @@
+import 'package:alias/providers/locale_provider.dart';
 import 'package:alias/screens/rules.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:dotted_line/dotted_line.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:just_audio/just_audio.dart';
 import '../providers/game_model_provider.dart';
 import 'count_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -22,13 +24,22 @@ class GuessingPage extends ConsumerStatefulWidget {
 class _GuessingPageState extends ConsumerState<GuessingPage> {
   late final CountDownController _countDownController;
   late final CardSwiperController controller;
+  late AudioPlayer player;
   int plus = 0;
   int minus = 0;
   @override
   void initState() {
     _countDownController = CountDownController();
     controller = CardSwiperController();
+    player = AudioPlayer();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    player.dispose();
+    super.dispose();
   }
 
   Map<String, int> roundWords = {};
@@ -166,7 +177,7 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                           );
                         },
                       ),
-                      Spacer(),
+                      SizedBox(width: w * 0.175),
                       CircularCountDownTimer(
                         duration: ref.read(gameProvider).duration,
                         initialDuration: 0,
@@ -193,7 +204,26 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                         onStart: () {
                           //debugPrint('Countdown Started');
                         },
-                        onComplete: () {
+                        onComplete: () async {
+                          Locale curLocale = ref.read(localeProvider);
+                          await player.setVolume(1);
+                          switch (curLocale.languageCode) {
+                            case "en":
+                              await player
+                                  .setAsset('assets/audio/lastWordEN.mp3');
+                              break;
+                            case "uk":
+                              await player
+                                  .setAsset('assets/audio/lastWordUK.mp3');
+                              break;
+                            default:
+                              await player
+                                  .setAsset('assets/audio/lastWordEN.mp3');
+                              break;
+                          }
+
+                          player.play();
+
                           if (ref.read(gameProvider).lastWord) {
                             ref.read(gameProvider.notifier).addUsedWord(
                                   guessingWord,
@@ -285,6 +315,9 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                         },
                         onSwipe: (previousIndex, currentIndex, direction) {
                           if (direction == CardSwiperDirection.right) {
+                            player.setAsset('assets/audio/correct.mp3');
+                            player.play();
+
                             ref
                                 .read(gameProvider.notifier)
                                 .addUsedWord(guessingWord); // save used word
@@ -292,6 +325,9 @@ class _GuessingPageState extends ConsumerState<GuessingPage> {
                                 1; // save this round words
                             plus++;
                           } else {
+                            player.setAsset('assets/audio/wrong.mp3');
+                            player.play();
+
                             ref
                                 .read(gameProvider.notifier)
                                 .addUsedWord(guessingWord);

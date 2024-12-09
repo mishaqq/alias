@@ -151,6 +151,8 @@ class _MainPageState extends ConsumerState<MainPage>
   @override
   void dispose() {
     _controller.dispose();
+    _controllerCat.dispose();
+    _controllerCatLangChange.dispose();
     super.dispose();
   }
 
@@ -497,6 +499,8 @@ class _MainPageState extends ConsumerState<MainPage>
 
                                   // ignore: use_build_context_synchronously
                                   Navigator.pushNamed(context, '/score');
+                                  _controllerCatLangChange.reverse();
+                                  overlayPortalController.hide();
                                 },
                                 child: Text(
                                     AppLocalizations.of(context)!
@@ -526,6 +530,8 @@ class _MainPageState extends ConsumerState<MainPage>
                                 const Duration(milliseconds: 200),
                                 () => controller.moveTo(0),
                               );
+                              _controllerCatLangChange.reverse();
+                              overlayPortalController.hide();
                             },
                             child: Text(
                               AppLocalizations.of(context)!.newGameButton,
@@ -551,6 +557,8 @@ class _MainPageState extends ConsumerState<MainPage>
                           child: ElevatedButton(
                             onPressed: () async {
                               Navigator.pushNamed(context, '/rules');
+                              _controllerCatLangChange.reverse();
+                              overlayPortalController.hide();
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:

@@ -25,7 +25,7 @@
     "leaveGame": "Leave",
     "no": "No",
     "leaveGameTitle": "Quit this game?",
-    "catPopup": "Swipe cards to change language",
+    "catPopup": "Swipe cards to change language.",
     "wordsAmount": "Words",
     "nothingSelected": "Well, go ahead and choose something...",
     "emptySets" : "Swipe or start the new game...",
@@ -34,9 +34,10 @@
     "lastWordForAll" : "Last word for all",
     "isNoMinusPoints": "Minus for skipping: ",
     "whoGuessed" : "Who is so smart?",
-    "lastWordRools": "in progress",
+    "lastWordRools": "1. At the end of each round, when the time is up, the word on the last card can be guessed by any team.\n\n2. The explainer must clearly and loudly explain the last word to all players.\n\n3. After a team guesses the last word, you need to click on that team in the last word menu to assign them points for the last word.\n\n4. At the end of the round, you can always change which team gets the points for the last word.",
     "scoreCountingTittle" : "Calculation of points",
     "scoreCountingBody" : "1. Tap on the words in the list to toggle their status between “guessed” and “not guessed”.\n\n2. If the “Last Word for Everyone” mode is enabled, you can change which team receives the points for the last word by tapping on it.\n\n3. If the “Minus for skipping” feature is activated, each skipped word deducts one point, but the total score for the round cannot drop below 0.",
     "gameFlowTittle": "Game flow",
-    "gameFlowBody": "1. The current team's picture is highlighted with a black circle, and the bottom of the screen displays “Now: ” followed by the team's name.\n\n2. Even if a team scores enough points to win, they will not be declared the winner until all teams have played one full round.\n\n3. If more than one team scores enough points to win, the team with the highest score will be declared the winner."
+    "gameFlowBody": "1. The current team's picture is highlighted with a black circle, and the bottom of the screen displays “Now: ” followed by the team's name.\n\n2. Even if a team scores enough points to win, they will not be declared the winner until all teams have played one full round.\n\n3. If more than one team scores enough points to win, the team with the highest score will be declared the winner.",
+    "countBackArrow" :  "There's only forward here, sparrow."
 }

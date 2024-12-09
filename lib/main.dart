@@ -31,6 +31,8 @@ Future<void> main() async {
     sound: true,
   );
 
+  // final fcmToken = await FirebaseMessaging.instance.getToken();
+  // print(fcmToken);
   runApp(
     const ProviderScope(
       child: MyApp(),
