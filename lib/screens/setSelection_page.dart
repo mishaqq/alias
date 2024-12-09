@@ -198,7 +198,9 @@ class _GuessingPageState extends ConsumerState<ChoosingPage>
                                     children: [
                                       Text(
                                         "${localizedSetList[index].contents.length} ${AppLocalizations.of(context)!.wordsAmount}", //TODO : Translate
-                                        style: TextStyle(fontSize: 14.sp),
+                                        style: TextStyle(
+                                          fontSize: 14.sp,
+                                        ),
                                       ),
                                       Padding(
                                         padding:

@@ -179,7 +179,7 @@ class ScorePage extends ConsumerWidget {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => RulesPage(
-                                        selected: 2,
+                                        selected: 3,
                                       ),
                                     ),
                                   );

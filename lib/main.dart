@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:alias/firebase_options.dart';
 import 'package:alias/providers/locale_provider.dart';
 import 'package:alias/screens/guessing_page.dart';
 import 'package:alias/screens/main_page.dart';
@@ -7,14 +8,29 @@ import 'package:alias/screens/rules.dart';
 import 'package:alias/screens/setSelection_page.dart';
 import 'package:alias/screens/settings_page.dart';
 import 'package:alias/screens/team_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'screens/score_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart'; // ;ocale
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // locale
+import 'package:firebase_messaging/firebase_messaging.dart';
 
-void main() async {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  await FirebaseMessaging.instance.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+
   runApp(
     const ProviderScope(
       child: MyApp(),

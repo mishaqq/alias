@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "771910261920",
+    "project_id": "alias-7aba6",
+    "storage_bucket": "alias-7aba6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:771910261920:android:eb0f807fc2bdd837dbfdc5",
+        "android_client_info": {
+          "package_name": "com.mika.alias"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7p8nIn7afyMJtoLMneawsgbWvQh2jfV0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
