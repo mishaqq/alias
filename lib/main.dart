@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:alias/firebase_options.dart';
@@ -20,8 +21,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-  await FirebaseMessaging.instance.requestPermission(
+  final _firebaseMessaging = FirebaseMessaging.instance;
+  await _firebaseMessaging.requestPermission(
     alert: true,
     announcement: false,
     badge: true,
@@ -31,6 +32,11 @@ Future<void> main() async {
     sound: true,
   );
 
+  if (Platform.isIOS) {
+    await Future.delayed(Duration(seconds: 2));
+    String? apnsToken = await _firebaseMessaging.getAPNSToken();
+    print('APNS Token: $apnsToken');
+  }
   runApp(
     const ProviderScope(
       child: MyApp(),
