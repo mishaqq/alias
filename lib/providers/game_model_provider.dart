@@ -10,6 +10,7 @@ import 'package:alias/screens/winning_screen.dart';
 import 'package:alias/utils/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/game_model.dart';
 

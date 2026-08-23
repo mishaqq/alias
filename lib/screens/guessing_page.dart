@@ -10,7 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_audio/just_audio.dart';
 import '../providers/game_model_provider.dart';
 import 'count_page.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:alias/l10n/app_localizations.dart';
 
 //TODO
 // add popUp "you cant go back"

@@ -15,7 +15,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'screens/score_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart'; // ;ocale
-import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // locale
+import 'package:alias/l10n/app_localizations.dart'; // locale
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 Future<void> main() async {

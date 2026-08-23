@@ -7,7 +7,7 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:alias/l10n/app_localizations.dart';
 
 class WinningPage extends ConsumerStatefulWidget {
   final List<String> winners;

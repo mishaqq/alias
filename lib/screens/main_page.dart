@@ -12,7 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:typewritertext/typewritertext.dart';
 import '../providers/game_model_provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:alias/l10n/app_localizations.dart';
 
 class MainPage extends ConsumerStatefulWidget {
   const MainPage({super.key});
